@@ -10,6 +10,13 @@ export default defineNuxtConfig({
                 },
                 {charset: "utf-8"},
             ],
+            link: [
+                {
+                    rel: "icon",
+                    type: "image/x-icon",
+                    href: "https://avatars.githubusercontent.com/u/63280128"
+                },
+            ],
         },
     },
 
