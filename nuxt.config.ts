@@ -4,7 +4,6 @@ const baseURL = "https://mcdr.zhanganzhi.com";
 export default defineNuxtConfig({
     app: {
         head: {
-            title: "MCDR Plugin Catalogue",
             meta: [
                 {
                     name: "viewport",
