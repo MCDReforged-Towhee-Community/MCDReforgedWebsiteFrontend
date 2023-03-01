@@ -22,6 +22,32 @@ export default defineNuxtConfig({
 
     modules: [
         "@element-plus/nuxt",
+        [
+            "@nuxtjs/i18n",
+            {
+                baseUrl: "https://mcdr.zhanganzhi.com",
+                locales: [
+                    {
+                        code: "en-US",
+                        iso: "en-US",
+                        file: "en-US.js",
+                        name: "English",
+                    },
+                    {
+                        code: "zh-CN",
+                        iso: "zh-CN",
+                        file: "zh-CN.js",
+                        name: "简体中文",
+                    },
+                ],
+                defaultLocale: "en-US",
+                strategy: "no_prefix",
+                langDir: "locales",
+                vueI18n: {
+                    fallbackLocale: "en-US",
+                },
+            }
+        ],
     ],
 
     nitro: {
