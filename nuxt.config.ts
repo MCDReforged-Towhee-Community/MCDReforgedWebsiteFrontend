@@ -1,3 +1,5 @@
+const baseURL = "https://mcdr.zhanganzhi.com";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     app: {
@@ -25,7 +27,7 @@ export default defineNuxtConfig({
         [
             "@nuxtjs/i18n",
             {
-                baseUrl: "https://mcdr.zhanganzhi.com",
+                baseUrl: baseURL,
                 locales: [
                     {
                         code: "en-US",
@@ -56,7 +58,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            baseURL: "https://mcdr.zhanganzhi.com",
+            baseURL: baseURL,
         },
     },
 
