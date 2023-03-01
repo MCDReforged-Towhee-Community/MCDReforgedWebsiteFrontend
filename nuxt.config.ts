@@ -24,5 +24,11 @@ export default defineNuxtConfig({
         preset: "vercel-edge",
     },
 
+    runtimeConfig: {
+        public: {
+            baseURL: "https://mcdr.zhanganzhi.com",
+        },
+    },
+
     telemetry: false,
 });
