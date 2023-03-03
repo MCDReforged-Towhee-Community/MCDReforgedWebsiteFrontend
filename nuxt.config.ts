@@ -26,6 +26,12 @@ export default defineNuxtConfig({
         },
     },
 
+    imports: {
+        dirs: [
+            "stores",
+        ]
+    },
+
     modules: [
         "@element-plus/nuxt",
         [
@@ -52,6 +58,14 @@ export default defineNuxtConfig({
                 vueI18n: {
                     fallbackLocale: "en-US",
                 },
+            }
+        ],
+        [
+            "@pinia/nuxt",
+            {
+                autoImports: [
+                    "defineStore",
+                ],
             }
         ],
     ],

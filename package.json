@@ -10,7 +10,12 @@
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.3",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
+    "@pinia/nuxt": "^0.4.7",
     "nuxt": "^3.2.2",
+    "pinia": "^2.0.32",
     "vue-gtag-next": "^1.14.0"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
