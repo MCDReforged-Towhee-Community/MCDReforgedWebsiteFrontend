@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     },
 
     css: [
+        "@/assets/main.scss",
         "open-props/style",
     ],
 
