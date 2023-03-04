@@ -11,6 +11,7 @@
     "@element-plus/nuxt": "^1.0.3",
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
+    "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.7",
     "nuxt": "^3.2.2",
     "open-props": "^1.5.5",
