@@ -26,6 +26,10 @@ export default defineNuxtConfig({
         },
     },
 
+    css: [
+        "open-props/style",
+    ],
+
     imports: {
         dirs: [
             "stores",

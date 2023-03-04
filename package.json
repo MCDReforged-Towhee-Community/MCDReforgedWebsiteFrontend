@@ -12,6 +12,7 @@
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@pinia/nuxt": "^0.4.7",
     "nuxt": "^3.2.2",
+    "open-props": "^1.5.5",
     "pinia": "^2.0.32",
     "vue-gtag-next": "^1.14.0"
   },
