@@ -27,7 +27,13 @@ export default defineNuxtConfig({
     },
 
     css: [
+        // project css
         "@/assets/main.scss",
+
+        // element plus
+        "element-plus/theme-chalk/display.css",
+
+        // open-props
         "open-props/style",
     ],
 
