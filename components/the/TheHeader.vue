@@ -12,17 +12,19 @@
         <NuxtLink class="nav-item" to="/">{{ t("home") }}</NuxtLink>
         <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
       </nav>
-      <ElSelect
-          v-model="localeRef"
-          @change="val => $i18n.setLocale(val)"
-      >
-        <el-option
-            v-for="item in $i18n.locales"
-            :key="item.name"
-            :value="item.code"
-            :label="item.name"
-        />
-      </ElSelect>
+      <ClientOnly>
+        <ElSelect
+            v-model="localeRef"
+            @change="val => $i18n.setLocale(val)"
+        >
+          <el-option
+              v-for="item in $i18n.locales"
+              :key="item.name"
+              :value="item.code"
+              :label="item.name"
+          />
+        </ElSelect>
+      </ClientOnly>
     </div>
   </header>
 </template>
