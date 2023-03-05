@@ -38,53 +38,11 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        [
-            "@nuxtjs/google-fonts",
-            {
-                families: {
-                    "Noto+Sans+SC": true,
-                    Raleway: {
-                        wght: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-                    },
-                },
-            }
-        ],
         "@element-plus/nuxt",
-        [
-            "@nuxtjs/i18n",
-            {
-                baseUrl: baseURL,
-                locales: [
-                    {
-                        code: "en-US",
-                        iso: "en-US",
-                        file: "en-US.js",
-                        name: "English",
-                    },
-                    {
-                        code: "zh-CN",
-                        iso: "zh-CN",
-                        file: "zh-CN.js",
-                        name: "简体中文",
-                    },
-                ],
-                defaultLocale: "en-US",
-                strategy: "no_prefix",
-                langDir: "locales",
-                vueI18n: {
-                    fallbackLocale: "en-US",
-                },
-            }
-        ],
+        "@nuxtjs/google-fonts",
+        "@nuxtjs/i18n",
         "@nuxtjs/robots",
-        [
-            "@pinia/nuxt",
-            {
-                autoImports: [
-                    "defineStore",
-                ],
-            }
-        ],
+        "@pinia/nuxt",
     ],
 
     nitro: {
@@ -98,4 +56,44 @@ export default defineNuxtConfig({
     },
 
     telemetry: false,
+
+    // modules options
+    googleFonts: {
+        families: {
+            "Noto+Sans+SC": true,
+            Raleway: {
+                wght: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            },
+        },
+    },
+
+    i18n: {
+        baseUrl: baseURL,
+        locales: [
+            {
+                code: "en-US",
+                iso: "en-US",
+                file: "en-US.js",
+                name: "English",
+            },
+            {
+                code: "zh-CN",
+                iso: "zh-CN",
+                file: "zh-CN.js",
+                name: "简体中文",
+            },
+        ],
+        defaultLocale: "en-US",
+        strategy: "no_prefix",
+        langDir: "locales",
+        vueI18n: {
+            fallbackLocale: "en-US",
+        },
+    },
+
+    pinia: {
+        autoImports: [
+            "defineStore",
+        ],
+    },
 });
