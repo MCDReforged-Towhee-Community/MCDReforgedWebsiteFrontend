@@ -44,7 +44,6 @@ const localeRef = ref(locale.value);
     background-color: var(--stone-3);
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
     .logo {
