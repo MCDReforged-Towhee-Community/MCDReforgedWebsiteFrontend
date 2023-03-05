@@ -63,52 +63,63 @@
             :key="plugin.id"
             class="box plugins-list-card"
         >
-          <div class="plugins-list-card-title">
-            <NuxtLink
-                class="plugins-list-card-title-item plugins-list-card-name clickable--underline"
-                :to="`/plugins/${plugin.id}`"
-            >
-              {{ plugin.name }}
-            </NuxtLink>
-            <div class="plugins-list-card-title-item plugins-list-card-at">
-              @
+          <div class="plugins-list-card-info">
+            <div class="plugins-list-card-title">
+              <NuxtLink
+                  class="plugins-list-card-title-item plugins-list-card-name clickable--underline"
+                  :to="`/plugins/${plugin.id}`"
+              >
+                {{ plugin.name }}
+              </NuxtLink>
+              <div class="plugins-list-card-title-item plugins-list-card-at">
+                @
+              </div>
+              <div
+                  class="plugins-list-card-title-item plugins-list-card-authors">
+                {{ plugin.authors.join(", ") }}
+              </div>
             </div>
-            <div
-                class="plugins-list-card-title-item plugins-list-card-authors">
-              {{ plugin.authors.join(", ") }}
+            <div class="plugins-list-card-description">
+              {{ plugin.description[MCDRLocale] }}
+            </div>
+            <div class="plugins-list-card-labels">
+              <div
+                  v-if="plugin.labels.includes('information')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconInfoFilled class="label-icon"/>
+                {{ t("information") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('tool')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconTools class="label-icon"/>
+                {{ t("tool") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('management')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconUserFilled class="label-icon"/>
+                {{ t("management") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('api')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconShare class="label-icon"/>
+                {{ t("api") }}
+              </div>
             </div>
           </div>
-          <div class="plugins-list-card-description">
-            {{ plugin.description[MCDRLocale] }}
-          </div>
-          <div class="plugins-list-card-labels">
-            <div
-                v-if="plugin.labels.includes('information')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconInfoFilled class="label-icon"/>
-              {{ t("information") }}
+          <div class="plugins-list-card-votes">
+            <ElIconStar class="plugins-list-card-votes-icon"/>
+            <div class="plugins-list-card-votes-number">
+              {{ plugin.id in votes ? votes[plugin.id] : 0 }}
             </div>
-            <div
-                v-if="plugin.labels.includes('tool')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconTools class="label-icon"/>
-              {{ t("tool") }}
-            </div>
-            <div
-                v-if="plugin.labels.includes('management')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconUserFilled class="label-icon"/>
-              {{ t("management") }}
-            </div>
-            <div
-                v-if="plugin.labels.includes('api')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconShare class="label-icon"/>
-              {{ t("api") }}
+            <div class="plugins-list-card-votes-text">
+              {{ t("votes") }}
             </div>
           </div>
         </div>
@@ -133,6 +144,12 @@ const MCDRLocale = computed(() => (
 
 // pinia
 const pluginsStore = usePluginsStore();
+
+// votes
+let votes = undefined;
+if (process.client) {
+  votes = await fetchVotes();
+}
 
 // filter
 const filter = ref({
@@ -235,34 +252,55 @@ function shouldShow(plugin: PluginMeta): boolean {
       margin-bottom: 1rem;
       color: var(--gray-7);
 
-      .plugins-list-card-title {
-        .plugins-list-card-title-item {
-          display: inline;
+      display: flex;
+      justify-content: space-between;
+
+      .plugins-list-card-info {
+        .plugins-list-card-title {
+          .plugins-list-card-title-item {
+            display: inline;
+          }
+
+          .plugins-list-card-name {
+            color: black;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+
+            &:hover {
+              color: var(--blue-6);
+              text-decoration: underline;
+            }
+          }
         }
 
-        .plugins-list-card-name {
-          color: black;
-          font-size: 1.5rem;
-          font-weight: bold;
-          text-decoration: none;
+        .plugins-list-card-labels {
+          display: flex;
 
-          &:hover {
-            color: var(--blue-6);
-            text-decoration: underline;
+          .plugins-list-card-labels-label {
+            margin-right: 0.5rem;
+
+            color: var(--brown-8);
+
+            display: flex;
+            align-items: center;
           }
         }
       }
 
-      .plugins-list-card-labels {
+      .plugins-list-card-votes {
         display: flex;
+        align-items: center;
 
-        .plugins-list-card-labels-label {
-          margin-right: 0.5rem;
+        font-size: 1.5rem;
 
-          color: var(--brown-8);
+        .plugins-list-card-votes-icon {
+          height: 1.5rem;
+        }
 
-          display: flex;
-          align-items: center;
+        .plugins-list-card-votes-number {
+          margin: 0 0.25rem;
+          font-weight: bold;
         }
       }
     }
@@ -300,6 +338,7 @@ information: Information
 tool: Tool
 management: Management
 api: API
+votes: Votes
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -312,4 +351,5 @@ information: 信息
 tool: 工具
 management: 管理
 api: API
+votes: 喜欢
 </i18n>

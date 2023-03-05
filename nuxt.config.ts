@@ -58,6 +58,11 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             baseURL: baseURL,
+            leanCloud: {
+                appId: "DFlxCu7mQRyfVOVeMnJsreh4-MdYXbMMI",
+                appKey: "mxyNDiUvRTsN5UPyANTvTr5v",
+                serverURL: "https://dflxcu7m.api.lncldglobal.com",
+            },
         },
     },
 
