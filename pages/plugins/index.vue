@@ -176,6 +176,7 @@ function shouldShow(plugin: PluginMeta): boolean {
       return false;
     }
   }
+
   return true;
 }
 </script>
