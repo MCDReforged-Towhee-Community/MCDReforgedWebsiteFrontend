@@ -1,42 +1,25 @@
-# Nuxt 3 Minimal Starter
+# MCDReforged Website
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is the source code of MCDReforged website.
 
-## Setup
+Please notice that this website is still under development, and the content is
+not complete.
 
-Make sure to install the dependencies:
+Please also notice that this website is not the official website of MCDReforged, and the official [repository](https://github.com/Fallen-Breath/MCDReforged) and [documentaion](https://mcdreforged.readthedocs.io/en/latest/) are listed above.
 
-```bash
-# yarn
-yarn install
+## License
 
-# npm
-npm install
+Copyright © 2023 Andy Zhang
 
-# pnpm
-pnpm install
-```
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-## Development Server
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
