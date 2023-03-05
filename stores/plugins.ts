@@ -1,3 +1,12 @@
+interface PluginStoreState {
+    pluginsMeta: PluginsMeta | undefined
+}
+
+export interface PluginsMeta {
+    plugin_amount: number,
+    plugins: { [key: string]: PluginMeta }
+}
+
 export interface PluginMeta {
     id: string,
     name: string,
@@ -11,15 +20,6 @@ export interface PluginMeta {
         en_us?: string,
         zh_cn?: string
     }
-}
-
-export interface PluginsMeta {
-    plugin_amount: number,
-    plugins: { [key: string]: PluginMeta }
-}
-
-interface PluginStoreState {
-    pluginsMeta: PluginsMeta | undefined
 }
 
 export const usePluginsStore = defineStore("plugins", {
