@@ -8,7 +8,7 @@
             alt="logo"
         >
       </NuxtLink>
-      <nav id="nav">
+      <nav id="nav" class="hidden-xs-only">
         <NuxtLink class="nav-item" to="/">{{ t("home") }}</NuxtLink>
         <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
       </nav>
