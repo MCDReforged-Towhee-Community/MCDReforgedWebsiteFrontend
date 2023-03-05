@@ -46,7 +46,7 @@
                 class="label-icon"
             />
             <div>
-              {{ t(label) }}
+              {{ t(`labels.${label}`) }}
             </div>
           </div>
         </ElCheckbox>
@@ -88,28 +88,28 @@
                   class="plugins-list-card-labels-label"
               >
                 <ElIconInfoFilled class="label-icon"/>
-                {{ t("information") }}
+                {{ t("labels.information") }}
               </div>
               <div
                   v-if="plugin.labels.includes('tool')"
                   class="plugins-list-card-labels-label"
               >
                 <ElIconTools class="label-icon"/>
-                {{ t("tool") }}
+                {{ t("labels.tool") }}
               </div>
               <div
                   v-if="plugin.labels.includes('management')"
                   class="plugins-list-card-labels-label"
               >
                 <ElIconUserFilled class="label-icon"/>
-                {{ t("management") }}
+                {{ t("labels.management") }}
               </div>
               <div
                   v-if="plugin.labels.includes('api')"
                   class="plugins-list-card-labels-label"
               >
                 <ElIconShare class="label-icon"/>
-                {{ t("api") }}
+                {{ t("labels.api") }}
               </div>
             </div>
           </div>
@@ -129,9 +129,9 @@
 </template>
 
 <script setup lang="ts">
-// i18n
 import {PluginMeta} from "~/stores/plugins";
 
+// i18n
 const {t, locale} = useI18n();
 
 // mcdr
@@ -334,10 +334,11 @@ filter:
   name: Name
   author: Author
   labels: Labels
-information: Information
-tool: Tool
-management: Management
-api: API
+labels:
+  information: Information
+  tool: Tool
+  management: Management
+  api: API
 votes: Votes
 </i18n>
 
@@ -347,9 +348,10 @@ filter:
   name: 名称
   author: 作者
   labels: 标签
-information: 信息
-tool: 工具
-management: 管理
-api: API
+labels:
+  information: 信息
+  tool: 工具
+  management: 管理
+  api: API
 votes: 喜欢
 </i18n>
