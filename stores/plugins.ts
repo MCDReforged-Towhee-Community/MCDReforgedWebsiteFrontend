@@ -1,0 +1,52 @@
+export interface PluginMeta {
+    id: string,
+    name: string,
+    version: string,
+    repository: string,
+    labels: string[],
+    authors: string[],
+    dependencies: { [key: string]: string },
+    requirements: string[],
+    description: {
+        en_us?: string,
+        zh_cn?: string
+    }
+}
+
+export interface PluginsMeta {
+    plugin_amount: number,
+    plugins: { [key: string]: PluginMeta }
+}
+
+interface PluginStoreState {
+    pluginsMeta: PluginsMeta | undefined
+}
+
+export const usePluginsStore = defineStore("plugins", {
+    state: (): PluginStoreState => ({
+        pluginsMeta: undefined,
+    }),
+    getters: {
+        /**
+         * Check if the plugin exists
+         */
+        exists: (state): (id: string) => boolean => {
+            return (id) => id in state.pluginsMeta!.plugins;
+        },
+        /**
+         * Get plugin meta by id.
+         */
+        getPluginMeta: (state): (id: string) => PluginMeta | undefined => {
+            return (id) => {
+                if (state.pluginsMeta !== undefined && id in state.pluginsMeta.plugins) {
+                    return state.pluginsMeta.plugins[id];
+                } else {
+                    return undefined;
+                }
+            };
+        },
+    },
+    async hydrate(storeState) {
+        storeState.pluginsMeta = JSON.parse(await $fetch("https://raw.githubusercontent.com/MCDReforged/PluginCatalogue/meta/plugins.json"));
+    },
+});
