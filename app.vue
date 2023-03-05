@@ -1,5 +1,6 @@
 <template>
   <NuxtLayout>
+    <TheHeader/>
     <ElConfigProvider :locale="locale">
       <NuxtPage/>
     </ElConfigProvider>
