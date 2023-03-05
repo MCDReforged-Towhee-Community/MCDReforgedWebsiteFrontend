@@ -217,6 +217,9 @@ function shouldShow(plugin: PluginMeta): boolean {
 
     .plugins-filter-item {
       margin-bottom: 0.5rem;
+
+      display: flex;
+      flex-direction: column;
     }
 
     .plugins-filter-item-labels {
