@@ -9,14 +9,27 @@
         >
       </NuxtLink>
       <nav id="nav">
-        <NuxtLink class="nav-item" to="/">Home</NuxtLink>
-        <NuxtLink class="nav-item" to="/plugins">Plugins</NuxtLink>
+        <NuxtLink class="nav-item" to="/">{{ t("home") }}</NuxtLink>
+        <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
       </nav>
+      <ElSelect
+          v-model="localeRef"
+          @change="val => $i18n.setLocale(val)"
+      >
+        <el-option
+            v-for="item in $i18n.locales"
+            :key="item.name"
+            :value="item.code"
+            :label="item.name"
+        />
+      </ElSelect>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
+const {locale, t} = useI18n();
+const localeRef = ref(locale.value);
 </script>
 
 <style lang="scss" scoped>
@@ -59,3 +72,13 @@
   }
 }
 </style>
+
+<i18n locale="en-US" lang="yaml">
+home: Home
+plugins: Plugins
+</i18n>
+
+<i18n locale="zh-CN" lang="yaml">
+home: 主页
+plugins: 插件
+</i18n>
