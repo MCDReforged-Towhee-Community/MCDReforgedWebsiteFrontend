@@ -1,34 +1,38 @@
 <template>
   <div id="plugins">
     <div
-        id="plugins-filter"
+        id="plugins-search"
         class="box"
     >
-      <div id="plugins-filter-title">
-        {{ t("filter.title") }}
+      <div id="plugins-search-title">
+        {{ t("search.title") }}
       </div>
       <ElInput
-          v-model="filter.name"
-          class="plugins-filter-item"
-          :placeholder="t('filter.name')"
+          v-model="searchSetting.name"
+          class="plugins-search-item"
+          :placeholder="t('search.name')"
           :prefix-icon="ElIconSearch"
       />
       <ElInput
-          v-model="filter.author"
-          class="plugins-filter-item"
-          :placeholder="t('filter.author')"
+          v-model="searchSetting.author"
+          class="plugins-search-item"
+          :placeholder="t('search.author')"
           :prefix-icon="ElIconAvatar"
       />
+      <div>
+        {{ t("search.labels") }}
+      </div>
       <ElCheckboxGroup
-          v-model="filter.labels"
-          class="plugins-filter-item"
+          id="plugins-search-item-labels"
+          v-model="searchSetting.labels"
+          class="plugins-search-item"
       >
         <ElCheckbox
             v-for="label in ['information', 'tool', 'management', 'api']"
             :key="label"
             :label="label"
         >
-          <div class="plugins-filter-item-labels">
+          <div class="plugins-search-item-labels-checkbox">
             <ElIconInfoFilled
                 v-if="label === 'information'"
                 class="label-icon"
@@ -51,14 +55,34 @@
           </div>
         </ElCheckbox>
       </ElCheckboxGroup>
+      <div>
+        {{ t("search.sorting") }}
+      </div>
+      <ElSelect
+          v-model="searchSetting.sorting"
+          class="plugins-search-item"
+          :placeholder="t('search.sorting')"
+      >
+        <ElOption
+            v-for="sorting in ['name', 'author', 'votes']"
+            :key="sorting"
+            :label="t(`sorting.${sorting}`)"
+            :value="sorting"
+        />
+      </ElSelect>
+      <div>
+        {{ t("search.reverse") }}
+      </div>
+      <ElCheckbox
+          v-model="searchSetting.reverse"
+          class="plugins-search-item"
+          :label="t('search.reverse')"
+      />
     </div>
     <ClientOnly>
-      <div
-          id="plugins-list"
-          v-if="pluginsStore.$state.pluginsMeta !== undefined"
-      >
+      <div id="plugins-list">
         <div
-            v-for="plugin in pluginsStore.$state.pluginsMeta.plugins"
+            v-for="plugin in plugins"
             v-show="shouldShow(plugin)"
             :key="plugin.id"
             class="box plugins-list-card"
@@ -142,11 +166,16 @@ import {PluginMeta} from "~/stores/plugins";
 // ----------------------------------------------------------------------------
 // basic constants
 // ----------------------------------------------------------------------------
-// i18n
 const {t} = useI18n();
 
-// pinia
-const pluginsStore = usePluginsStore();
+// ----------------------------------------------------------------------------
+// plugins store
+// ----------------------------------------------------------------------------
+const pluginsStore = await usePluginsStore();
+
+// ----------------------------------------------------------------------------
+// lean cloud
+// ----------------------------------------------------------------------------
 
 // votes
 let votes: VotesData = {};
@@ -157,19 +186,62 @@ if (process.client) {
 // plugins local storage
 const {isVoted} = useLocalStoragePlugins();
 
-// filter
-const filter = ref({
+// ----------------------------------------------------------------------------
+// search
+// ----------------------------------------------------------------------------
+
+interface SearchSettingType {
+  name: string,
+  author: string,
+  labels: string[],
+  sorting: "name" | "author" | "votes",
+  reverse: boolean,
+}
+
+// search setting model
+const searchSetting: Ref<SearchSettingType> = ref({
   name: "",
   author: "",
   labels: [],
+  sorting: "votes",
+  reverse: false,
+}) as Ref<SearchSettingType>;
+
+// searched list
+const plugins = computed(() => {
+  // origin
+  const pluginsOrigin = pluginsStore.$state.pluginsMeta?.plugins ?? {};
+
+  // filter
+  let pluginsList = Object.values(pluginsOrigin).filter((plugin) => shouldShow(plugin));
+
+  // sort
+  if (searchSetting.value.sorting === "name") {
+    pluginsList.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (searchSetting.value.sorting === "author") {
+    pluginsList.sort((a, b) => a.authors[0].localeCompare(b.authors[0]));
+  } else if (searchSetting.value.sorting === "votes") {
+    pluginsList.sort((a, b) => {
+      const aVotes = a.id in votes ? votes[a.id].vote : 0;
+      const bVotes = b.id in votes ? votes[b.id].vote : 0;
+      return bVotes - aVotes;
+    });
+  }
+
+  // reverse
+  if (searchSetting.value.reverse) {
+    pluginsList.reverse()
+  }
+
+  return pluginsList;
 });
 
 function shouldShow(plugin: PluginMeta): boolean {
   // name
-  if (filter.value.name) {
+  if (searchSetting.value.name) {
     const pluginName = plugin.name.toLowerCase();
     let shouldHideFlag = false;
-    for (const name of filter.value.name.toLowerCase().split(" ")) {
+    for (const name of searchSetting.value.name.toLowerCase().split(" ")) {
       if (!pluginName.includes(name)) {
         shouldHideFlag = true;
       }
@@ -180,10 +252,10 @@ function shouldShow(plugin: PluginMeta): boolean {
   }
 
   // author
-  if (filter.value.author) {
+  if (searchSetting.value.author) {
     const pluginAuthors = plugin.authors.map((author) => author.toLowerCase());
     let shouldHideFlag = false;
-    for (const author of filter.value.author.toLowerCase().split(" ")) {
+    for (const author of searchSetting.value.author.toLowerCase().split(" ")) {
       if (!pluginAuthors.some((pluginAuthor) => pluginAuthor.includes(author))) {
         shouldHideFlag = true;
       }
@@ -194,8 +266,8 @@ function shouldShow(plugin: PluginMeta): boolean {
   }
 
   // labels
-  if (filter.value.labels.length > 0) {
-    if (!filter.value.labels.every((label: string) => plugin.labels.includes(label))) {
+  if (searchSetting.value.labels.length > 0) {
+    if (!searchSetting.value.labels.every((label: string) => plugin.labels.includes(label))) {
       return false;
     }
   }
@@ -225,29 +297,31 @@ function shouldShow(plugin: PluginMeta): boolean {
     background: var(--gray-2);
   }
 
-  #plugins-filter {
+  #plugins-search {
     width: 19%;
-    height: 20rem;
+    height: 30rem;
 
     position: sticky;
     top: 1rem;
 
-    #plugins-filter-title {
+    #plugins-search-title {
       margin-bottom: 1rem;
       font-size: 1.5rem;
       font-weight: bold;
       text-align: center;
     }
 
-    .plugins-filter-item {
+    .plugins-search-item {
       margin-bottom: 0.5rem;
-
-      display: flex;
-      flex-direction: column;
     }
 
-    .plugins-filter-item-labels {
+    #plugins-search-item-labels {
       display: flex;
+      flex-direction: column;
+
+      .plugins-search-item-labels-checkbox {
+        display: flex;
+      }
     }
   }
 
@@ -315,7 +389,7 @@ function shouldShow(plugin: PluginMeta): boolean {
   @media only screen and (width < $size-md) {
     flex-direction: column;
 
-    #plugins-filter {
+    #plugins-search {
       width: 100%;
       margin-bottom: 1rem;
 
@@ -335,29 +409,41 @@ function shouldShow(plugin: PluginMeta): boolean {
 </style>
 
 <i18n locale="en-US" lang="yaml">
-filter:
+search:
   title: Filter
   name: Name
   author: Author
   labels: Labels
+  sorting: Sorting
+  reverse: Reverse
 labels:
   information: Information
   tool: Tool
   management: Management
   api: API
+sorting:
+  name: Name
+  author: Author
+  votes: Votes
 votes: Votes
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
-filter:
+search:
   title: 搜索
   name: 名称
   author: 作者
   labels: 标签
+  sorting: 排序
+  reverse: 倒序
 labels:
   information: 信息
   tool: 工具
   management: 管理
   api: API
+sorting:
+  name: 名称
+  author: 作者
+  votes: 喜欢
 votes: 喜欢
 </i18n>
