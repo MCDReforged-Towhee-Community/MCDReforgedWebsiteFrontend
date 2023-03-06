@@ -16,7 +16,7 @@ export function fetchData(method: HTTPMethod, url: string, data: object = {}) {
  * @interface VotesData
  * @property {number} [key] Plugin id with vote number.
  */
-interface VotesData {
+export interface VotesData {
     [key: string]: number
 }
 

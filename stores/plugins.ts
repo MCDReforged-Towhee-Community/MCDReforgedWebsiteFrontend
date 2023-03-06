@@ -16,10 +16,12 @@ export interface PluginMeta {
     authors: string[],
     dependencies: { [key: string]: string },
     requirements: string[],
-    description: {
-        en_us?: string,
-        zh_cn?: string
-    }
+    description: PluginMetaDescription
+}
+
+export interface PluginMetaDescription {
+    en_us?: string,
+    zh_cn?: string
 }
 
 export const usePluginsStore = defineStore("plugins", {

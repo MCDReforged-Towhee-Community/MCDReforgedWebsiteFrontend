@@ -15,10 +15,10 @@
       <ClientOnly>
         <ElSelect
             v-model="localeRef"
-            @change="val => $i18n.setLocale(val)"
+            @change="val => setLocale(val)"
         >
           <el-option
-              v-for="item in $i18n.locales"
+              v-for="item in locales"
               :key="item.name"
               :value="item.code"
               :label="item.name"
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-const {locale, t} = useI18n();
+const {t, locale, locales, setLocale} = useI18n();
 const localeRef = ref(locale.value);
 </script>
 
