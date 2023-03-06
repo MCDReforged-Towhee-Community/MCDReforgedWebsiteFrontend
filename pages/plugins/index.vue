@@ -133,7 +133,7 @@
 
 <script setup lang="ts">
 import {ComputedRef} from "vue";
-import {VotesData} from "~/utils/leancloud";
+import {VotesData} from "~/composables/useLeanCloud";
 import {PluginMeta, PluginMetaDescription} from "~/stores/plugins";
 
 // i18n
@@ -153,7 +153,7 @@ const pluginsStore = usePluginsStore();
 // votes
 let votes: VotesData = {};
 if (process.client) {
-  votes = await fetchVotes();
+  votes = await useLeanCloud().fetchVotes();
 }
 
 // filter
