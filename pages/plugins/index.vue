@@ -80,10 +80,7 @@
               </div>
             </div>
             <div class="plugins-list-card-description">
-              {{
-                // @ts-ignore
-                plugin.description[MCDRLocale]
-              }}
+              {{ plugin.description[getMCDRLocale()] }}
             </div>
             <div class="plugins-list-card-labels">
               <div
@@ -139,20 +136,14 @@
 </template>
 
 <script setup lang="ts">
-import {ComputedRef} from "vue";
 import {VotesData} from "~/composables/useLeanCloud";
-import {PluginMeta, PluginMetaDescription} from "~/stores/plugins";
+import {PluginMeta} from "~/stores/plugins";
 
+// ----------------------------------------------------------------------------
+// basic constants
+// ----------------------------------------------------------------------------
 // i18n
-const {t, locale} = useI18n();
-
-// mcdr
-const MCDRLocale: ComputedRef<keyof PluginMetaDescription> = computed(() => (
-    {
-      "en-US": "en_us",
-      "zh-CN": "zh_cn",
-    }[locale.value as string]
-)) as ComputedRef<keyof PluginMetaDescription>;
+const {t} = useI18n();
 
 // pinia
 const pluginsStore = usePluginsStore();
