@@ -34,7 +34,7 @@ const {locale, t} = useI18n();
 const localeRef = ref(locale.value);
 </script>
 
-<style scoped lang="scss" >
+<style scoped lang="scss">
 #header {
   height: 4rem;
 
