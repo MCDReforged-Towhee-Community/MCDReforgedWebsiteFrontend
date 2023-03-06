@@ -17,27 +17,26 @@ export function fetchData(method: HTTPMethod, url: string, data: object = {}) {
  * @property {number} [key] Plugin id with vote number.
  */
 export interface VotesData {
-    [key: string]: number
+    [key: string]: {
+        objectId: string,
+        id: string
+        vote: number,
+    }
 }
 
 /**
  * Fetch votes from LeanCloud.
  * @returns {Promise<VotesData>} Votes data.
  */
-export async function fetchVotes(): Promise<VotesData> {
+export async function fetchVotes(id?: string): Promise<VotesData> {
     interface VotesFetched {
         results: {
+            objectId: string,
             id: string,
             vote: number
         }[]
     }
 
     const votes: VotesFetched = await fetchData("GET", "/classes/Plugins_Votes") as VotesFetched;
-    let result: VotesData = {}
-
-    for (let vote of votes.results) {
-        result[vote.id] = vote.vote;
-    }
-
-    return result;
+    return Object.fromEntries(votes.results.map(vote => [vote.id, vote]));
 }

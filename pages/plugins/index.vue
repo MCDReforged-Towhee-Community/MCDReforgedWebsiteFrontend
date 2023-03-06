@@ -119,7 +119,7 @@
           <div class="plugins-list-card-votes">
             <ElIconStar class="plugins-list-card-votes-icon"/>
             <div class="plugins-list-card-votes-number">
-              {{ plugin.id in votes ? votes[plugin.id] : 0 }}
+              {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
             </div>
             <div class="plugins-list-card-votes-text">
               {{ t("votes") }}
