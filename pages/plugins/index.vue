@@ -117,7 +117,14 @@
             </div>
           </div>
           <div class="plugins-list-card-votes">
-            <ElIconStar class="plugins-list-card-votes-icon"/>
+            <ElIconStarFilled
+                v-if="isVoted(plugin.id)"
+                class="plugins-list-card-votes-icon"
+            />
+            <ElIconStar
+                v-else
+                class="plugins-list-card-votes-icon"
+            />
             <div class="plugins-list-card-votes-number">
               {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
             </div>
@@ -155,6 +162,9 @@ let votes: VotesData = {};
 if (process.client) {
   votes = await useLeanCloud().fetchVotes();
 }
+
+// plugins local storage
+const {isVoted} = useLocalStoragePlugins();
 
 // filter
 const filter = ref({
