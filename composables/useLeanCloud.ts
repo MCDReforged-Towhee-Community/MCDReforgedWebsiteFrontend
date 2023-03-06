@@ -101,9 +101,22 @@ export const useLeanCloud = () => {
         );
     }
 
+    /**
+     * Decrease vote for a plugin in LeanCloud.
+     * @param {string} objectId Object id.
+     */
+    async function decreaseVote(objectId: string): Promise<void> {
+        await request(
+            "PUT",
+            `/classes/Plugins_Votes/${objectId}`,
+            {vote: {"__op": "Decrement", "amount": 1}}
+        );
+    }
+
     return {
         fetchVotes,
         createVote,
         increaseVote,
+        decreaseVote,
     };
 }
