@@ -119,4 +119,4 @@ export const useLeanCloud = () => {
         increaseVote,
         decreaseVote,
     };
-}
+};
