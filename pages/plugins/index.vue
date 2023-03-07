@@ -90,16 +90,16 @@
           <div class="plugins-list-card-info">
             <div class="plugins-list-card-title">
               <NuxtLink
-                  class="plugins-list-card-title-item plugins-list-card-name clickable--underline"
+                  class="plugins-list-card-title-name clickable--underline"
                   :to="`/plugins/${plugin.id}`"
               >
                 {{ plugin.name }}
               </NuxtLink>
-              <div class="plugins-list-card-title-item plugins-list-card-at">
+              <br class="hidden-sm-and-up">
+              <div class="plugins-list-card-title-at">
                 @
               </div>
-              <div
-                  class="plugins-list-card-title-item plugins-list-card-authors">
+              <div class="plugins-list-card-title-authors">
                 {{ plugin.authors.join(", ") }}
               </div>
             </div>
@@ -335,13 +335,23 @@ function shouldShow(plugin: PluginMeta): boolean {
       display: flex;
       justify-content: space-between;
 
+      @media only screen and (width < $size-md) {
+        flex-direction: column;
+      }
+
       .plugins-list-card-info {
+        max-width: 80%;
+
+        @media only screen and (width < $size-md) {
+          max-width: 100%;
+        }
+
         .plugins-list-card-title {
-          .plugins-list-card-title-item {
+          * {
             display: inline;
           }
 
-          .plugins-list-card-name {
+          .plugins-list-card-title-name {
             color: black;
             font-size: 1.5rem;
             font-weight: bold;
@@ -352,6 +362,10 @@ function shouldShow(plugin: PluginMeta): boolean {
               text-decoration: underline;
             }
           }
+        }
+
+        .plugins-list-card-description {
+          overflow-wrap: anywhere;
         }
 
         .plugins-list-card-labels {
