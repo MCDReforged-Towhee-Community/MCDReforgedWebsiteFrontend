@@ -386,10 +386,10 @@ function shouldShow(plugin: PluginMeta): boolean {
         display: flex;
         align-items: center;
 
-        font-size: 1.5rem;
+        font-size: 1.2rem;
 
         .plugins-list-card-votes-icon {
-          height: 1.5rem;
+          height: 1.2rem;
         }
 
         .plugins-list-card-votes-number {
