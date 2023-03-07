@@ -291,9 +291,11 @@ function shouldShow(plugin: PluginMeta): boolean {
 
   .box {
     padding: 1rem;
-    border-radius: 1rem;
-
     box-sizing: border-box;
+
+    border-radius: 1rem;
+    box-shadow: $shadow-basic;
+
     background: var(--gray-2);
   }
 
