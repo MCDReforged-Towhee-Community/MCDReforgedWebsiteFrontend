@@ -30,6 +30,12 @@ export default defineNuxtConfig({
         // project css
         "@/assets/main.scss",
 
+        // bytemd
+        "bytemd/dist/index.css",
+        "github-markdown-css/github-markdown-light.css",
+        "highlight.js/styles/github.css",
+        "katex/dist/katex.css",
+
         // element plus
         "element-plus/theme-chalk/display.css",
 
