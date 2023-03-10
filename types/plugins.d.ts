@@ -1,19 +1,73 @@
-export interface PluginMeta {
-    schema_version: 1;
+export interface PluginMetaSummary {
+    plugin_amount: number;
+    plugins: { [key: string]: MetaInfo };
+}
+
+export interface AuthorSummary {
+    amount: number;
+    authors: { [key: string]: Author };
+}
+
+export interface MetaInfo {
+    schema_version: 2;
     id: string;
     name: string;
     version: string;
     repository: string;
-    branch: string;
-    related_path: string;
-    labels: string[];
     authors: string[];
     dependencies: { [key: string]: string };
     requirements: string[];
-    description: PluginMetaDescription;
+    description: MetaInfoDescription;
 }
 
-export interface PluginMetaDescription {
-    en_us?: string;
+export interface MetaInfoDescription {
+    en_us: string;
+    zh_cn?: string;
+}
+
+export interface Author {
+    name: string;
+    link: string;
+}
+
+export interface ReleaseSummary {
+    schema_version: 6;
+    id: string;
+    latest_version: string;
+    releases: ReleaseInfo[];
+}
+
+export interface ReleaseInfo {
+    url: string;
+    name: string;
+    tag_name: string;
+    created_at: string;
+    assets: AssetInfo[];
+    description: string;
+    prerelease: boolean;
+    parsed_version: string;
+    meta: MetaInfo;
+}
+
+export interface AssetInfo {
+    name: string;
+    size: number;
+    download_count: number;
+    created_at: string;
+    browser_download_url: string;
+}
+
+export interface FormattedPluginInfo {
+    schema_version: 1;
+    id: string;
+    repository: string;
+    branch: string;
+    related_path: string;
+    labels: string[];
+    introduction: FormattedPluginInfoIntroduction;
+}
+
+export interface FormattedPluginInfoIntroduction {
+    en_us: string;
     zh_cn?: string;
 }

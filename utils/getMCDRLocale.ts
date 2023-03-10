@@ -1,5 +1,5 @@
-import {PluginMetaDescription} from "~/types/plugins";
+type MCDRLocale = "en_us" | "zh_cn";
 
-export function getMCDRLocale(): keyof PluginMetaDescription{
-    return useI18n().locale.value.replace("-", "_").toLowerCase() as keyof PluginMetaDescription;
+export function getMCDRLocale(): MCDRLocale {
+    return useI18n().locale.value.replace("-", "_").toLowerCase() as MCDRLocale;
 }
