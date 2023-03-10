@@ -161,7 +161,7 @@
 
 <script setup lang="ts">
 import {VotesData} from "~/composables/useLeanCloud";
-import {PluginMeta} from "~/stores/plugins";
+import {PluginMeta} from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants

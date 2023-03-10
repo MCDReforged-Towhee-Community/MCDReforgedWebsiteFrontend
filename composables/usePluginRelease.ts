@@ -1,4 +1,4 @@
-import {PluginMeta} from "~/stores/plugins";
+import {PluginMeta} from "~/types/plugins";
 
 export interface PluginRelease {
     schema_version: 5;
@@ -10,7 +10,7 @@ export interface PluginRelease {
     }
 }
 
-export interface ReleaseMetaGitHub {
+interface ReleaseMetaGitHub {
     url: string;
     name: string;
     tag_name: string;
@@ -21,7 +21,7 @@ export interface ReleaseMetaGitHub {
     parsed_version: string;
 }
 
-export interface ReleaseMetaGitHubAsset {
+interface ReleaseMetaGitHubAsset {
     name: string;
     size: number;
     download_count: number;
