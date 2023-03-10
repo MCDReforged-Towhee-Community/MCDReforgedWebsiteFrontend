@@ -191,11 +191,11 @@ const {isVoted} = useLocalStoragePlugins();
 // ----------------------------------------------------------------------------
 
 interface SearchSettingType {
-  name: string,
-  author: string,
-  labels: string[],
-  sorting: "name" | "author" | "votes",
-  reverse: boolean,
+  name: string;
+  author: string;
+  labels: string[];
+  sorting: "name" | "author" | "votes";
+  reverse: boolean;
 }
 
 // search setting model

@@ -8,9 +8,9 @@ import {HTTPMethod} from "h3";
  * @property {number} vote Vote number.
  */
 export interface Vote {
-    objectId: string,
-    id: string
-    vote: number
+    objectId: string;
+    id: string;
+    vote: number;
 }
 
 /**
@@ -19,7 +19,7 @@ export interface Vote {
  * @property {number} [key] Plugin id with vote number.
  */
 export interface VotesData {
-    [key: string]: Vote
+    [key: string]: Vote;
 }
 
 export const useLeanCloud = () => {
@@ -48,7 +48,7 @@ export const useLeanCloud = () => {
      */
     async function fetchVotes(id?: string): Promise<VotesData> {
         interface fetchVotesResponse {
-            results: Vote[]
+            results: Vote[];
         }
 
         // query
@@ -74,7 +74,7 @@ export const useLeanCloud = () => {
      */
     async function createVote(id: string): Promise<Vote> {
         interface CreateVoteResponse {
-            objectId: string
+            objectId: string;
         }
 
         const response: CreateVoteResponse = await request(
