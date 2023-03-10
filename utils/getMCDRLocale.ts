@@ -1,5 +1,5 @@
 import {PluginMetaDescription} from "~/stores/plugins";
 
 export function getMCDRLocale(): keyof PluginMetaDescription{
-    return useI18n().locale.value.replace("-", "_").toLowerCase();
+    return useI18n().locale.value.replace("-", "_").toLowerCase() as keyof PluginMetaDescription;
 }
