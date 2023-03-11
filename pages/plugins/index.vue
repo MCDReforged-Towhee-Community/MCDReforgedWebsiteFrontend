@@ -90,7 +90,7 @@
           <div class="plugins-list-card-info">
             <div class="plugins-list-card-title">
               <NuxtLink
-                  class="plugins-list-card-title-name clickable--underline"
+                  class="plugins-list-card-title-name"
                   :to="`/plugins/${plugin.id}`"
               >
                 {{ plugin.name }}
@@ -100,7 +100,26 @@
                 @
               </div>
               <div class="plugins-list-card-title-authors">
-                {{ plugin.authors.join(", ") }}
+                <template
+                    v-for="(author, index) in plugin.authors"
+                    :key="`${plugin.id}_${author.name}`"
+                >
+                  <div v-if="index > 0">{{ ", " }}</div>
+                  <div
+                      v-if="getAuthorLink(author) === undefined"
+                      class="plugins-list-card-title-authors-name"
+                  >
+                    {{ author }}
+                  </div>
+                  <a
+                      v-else
+                      class="plugins-list-card-title-authors-name--clickable"
+                      :href="getAuthorLink(author)"
+                      target="_blank"
+                  >
+                    {{ author }}
+                  </a>
+                </template>
               </div>
             </div>
             <div class="plugins-list-card-description">
@@ -172,6 +191,11 @@ const {t} = useI18n();
 // plugins store
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
+
+function getAuthorLink(authorName: string): string | undefined {
+  const author = pluginsStore.getAuthor(authorName);
+  return author === undefined ? undefined : author.link;
+}
 
 // ----------------------------------------------------------------------------
 // lean cloud
@@ -362,6 +386,21 @@ function shouldShow(plugin: MetaInfo): boolean {
             &:hover {
               color: var(--blue-6);
               text-decoration: underline;
+            }
+          }
+
+          .plugins-list-card-title-authors {
+            .plugins-list-card-title-authors-name {
+              color: var(--gray-7);
+              cursor: default;
+
+              &--clickable {
+                color: var(--gray-7);
+              }
+
+              &--clickable:hover {
+                color: var(--blue-6);
+              }
             }
           }
         }
