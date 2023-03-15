@@ -1,3 +1,7 @@
+// ----------------------------------------------------------------------------
+// Raw types from plugin catalogue
+// ----------------------------------------------------------------------------
+
 export interface PluginMetaSummary {
     plugin_amount: number;
     plugins: { [key: string]: MetaInfo };
@@ -70,4 +74,19 @@ export interface FormattedPluginInfo {
 export interface FormattedPluginInfoIntroduction {
     en_us: string;
     zh_cn?: string;
+}
+
+// ----------------------------------------------------------------------------
+// Parsed Plugin Catalogue Summary, provided by nuxt server api
+// ----------------------------------------------------------------------------
+
+interface PluginCatalogueSummary {
+    [key: string]: MergedPluginData;
+}
+
+interface MergedPluginData {
+    meta: MetaInfo;
+    release: ReleaseSummary;
+    info: FormattedPluginInfo;
+    authors: Author[];
 }
