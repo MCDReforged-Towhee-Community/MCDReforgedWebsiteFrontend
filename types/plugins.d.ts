@@ -77,10 +77,10 @@ export interface FormattedPluginInfoIntroduction {
 }
 
 // ----------------------------------------------------------------------------
-// Parsed Plugin Catalogue Summary, provided by nuxt server api
+// Merged Plugin Catalogue Summary, provided by nuxt server api
 // ----------------------------------------------------------------------------
 
-interface PluginCatalogueSummary {
+interface MergedPluginDataSummary {
     [key: string]: MergedPluginData;
 }
 
