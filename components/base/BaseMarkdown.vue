@@ -57,19 +57,14 @@ async function uploadImages(files: File[]) {
 }
 
 // props and emits
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-  isEditor: {
-    type: Boolean,
-    default: false,
-  },
-  aTagBlankTarget: {
-    type: Boolean,
-    default: false,
-  },
+interface Props {
+  modelValue: string;
+  isEditor?: boolean;
+  aTagBlankTarget?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  isEditor: false,
+  aTagBlankTarget: false,
 });
 defineEmits(["update:modelValue"]);
 
