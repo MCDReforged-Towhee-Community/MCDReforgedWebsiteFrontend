@@ -184,7 +184,7 @@
                 {{ t("data.updated_at") }}
               </div>
               <div class="plugins-list-card-data-item-number">
-                {{ $d(new Date(plugin.updated_at)) }}
+                {{ $d(new Date(plugin.updated_at), "text") }}
               </div>
             </div>
           </div>
