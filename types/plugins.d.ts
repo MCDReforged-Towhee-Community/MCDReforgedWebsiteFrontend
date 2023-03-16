@@ -90,3 +90,18 @@ interface PluginData {
     info: FormattedPluginInfo;
     authors: Author[];
 }
+
+interface PluginDataBriefSummary {
+    [key: string]: PluginDataBrief;
+}
+
+interface PluginDataBrief {
+    id: string;
+    name: string;
+    version: string;
+    authors: Author[];
+    description: MetaInfoDescription;
+    labels: string[];
+    updated_at: string;
+    downloads: number;
+}
