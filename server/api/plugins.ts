@@ -1,4 +1,4 @@
-import JSZip from "jszip";
+import {unzipSync} from "fflate";
 import {
     PluginMetaSummary,
     AuthorSummary,
@@ -8,21 +8,25 @@ import {
     PluginDataSummary,
 } from "~/types/plugins";
 
+function parse(dataAsU8Array: Uint8Array): object {
+    return JSON.parse(Buffer.from(dataAsU8Array).toString('utf8'));
+}
+
 async function getPluginDataSummary(): Promise<PluginDataSummary> {
     // fetch
     const pluginDataSummary: PluginDataSummary = {};
     const zipRaw: Blob = await $fetch("https://codeload.github.com/MCDReforged/PluginCatalogue/zip/refs/heads/meta") as Blob;
-    const zip: JSZip = await new JSZip().loadAsync(await zipRaw.arrayBuffer());
+    const zip = unzipSync(new Uint8Array(await zipRaw.arrayBuffer()));
 
     // authors
-    const {authors}: AuthorSummary = JSON.parse(await zip.file("PluginCatalogue-meta/authors.json")!.async("string"));
+    const {authors}: AuthorSummary = parse(zip["PluginCatalogue-meta/authors.json"]) as AuthorSummary;
 
     // merge data
-    const pluginMetaSummary: PluginMetaSummary = JSON.parse(await zip.file("PluginCatalogue-meta/plugins.json")!.async("string"));
+    const pluginMetaSummary: PluginMetaSummary = parse(zip["PluginCatalogue-meta/plugins.json"]) as PluginMetaSummary;
     for (const pluginID in pluginMetaSummary.plugins) {
         const meta: MetaInfo = pluginMetaSummary.plugins[pluginID];
-        const release: ReleaseSummary = JSON.parse(await zip.file(`PluginCatalogue-meta/${pluginID}/release.json`)!.async("string")) as ReleaseSummary;
-        const info: FormattedPluginInfo = JSON.parse(await zip.file(`PluginCatalogue-meta/${pluginID}/plugin.json`)!.async("string")) as FormattedPluginInfo;
+        const release: ReleaseSummary = parse(zip[`PluginCatalogue-meta/${pluginID}/release.json`]) as ReleaseSummary;
+        const info: FormattedPluginInfo = parse(zip[`PluginCatalogue-meta/${pluginID}/plugin.json`]) as FormattedPluginInfo;
         pluginDataSummary[pluginID] = {
             meta: meta,
             release: release,
