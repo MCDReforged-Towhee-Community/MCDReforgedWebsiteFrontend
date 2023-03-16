@@ -117,7 +117,7 @@
             </div>
             <div class="plugins-list-card-description">
               <BaseMarkdown
-                  v-model="plugin.description[getMCDRLocale()]"
+                  :model-value="getDescription(plugin)"
                   a-tag-blank-target
               />
             </div>
@@ -211,6 +211,10 @@ const {t} = useI18n();
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
 await pluginsStore.nuxtServerInit();
+
+function getDescription(plugin: PluginDataBrief): string {
+  return plugin.description[getMCDRLocale()] ?? "";
+}
 
 // ----------------------------------------------------------------------------
 // lean cloud
