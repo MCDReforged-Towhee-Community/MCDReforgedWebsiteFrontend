@@ -1,6 +1,6 @@
-import {MergedPluginDataSummary} from "~/types/plugins";
+import {PluginDataSummary} from "~/types/plugins";
 
 export default defineEventHandler(async (event) => {
-    const mergedPluginDataSummary: MergedPluginDataSummary = await $fetch("/api/plugins");
+    const mergedPluginDataSummary: PluginDataSummary = await $fetch("/api/plugins");
     return mergedPluginDataSummary[event.context.params!.id];
 });

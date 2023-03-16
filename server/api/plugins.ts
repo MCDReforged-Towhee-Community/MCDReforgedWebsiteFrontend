@@ -5,12 +5,12 @@ import {
     MetaInfo,
     ReleaseSummary,
     FormattedPluginInfo,
-    MergedPluginDataSummary,
+    PluginDataSummary,
 } from "~/types/plugins";
 
-async function getPluginCatalogueSummary() {
+async function getPluginDataSummary(): Promise<PluginDataSummary> {
     // fetch
-    const mergedPluginDataSummary: MergedPluginDataSummary = {};
+    const pluginDataSummary: PluginDataSummary = {};
     const zipRaw: Blob = await $fetch("https://codeload.github.com/MCDReforged/PluginCatalogue/zip/refs/heads/meta") as Blob;
     const zip: JSZip = await new JSZip().loadAsync(await zipRaw.arrayBuffer());
 
@@ -23,7 +23,7 @@ async function getPluginCatalogueSummary() {
         const meta: MetaInfo = pluginMetaSummary.plugins[pluginID];
         const release: ReleaseSummary = JSON.parse(await zip.file(`PluginCatalogue-meta/${pluginID}/release.json`)!.async("string")) as ReleaseSummary;
         const info: FormattedPluginInfo = JSON.parse(await zip.file(`PluginCatalogue-meta/${pluginID}/plugin.json`)!.async("string")) as FormattedPluginInfo;
-        mergedPluginDataSummary[pluginID] = {
+        pluginDataSummary[pluginID] = {
             meta: meta,
             release: release,
             info: info,
@@ -34,9 +34,9 @@ async function getPluginCatalogueSummary() {
         };
     }
 
-    return mergedPluginDataSummary;
+    return pluginDataSummary;
 }
 
-export default defineEventHandler(async (): Promise<MergedPluginDataSummary> => {
-    return await getPluginCatalogueSummary();
+export default defineEventHandler(async (): Promise<PluginDataSummary> => {
+    return await getPluginDataSummary();
 });
