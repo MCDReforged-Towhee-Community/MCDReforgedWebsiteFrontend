@@ -95,7 +95,7 @@
               >
                 {{ plugin.name }}
               </NuxtLink>
-              <br class="hidden-sm-and-up">
+              <br class="hidden-md-and-up">
               <div class="plugins-list-card-title-at">
                 @
               </div>
@@ -479,6 +479,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
           align-items: center;
 
           font-size: 1.2rem;
+          white-space: nowrap;
 
           .plugins-list-card-data-item-icon {
             height: 1.2rem;
