@@ -1,48 +1,27 @@
-import {
-    PluginMetaSummary,
-    MetaInfo,
-    AuthorSummary,
-    Author,
-    ReleaseSummary,
-    FormattedPluginInfo,
-} from "~/types/plugins";
+import {PluginDataBrief, PluginDataBriefSummary} from "~/types/plugins";
 
 interface PluginStoreState {
-    pluginMetaSummary: PluginMetaSummary | undefined;
-    authorSummary: AuthorSummary | undefined;
+    plugins: PluginDataBriefSummary | undefined;
 }
 
 export const usePluginsStore = defineStore("plugins", {
     state: (): PluginStoreState => ({
-        pluginMetaSummary: undefined,
-        authorSummary: undefined,
+        plugins: undefined,
     }),
     getters: {
         /**
          * Check if the plugin exists
          */
         exists: (state): (id: string) => boolean => {
-            return (id) => id in state.pluginMetaSummary!.plugins;
+            return (id) => id in state.plugins!.plugins;
         },
         /**
          * Get plugin meta by id.
          */
-        getPluginMeta: (state): (id: string) => MetaInfo | undefined => {
+        getPluginDataBrief: (state): (id: string) => PluginDataBrief | undefined => {
             return (id) => {
-                if (state.pluginMetaSummary !== undefined && id in state.pluginMetaSummary.plugins) {
-                    return state.pluginMetaSummary.plugins[id];
-                } else {
-                    return undefined;
-                }
-            };
-        },
-        /**
-         * Get author by name.
-         */
-        getAuthor: (state): (name: string) => Author | undefined => {
-            return (name) => {
-                if (state.authorSummary !== undefined && name in state.authorSummary.authors) {
-                    return state.authorSummary.authors[name];
+                if (state.plugins !== undefined && id in state.plugins) {
+                    return state.plugins[id];
                 } else {
                     return undefined;
                 }
@@ -50,24 +29,8 @@ export const usePluginsStore = defineStore("plugins", {
         },
     },
     actions: {
-        /**
-         * Get plugin release by id.
-         * @param id Plugin id.
-         */
-        async getPluginReleaseSummary(id: string): Promise<ReleaseSummary> {
-            return JSON.parse(await $fetch(`https://raw.githubusercontent.com/MCDReforged/PluginCatalogue/meta/${id}/release.json`));
+        async nuxtServerInit() {
+            this.plugins = await $fetch("/api/pluginsBrief");
         },
-
-        /**
-         * Get formatted plugin info by id.
-         * @param id Plugin id.
-         */
-        async getFormattedPluginInfo(id: string): Promise<FormattedPluginInfo> {
-            return JSON.parse(await $fetch(`https://raw.githubusercontent.com/MCDReforged/PluginCatalogue/meta/${id}/plugin.json`));
-        }
-    },
-    async hydrate(storeState) {
-        storeState.pluginMetaSummary = JSON.parse(await $fetch("https://raw.githubusercontent.com/MCDReforged/PluginCatalogue/meta/plugins.json"));
-        storeState.authorSummary = JSON.parse(await $fetch("https://raw.githubusercontent.com/MCDReforged/PluginCatalogue/meta/authors.json"));
     },
 });

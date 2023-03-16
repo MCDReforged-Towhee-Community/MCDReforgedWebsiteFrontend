@@ -19,42 +19,42 @@
           :placeholder="t('search.author')"
           :prefix-icon="ElIconAvatar"
       />
-      <!--<div>-->
-      <!--  {{ t("search.labels") }}-->
-      <!--</div>-->
-      <!--<ElCheckboxGroup-->
-      <!--    id="plugins-search-item-labels"-->
-      <!--    v-model="searchSetting.labels"-->
-      <!--    class="plugins-search-item"-->
-      <!--&gt;-->
-      <!--  <ElCheckbox-->
-      <!--      v-for="label in ['information', 'tool', 'management', 'api']"-->
-      <!--      :key="label"-->
-      <!--      :label="label"-->
-      <!--  >-->
-      <!--    <div class="plugins-search-item-labels-checkbox">-->
-      <!--      <ElIconInfoFilled-->
-      <!--          v-if="label === 'information'"-->
-      <!--          class="label-icon"-->
-      <!--      />-->
-      <!--      <ElIconTools-->
-      <!--          v-if="label === 'tool'"-->
-      <!--          class="label-icon"-->
-      <!--      />-->
-      <!--      <ElIconUserFilled-->
-      <!--          v-if="label === 'management'"-->
-      <!--          class="label-icon"-->
-      <!--      />-->
-      <!--      <ElIconShare-->
-      <!--          v-if="label === 'api'"-->
-      <!--          class="label-icon"-->
-      <!--      />-->
-      <!--      <div>-->
-      <!--        {{ t(`labels.${label}`) }}-->
-      <!--      </div>-->
-      <!--    </div>-->
-      <!--  </ElCheckbox>-->
-      <!--</ElCheckboxGroup>-->
+      <div>
+        {{ t("search.labels") }}
+      </div>
+      <ElCheckboxGroup
+          id="plugins-search-item-labels"
+          v-model="searchSetting.labels"
+          class="plugins-search-item"
+      >
+        <ElCheckbox
+            v-for="label in ['information', 'tool', 'management', 'api']"
+            :key="label"
+            :label="label"
+        >
+          <div class="plugins-search-item-labels-checkbox">
+            <ElIconInfoFilled
+                v-if="label === 'information'"
+                class="label-icon"
+            />
+            <ElIconTools
+                v-if="label === 'tool'"
+                class="label-icon"
+            />
+            <ElIconUserFilled
+                v-if="label === 'management'"
+                class="label-icon"
+            />
+            <ElIconShare
+                v-if="label === 'api'"
+                class="label-icon"
+            />
+            <div>
+              {{ t(`labels.${label}`) }}
+            </div>
+          </div>
+        </ElCheckbox>
+      </ElCheckboxGroup>
       <div>
         {{ t("search.sorting") }}
       </div>
@@ -64,7 +64,7 @@
           :placeholder="t('search.sorting')"
       >
         <ElOption
-            v-for="sorting in ['name', 'author', 'votes']"
+            v-for="sorting in ['name', 'author', 'votes', 'updated_at', 'downloads']"
             :key="sorting"
             :label="t(`sorting.${sorting}`)"
             :value="sorting"
@@ -105,19 +105,12 @@
                     :key="`${plugin.id}_${author.name}`"
                 >
                   <div v-if="index > 0">{{ ", " }}</div>
-                  <div
-                      v-if="getAuthorLink(author) === undefined"
-                      class="plugins-list-card-title-authors-name"
-                  >
-                    {{ author }}
-                  </div>
                   <a
-                      v-else
                       class="plugins-list-card-title-authors-name--clickable"
-                      :href="getAuthorLink(author)"
+                      :href="author.link"
                       target="_blank"
                   >
-                    {{ author }}
+                    {{ author.name }}
                   </a>
                 </template>
               </div>
@@ -125,51 +118,74 @@
             <div class="plugins-list-card-description">
               {{ plugin.description[getMCDRLocale()] }}
             </div>
-            <!--<div class="plugins-list-card-labels">-->
-            <!--  <div-->
-            <!--      v-if="plugin.labels.includes('information')"-->
-            <!--      class="plugins-list-card-labels-label"-->
-            <!--  >-->
-            <!--    <ElIconInfoFilled class="label-icon"/>-->
-            <!--    {{ t("labels.information") }}-->
-            <!--  </div>-->
-            <!--  <div-->
-            <!--      v-if="plugin.labels.includes('tool')"-->
-            <!--      class="plugins-list-card-labels-label"-->
-            <!--  >-->
-            <!--    <ElIconTools class="label-icon"/>-->
-            <!--    {{ t("labels.tool") }}-->
-            <!--  </div>-->
-            <!--  <div-->
-            <!--      v-if="plugin.labels.includes('management')"-->
-            <!--      class="plugins-list-card-labels-label"-->
-            <!--  >-->
-            <!--    <ElIconUserFilled class="label-icon"/>-->
-            <!--    {{ t("labels.management") }}-->
-            <!--  </div>-->
-            <!--  <div-->
-            <!--      v-if="plugin.labels.includes('api')"-->
-            <!--      class="plugins-list-card-labels-label"-->
-            <!--  >-->
-            <!--    <ElIconShare class="label-icon"/>-->
-            <!--    {{ t("labels.api") }}-->
-            <!--  </div>-->
-            <!--</div>-->
-          </div>
-          <div class="plugins-list-card-votes">
-            <ElIconStarFilled
-                v-if="isVoted(plugin.id)"
-                class="plugins-list-card-votes-icon"
-            />
-            <ElIconStar
-                v-else
-                class="plugins-list-card-votes-icon"
-            />
-            <div class="plugins-list-card-votes-number">
-              {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
+            <div class="plugins-list-card-labels">
+              <div
+                  v-if="plugin.labels.includes('information')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconInfoFilled class="label-icon"/>
+                {{ t("labels.information") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('tool')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconTools class="label-icon"/>
+                {{ t("labels.tool") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('management')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconUserFilled class="label-icon"/>
+                {{ t("labels.management") }}
+              </div>
+              <div
+                  v-if="plugin.labels.includes('api')"
+                  class="plugins-list-card-labels-label"
+              >
+                <ElIconShare class="label-icon"/>
+                {{ t("labels.api") }}
+              </div>
             </div>
-            <div class="plugins-list-card-votes-text">
-              {{ t("votes") }}
+          </div>
+          <div class="plugins-list-card-data">
+            <div class="plugins-list-card-data-item">
+              <ElIconStarFilled
+                  v-if="isVoted(plugin.id)"
+                  class="plugins-list-card-data-item-icon"
+              />
+              <ElIconStar
+                  v-else
+                  class="plugins-list-card-data-item-icon"
+              />
+              <div>
+                {{ t("data.votes") }}
+              </div>
+              <div class="plugins-list-card-data-item-number">
+                {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
+              </div>
+            </div>
+            <div class="plugins-list-card-data-item">
+              <ElIconDownload class="plugins-list-card-data-item-icon"/>
+              <div>
+                {{ t("data.downloads") }}
+              </div>
+              <div class="plugins-list-card-data-item-number">
+                {{ plugin.downloads }}
+              </div>
+            </div>
+            <div
+                v-if="plugin.updated_at !== null"
+                class="plugins-list-card-data-item"
+            >
+              <ElIconRefresh class="plugins-list-card-data-item-icon"/>
+              <div>
+                {{ t("data.updated_at") }}
+              </div>
+              <div class="plugins-list-card-data-item-number">
+                {{ $d(new Date(plugin.updated_at)) }}
+              </div>
             </div>
           </div>
         </div>
@@ -179,7 +195,7 @@
 </template>
 
 <script setup lang="ts">
-import {MetaInfo} from "~/types/plugins";
+import {PluginDataBrief, PluginDataBriefSummary} from "~/types/plugins";
 import {VotesData} from "~/composables/useLeanCloud";
 
 // ----------------------------------------------------------------------------
@@ -191,11 +207,7 @@ const {t} = useI18n();
 // plugins store
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
-
-function getAuthorLink(authorName: string): string | undefined {
-  const author = pluginsStore.getAuthor(authorName);
-  return author === undefined ? undefined : author.link;
-}
+await pluginsStore.nuxtServerInit();
 
 // ----------------------------------------------------------------------------
 // lean cloud
@@ -217,8 +229,8 @@ const {isVoted} = useLocalStoragePlugins();
 interface SearchSettingType {
   name: string;
   author: string;
-  // labels: string[];
-  sorting: "name" | "author" | "votes";
+  labels: string[];
+  sorting: "name" | "author" | "votes" | "updated_at" | "downloads";
   reverse: boolean;
 }
 
@@ -226,30 +238,35 @@ interface SearchSettingType {
 const searchSetting: Ref<SearchSettingType> = ref({
   name: "",
   author: "",
-  // labels: [],
+  labels: [],
   sorting: "votes",
   reverse: false,
 }) as Ref<SearchSettingType>;
 
 // searched list
 const plugins = computed(() => {
-  // origin
-  const pluginsOrigin = pluginsStore.$state.pluginMetaSummary?.plugins ?? {};
-
   // filter
-  let pluginsList = Object.values(pluginsOrigin).filter((plugin) => shouldShow(plugin));
+  let pluginsList = Object.values(pluginsStore.$state.plugins as PluginDataBriefSummary).filter((plugin) => shouldShow(plugin));
 
   // sort
   if (searchSetting.value.sorting === "name") {
     pluginsList.sort((a, b) => a.name.localeCompare(b.name));
   } else if (searchSetting.value.sorting === "author") {
-    pluginsList.sort((a, b) => a.authors[0].localeCompare(b.authors[0]));
+    pluginsList.sort((a, b) => a.authors[0].name.localeCompare(b.authors[0].name));
   } else if (searchSetting.value.sorting === "votes") {
     pluginsList.sort((a, b) => {
       const aVotes = a.id in votes ? votes[a.id].vote : 0;
       const bVotes = b.id in votes ? votes[b.id].vote : 0;
       return bVotes - aVotes;
     });
+  } else if (searchSetting.value.sorting === "updated_at") {
+    pluginsList.sort((a, b) => {
+      const aUpdatedAt = new Date(a.updated_at ?? 0);
+      const bUpdatedAt = new Date(b.updated_at ?? 0);
+      return bUpdatedAt.getTime() - aUpdatedAt.getTime();
+    });
+  } else if (searchSetting.value.sorting === "downloads") {
+    pluginsList.sort((a, b) => b.downloads - a.downloads);
   }
 
   // reverse
@@ -260,7 +277,7 @@ const plugins = computed(() => {
   return pluginsList;
 });
 
-function shouldShow(plugin: MetaInfo): boolean {
+function shouldShow(plugin: PluginDataBrief): boolean {
   // name
   if (searchSetting.value.name) {
     const pluginName = plugin.name.toLowerCase();
@@ -277,7 +294,7 @@ function shouldShow(plugin: MetaInfo): boolean {
 
   // author
   if (searchSetting.value.author) {
-    const pluginAuthors = plugin.authors.map((author) => author.toLowerCase());
+    const pluginAuthors = plugin.authors.map((author) => author.name.toLowerCase());
     let shouldHideFlag = false;
     for (const author of searchSetting.value.author.toLowerCase().split(" ")) {
       if (!pluginAuthors.some((pluginAuthor) => pluginAuthor.includes(author))) {
@@ -290,11 +307,11 @@ function shouldShow(plugin: MetaInfo): boolean {
   }
 
   // labels
-  // if (searchSetting.value.labels.length > 0) {
-  //   if (!searchSetting.value.labels.every((label: string) => plugin.labels.includes(label))) {
-  //     return false;
-  //   }
-  // }
+  if (searchSetting.value.labels.length > 0) {
+    if (!searchSetting.value.labels.every((label: string) => plugin.labels.includes(label))) {
+      return false;
+    }
+  }
 
   return true;
 }
@@ -308,9 +325,14 @@ function shouldShow(plugin: MetaInfo): boolean {
 
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 
   @media only screen and (width < $size-xl) {
     padding: 1rem;
+  }
+
+  @media only screen and (width < $size-md) {
+    flex-direction: column;
   }
 
   .box {
@@ -325,10 +347,16 @@ function shouldShow(plugin: MetaInfo): boolean {
 
   #plugins-search {
     width: 19%;
-    height: 30rem;
 
     position: sticky;
     top: 1rem;
+
+    @media only screen and (width < $size-md) {
+      width: 100%;
+      margin-bottom: 1rem;
+
+      position: unset;
+    }
 
     #plugins-search-title {
       margin-bottom: 1rem;
@@ -354,7 +382,15 @@ function shouldShow(plugin: MetaInfo): boolean {
   #plugins-list {
     width: 80%;
 
+    @media only screen and (width < $size-md) {
+      width: 100%;
+      margin-bottom: 1rem;
+
+      position: unset;
+    }
+
     .plugins-list-card {
+      min-height: 8rem;
       margin-bottom: 1rem;
       color: var(--gray-7);
 
@@ -366,7 +402,10 @@ function shouldShow(plugin: MetaInfo): boolean {
       }
 
       .plugins-list-card-info {
-        max-width: 80%;
+        max-width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         @media only screen and (width < $size-md) {
           max-width: 100%;
@@ -382,6 +421,7 @@ function shouldShow(plugin: MetaInfo): boolean {
             font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
+            overflow-wrap: anywhere;
 
             &:hover {
               color: var(--blue-6);
@@ -423,36 +463,33 @@ function shouldShow(plugin: MetaInfo): boolean {
         }
       }
 
-      .plugins-list-card-votes {
+      .plugins-list-card-data {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-end;
 
-        font-size: 1.2rem;
-
-        .plugins-list-card-votes-icon {
-          height: 1.2rem;
+        @media only screen and (width < $size-md) {
+          margin-top: 1rem;
+          display: unset;
         }
 
-        .plugins-list-card-votes-number {
-          margin: 0 0.25rem;
-          font-weight: bold;
+        .plugins-list-card-data-item {
+          display: flex;
+          align-items: center;
+
+          font-size: 1.2rem;
+
+          .plugins-list-card-data-item-icon {
+            height: 1.2rem;
+          }
+
+          .plugins-list-card-data-item-number {
+            margin: 0 0.25rem;
+            font-weight: bold;
+          }
         }
       }
-    }
-  }
-
-  @media only screen and (width < $size-md) {
-    flex-direction: column;
-
-    #plugins-search {
-      width: 100%;
-      margin-bottom: 1rem;
-
-      position: unset;
-    }
-
-    #plugins-list {
-      width: 100%;
     }
   }
 }
@@ -480,7 +517,12 @@ sorting:
   name: Name
   author: Author
   votes: Votes
-votes: Votes
+  updated_at: Updated At
+  downloads: Downloads
+data:
+  votes: Votes
+  downloads: Downloads
+  updated_at: Updated At
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -500,5 +542,10 @@ sorting:
   name: 名称
   author: 作者
   votes: 喜欢
-votes: 喜欢
+  updated_at: 最后更新
+  downloads: 下载量
+data:
+  votes: 喜欢
+  downloads: 下载
+  updated_at: 更新于
 </i18n>
