@@ -2,5 +2,10 @@ import {PluginDataSummary} from "~/types/plugins";
 
 export default defineEventHandler(async (event) => {
     const mergedPluginDataSummary: PluginDataSummary = await $fetch("/api/plugins");
-    return mergedPluginDataSummary[event.context.params!.id];
+    const id = event.context.params!.id;
+    if (id in mergedPluginDataSummary) {
+        return mergedPluginDataSummary[id];
+    } else {
+        return {};
+    }
 });
