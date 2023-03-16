@@ -11,7 +11,7 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
         const {meta, release, info, authors} = pluginDataSummary[id];
 
         // updated_at
-        let updated_at: string = "N/A";
+        let updated_at: string | null = null;
         if (release.releases.length !== 0) {
             updated_at = release.releases[0].created_at;
         }

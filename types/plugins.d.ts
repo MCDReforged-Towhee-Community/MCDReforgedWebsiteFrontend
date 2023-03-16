@@ -102,6 +102,6 @@ interface PluginDataBrief {
     authors: Author[];
     description: MetaInfoDescription;
     labels: string[];
-    updated_at: string;
+    updated_at: string | null;
     downloads: number;
 }
