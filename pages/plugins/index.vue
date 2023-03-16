@@ -116,7 +116,10 @@
               </div>
             </div>
             <div class="plugins-list-card-description">
-              {{ plugin.description[getMCDRLocale()] }}
+              <BaseMarkdown
+                  v-model="plugin.description[getMCDRLocale()]"
+                  a-tag-blank-target
+              />
             </div>
             <div class="plugins-list-card-labels">
               <div
@@ -447,6 +450,11 @@ function shouldShow(plugin: PluginDataBrief): boolean {
 
         .plugins-list-card-description {
           overflow-wrap: anywhere;
+
+          :deep(.markdown-body) {
+            background: unset;
+            color: var(--gray-7);
+          }
         }
 
         .plugins-list-card-labels {
