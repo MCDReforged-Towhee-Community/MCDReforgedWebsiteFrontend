@@ -40,6 +40,6 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
     return pluginDataBriefSummary;
 }
 
-export default defineEventHandler(async (event): Promise<PluginDataBriefSummary> => {
+export default defineEventHandler(async (): Promise<PluginDataBriefSummary> => {
     return await getPluginDataBriefSummary();
 });
