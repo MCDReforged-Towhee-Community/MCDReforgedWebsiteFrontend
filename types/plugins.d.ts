@@ -4,12 +4,12 @@
 
 export interface PluginMetaSummary {
     plugin_amount: number;
-    plugins: { [key: string]: MetaInfo };
+    plugins: Record<string, MetaInfo>;
 }
 
 export interface AuthorSummary {
     amount: number;
-    authors: { [key: string]: Author };
+    authors: Record<string, Author>;
 }
 
 export interface MetaInfo {
@@ -19,12 +19,12 @@ export interface MetaInfo {
     version: string;
     repository: string;
     authors: string[];
-    dependencies: { [key: string]: string };
+    dependencies: Record<string, string>;
     requirements: string[];
     description: MetaInfoDescription;
 }
 
-export interface MetaInfoDescription {
+export interface MetaInfoDescription extends Record<MCDRLocale, string> {
     en_us: string;
     zh_cn?: string;
 }
@@ -71,7 +71,7 @@ export interface FormattedPluginInfo {
     introduction: FormattedPluginInfoIntroduction;
 }
 
-export interface FormattedPluginInfoIntroduction {
+export interface FormattedPluginInfoIntroduction extends Record<MCDRLocale, string> {
     en_us: string;
     zh_cn?: string;
 }
@@ -80,22 +80,18 @@ export interface FormattedPluginInfoIntroduction {
 // Plugin Catalogue Summary, provided by nuxt server api
 // ----------------------------------------------------------------------------
 
-interface PluginDataSummary {
-    [key: string]: PluginData;
-}
+export type PluginDataSummary = Record<string, PluginData>;
 
-interface PluginData {
+export interface PluginData {
     meta: MetaInfo;
     release: ReleaseSummary;
     info: FormattedPluginInfo;
     authors: Author[];
 }
 
-interface PluginDataBriefSummary {
-    [key: string]: PluginDataBrief;
-}
+export type PluginDataBriefSummary = Record<string, PluginDataBrief>;
 
-interface PluginDataBrief {
+export interface PluginDataBrief {
     id: string;
     name: string;
     version: string;
