@@ -2,17 +2,17 @@
 // Raw types from plugin catalogue
 // ----------------------------------------------------------------------------
 
-export interface PluginMetaSummary {
+export interface PluginMetaSummary extends Readonly<object> {
     plugin_amount: number;
     plugins: Record<string, MetaInfo>;
 }
 
-export interface AuthorSummary {
+export interface AuthorSummary extends Readonly<object> {
     amount: number;
     authors: Record<string, Author>;
 }
 
-export interface MetaInfo {
+export interface MetaInfo extends Readonly<object> {
     schema_version: 2;
     id: string;
     name: string;
@@ -24,24 +24,24 @@ export interface MetaInfo {
     description: MetaInfoDescription;
 }
 
-export interface MetaInfoDescription extends Record<MCDRLocale, string> {
+export interface MetaInfoDescription extends Readonly<Record<MCDRLocale, string>> {
     en_us: string;
     zh_cn?: string;
 }
 
-export interface Author {
+export interface Author extends Readonly<object> {
     name: string;
     link: string;
 }
 
-export interface ReleaseSummary {
+export interface ReleaseSummary extends Readonly<object> {
     schema_version: 6;
     id: string;
     latest_version: string;
     releases: ReleaseInfo[];
 }
 
-export interface ReleaseInfo {
+export interface ReleaseInfo extends Readonly<object> {
     url: string;
     name: string;
     tag_name: string;
@@ -53,7 +53,7 @@ export interface ReleaseInfo {
     meta: MetaInfo;
 }
 
-export interface AssetInfo {
+export interface AssetInfo extends Readonly<object> {
     name: string;
     size: number;
     download_count: number;
@@ -61,7 +61,7 @@ export interface AssetInfo {
     browser_download_url: string;
 }
 
-export interface FormattedPluginInfo {
+export interface FormattedPluginInfo extends Readonly<object> {
     schema_version: 1;
     id: string;
     repository: string;
@@ -71,7 +71,7 @@ export interface FormattedPluginInfo {
     introduction: FormattedPluginInfoIntroduction;
 }
 
-export interface FormattedPluginInfoIntroduction extends Record<MCDRLocale, string> {
+export interface FormattedPluginInfoIntroduction extends Readonly<Record<MCDRLocale, string>> {
     en_us: string;
     zh_cn?: string;
 }
