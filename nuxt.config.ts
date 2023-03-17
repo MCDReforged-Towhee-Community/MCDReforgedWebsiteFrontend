@@ -1,3 +1,5 @@
+import {nodeResolve} from "@rollup/plugin-node-resolve";
+
 const baseURL = "https://mcdr.zhanganzhi.com";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -56,6 +58,17 @@ export default defineNuxtConfig({
         "@nuxtjs/robots",
         "@pinia/nuxt",
     ],
+
+
+    nitro: {
+        rollupConfig: {
+            // @ts-ignore
+            plugins: [
+                // https://github.com/element-plus/element-plus/issues/10979#issuecomment-1473107778
+                nodeResolve({exportConditions: ['node']}),
+            ],
+        },
+    },
 
     runtimeConfig: {
         public: {
