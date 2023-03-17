@@ -210,7 +210,12 @@ const {t} = useI18n();
 // plugins store
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
-await pluginsStore.nuxtServerInit();
+
+// fill the store
+// https://github.com/vuejs/pinia/issues/1080
+if (process.server) {
+  await pluginsStore.nuxtServerInit();
+}
 
 function getDescription(plugin: PluginDataBrief): string {
   return plugin.description[getMCDRLocale()] ?? "";
