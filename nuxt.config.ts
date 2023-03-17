@@ -57,10 +57,6 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
     ],
 
-    nitro: {
-        preset: "vercel-edge",
-    },
-
     runtimeConfig: {
         public: {
             baseURL: baseURL,
