@@ -79,121 +79,119 @@
           :label="t('search.reverse')"
       />
     </div>
-    <ClientOnly>
-      <div id="plugins-list">
-        <div
-            v-for="plugin in plugins"
-            v-show="shouldShow(plugin)"
-            :key="plugin.id"
-            class="box plugins-list-card"
-        >
-          <div class="plugins-list-card-info">
-            <div class="plugins-list-card-title">
-              <NuxtLink
-                  class="plugins-list-card-title-name"
-                  :to="`/plugins/${plugin.id}`"
+    <div id="plugins-list">
+      <div
+          v-for="plugin in plugins"
+          v-show="shouldShow(plugin)"
+          :key="plugin.id"
+          class="box plugins-list-card"
+      >
+        <div class="plugins-list-card-info">
+          <div class="plugins-list-card-title">
+            <NuxtLink
+                class="plugins-list-card-title-name"
+                :to="`/plugins/${plugin.id}`"
+            >
+              {{ plugin.name }}
+            </NuxtLink>
+            <br class="hidden-md-and-up">
+            <div class="plugins-list-card-title-at">
+              @
+            </div>
+            <div class="plugins-list-card-title-authors">
+              <template
+                  v-for="(author, index) in plugin.authors"
+                  :key="`${plugin.id}_${author.name}`"
               >
-                {{ plugin.name }}
-              </NuxtLink>
-              <br class="hidden-md-and-up">
-              <div class="plugins-list-card-title-at">
-                @
-              </div>
-              <div class="plugins-list-card-title-authors">
-                <template
-                    v-for="(author, index) in plugin.authors"
-                    :key="`${plugin.id}_${author.name}`"
+                <div v-if="index > 0">{{ ", " }}</div>
+                <a
+                    class="plugins-list-card-title-authors-name--clickable"
+                    :href="author.link"
+                    target="_blank"
                 >
-                  <div v-if="index > 0">{{ ", " }}</div>
-                  <a
-                      class="plugins-list-card-title-authors-name--clickable"
-                      :href="author.link"
-                      target="_blank"
-                  >
-                    {{ author.name }}
-                  </a>
-                </template>
-              </div>
-            </div>
-            <div class="plugins-list-card-description">
-              <BaseMarkdown
-                  :model-value="getDescription(plugin)"
-                  a-tag-blank-target
-              />
-            </div>
-            <div class="plugins-list-card-labels">
-              <div
-                  v-if="plugin.labels.includes('information')"
-                  class="plugins-list-card-labels-label"
-              >
-                <ElIconInfoFilled class="label-icon"/>
-                {{ t("labels.information") }}
-              </div>
-              <div
-                  v-if="plugin.labels.includes('tool')"
-                  class="plugins-list-card-labels-label"
-              >
-                <ElIconTools class="label-icon"/>
-                {{ t("labels.tool") }}
-              </div>
-              <div
-                  v-if="plugin.labels.includes('management')"
-                  class="plugins-list-card-labels-label"
-              >
-                <ElIconUserFilled class="label-icon"/>
-                {{ t("labels.management") }}
-              </div>
-              <div
-                  v-if="plugin.labels.includes('api')"
-                  class="plugins-list-card-labels-label"
-              >
-                <ElIconShare class="label-icon"/>
-                {{ t("labels.api") }}
-              </div>
+                  {{ author.name }}
+                </a>
+              </template>
             </div>
           </div>
-          <div class="plugins-list-card-data">
-            <div class="plugins-list-card-data-item">
-              <ElIconStarFilled
-                  v-if="isVoted(plugin.id)"
-                  class="plugins-list-card-data-item-icon"
-              />
-              <ElIconStar
-                  v-else
-                  class="plugins-list-card-data-item-icon"
-              />
-              <div>
-                {{ t("data.votes") }}
-              </div>
-              <div class="plugins-list-card-data-item-number">
-                {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
-              </div>
-            </div>
-            <div class="plugins-list-card-data-item">
-              <ElIconDownload class="plugins-list-card-data-item-icon"/>
-              <div>
-                {{ t("data.downloads") }}
-              </div>
-              <div class="plugins-list-card-data-item-number">
-                {{ plugin.downloads }}
-              </div>
+          <div class="plugins-list-card-description">
+            <BaseMarkdown
+                :model-value="getDescription(plugin)"
+                a-tag-blank-target
+            />
+          </div>
+          <div class="plugins-list-card-labels">
+            <div
+                v-if="plugin.labels.includes('information')"
+                class="plugins-list-card-labels-label"
+            >
+              <ElIconInfoFilled class="label-icon"/>
+              {{ t("labels.information") }}
             </div>
             <div
-                v-if="plugin.updated_at !== null"
-                class="plugins-list-card-data-item"
+                v-if="plugin.labels.includes('tool')"
+                class="plugins-list-card-labels-label"
             >
-              <ElIconRefresh class="plugins-list-card-data-item-icon"/>
-              <div>
-                {{ t("data.updated_at") }}
-              </div>
-              <div class="plugins-list-card-data-item-number">
-                {{ $d(new Date(plugin.updated_at), "text") }}
-              </div>
+              <ElIconTools class="label-icon"/>
+              {{ t("labels.tool") }}
+            </div>
+            <div
+                v-if="plugin.labels.includes('management')"
+                class="plugins-list-card-labels-label"
+            >
+              <ElIconUserFilled class="label-icon"/>
+              {{ t("labels.management") }}
+            </div>
+            <div
+                v-if="plugin.labels.includes('api')"
+                class="plugins-list-card-labels-label"
+            >
+              <ElIconShare class="label-icon"/>
+              {{ t("labels.api") }}
+            </div>
+          </div>
+        </div>
+        <div class="plugins-list-card-data">
+          <div class="plugins-list-card-data-item">
+            <ElIconStarFilled
+                v-if="isVoted(plugin.id)"
+                class="plugins-list-card-data-item-icon"
+            />
+            <ElIconStar
+                v-else
+                class="plugins-list-card-data-item-icon"
+            />
+            <div>
+              {{ t("data.votes") }}
+            </div>
+            <div class="plugins-list-card-data-item-number">
+              {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
+            </div>
+          </div>
+          <div class="plugins-list-card-data-item">
+            <ElIconDownload class="plugins-list-card-data-item-icon"/>
+            <div>
+              {{ t("data.downloads") }}
+            </div>
+            <div class="plugins-list-card-data-item-number">
+              {{ plugin.downloads }}
+            </div>
+          </div>
+          <div
+              v-if="plugin.updated_at !== null"
+              class="plugins-list-card-data-item"
+          >
+            <ElIconRefresh class="plugins-list-card-data-item-icon"/>
+            <div>
+              {{ t("data.updated_at") }}
+            </div>
+            <div class="plugins-list-card-data-item-number">
+              {{ $d(new Date(plugin.updated_at), "text") }}
             </div>
           </div>
         </div>
       </div>
-    </ClientOnly>
+    </div>
   </div>
 </template>
 
@@ -226,10 +224,7 @@ function getDescription(plugin: PluginDataBrief): string {
 // ----------------------------------------------------------------------------
 
 // votes
-let votes: VotesData = {};
-if (process.client) {
-  votes = await useLeanCloud().fetchVotes();
-}
+const votes: VotesData = await useLeanCloud().fetchVotes();
 
 // plugins local storage
 const {isVoted} = useLocalStoragePlugins();
