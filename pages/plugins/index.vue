@@ -287,7 +287,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     padding: 1rem;
   }
 
-  @media only screen and (width < $size-md) {
+  @media only screen and (width < $size-lg) {
     flex-direction: column;
   }
 
@@ -307,7 +307,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     position: sticky;
     top: 1rem;
 
-    @media only screen and (width < $size-md) {
+    @media only screen and (width < $size-lg) {
       width: 100%;
       margin-bottom: 1rem;
 
@@ -334,7 +334,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
   #plugins-list {
     width: 80%;
 
-    @media only screen and (width < $size-md) {
+    @media only screen and (width < $size-lg) {
       width: 100%;
       margin-bottom: 1rem;
 

@@ -107,24 +107,24 @@ function viewAsset(tagName: string, assetName: string) {
     padding: 1rem;
   }
 
-  @media only screen and (width < $size-md) {
+  @media only screen and (width < $size-lg) {
     flex-direction: column;
   }
 }
 
 #aside {
-  width: 19%;
+  width: 29%;
 
-  @media only screen and (width < $size-md) {
+  @media only screen and (width < $size-lg) {
     width: 100%;
     margin-bottom: 1rem;
   }
 }
 
 #main {
-  width: 80%;
+  width: 70%;
 
-  @media only screen and (width < $size-md) {
+  @media only screen and (width < $size-lg) {
     width: 100%;
   }
 }
