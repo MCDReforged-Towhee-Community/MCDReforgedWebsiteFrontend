@@ -48,12 +48,28 @@
             v-for="asset in release.assets"
             :key="asset.name"
             class="files-asset"
+            tabindex="0"
+            @keydown.enter.self="$emit('viewAsset', release.tag_name, asset.name)"
             @click="$emit('viewAsset', release.tag_name, asset.name)"
         >
-          <div class="files-asset-name">{{ asset.name }}</div>
-          <div class="files-asset-date">
-            {{ $d(new Date(asset.created_at), "text") }}
+          <div class="files-asset-text">
+            <div class="files-asset-text-name">{{ asset.name }}</div>
+            <div class="files-asset-text-date">
+              {{ $d(new Date(asset.created_at), "text") }}
+            </div>
           </div>
+          <a
+              class="files-asset-download"
+              tabindex="-1"
+              :href="asset.browser_download_url"
+              download
+              @click.stop
+          >
+            <el-button
+                type="primary"
+                :icon="ElIconDownload"
+            />
+          </a>
         </ElCard>
       </div>
     </div>
@@ -153,26 +169,33 @@ defineEmits<{
       padding: 0.5rem;
       background-color: white;
 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
       &:hover {
         background-color: var(--gray-1);
       }
     }
 
-    .files-asset-name {
+    .files-asset-text {
       width: 60%;
-      color: var(--gray-7);
-      font-size: 0.8rem;
-
-      overflow-wrap: anywhere;
 
       @media only screen and (width < $size-md) {
         width: 80%;
       }
-    }
 
-    .files-asset-date {
-      color: var(--gray-6);
-      font-size: 0.5rem;
+      .files-asset-text-name {
+        color: var(--gray-7);
+        font-size: 0.8rem;
+
+        overflow-wrap: anywhere;
+      }
+
+      .files-asset-text-date {
+        color: var(--gray-6);
+        font-size: 0.5rem;
+      }
     }
   }
 }
