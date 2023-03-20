@@ -1,27 +1,54 @@
-import {PluginDataBrief, PluginDataBriefSummary} from "~/types/plugins";
+import {
+    PluginData,
+    PluginDataSummary,
+    PluginDataBrief,
+    PluginDataBriefSummary,
+} from "~/types/plugins";
 
 interface PluginStoreState {
-    plugins: PluginDataBriefSummary | undefined;
+    pluginDataSummary: PluginDataSummary;
+    pluginDataBriefSummary: PluginDataBriefSummary | undefined;
 }
 
 export const usePluginsStore = defineStore("plugins", {
     state: (): PluginStoreState => ({
-        plugins: undefined,
+        pluginDataSummary: {},
+        pluginDataBriefSummary: undefined,
     }),
     getters: {
         /**
          * Check if the plugin exists
          */
-        exists: (state): (id: string) => boolean => {
-            return (id) => id in state.plugins!.plugins;
+        exists(state): (id: string) => boolean {
+            return (id) => state.pluginDataBriefSummary !== undefined && id in state.pluginDataBriefSummary;
         },
+
         /**
-         * Get plugin meta by id.
+         * Get plugin data by id.
          */
-        getPluginDataBrief: (state): (id: string) => PluginDataBrief | undefined => {
+        getPluginData(state): (id: string) => Promise<PluginData | undefined> {
+            return async (id) => {
+                if (this.exists(id)) {
+                    // fetch if not exists
+                    if (!(id in state.pluginDataSummary)) {
+                        state.pluginDataSummary[id] = await $fetch("/api/plugins/" + id);
+                    }
+
+                    // return
+                    return state.pluginDataSummary[id];
+                } else {
+                    return undefined;
+                }
+            };
+        },
+
+        /**
+         * Get plugin data brief by id.
+         */
+        getPluginDataBrief(state): (id: string) => PluginDataBrief | undefined {
             return (id) => {
-                if (state.plugins !== undefined && id in state.plugins) {
-                    return state.plugins[id];
+                if (this.exists(id)) {
+                    return state.pluginDataBriefSummary![id];
                 } else {
                     return undefined;
                 }
@@ -31,12 +58,12 @@ export const usePluginsStore = defineStore("plugins", {
     actions: {
         async nuxtServerInit() {
             // check if already fetched
-            if (this.plugins !== undefined) {
+            if (this.pluginDataBriefSummary !== undefined) {
                 return;
             }
 
             // fetch plugins
-            this.plugins = await $fetch("/api/pluginsBrief");
+            this.pluginDataBriefSummary = await $fetch("/api/pluginsBrief");
         },
     },
 });

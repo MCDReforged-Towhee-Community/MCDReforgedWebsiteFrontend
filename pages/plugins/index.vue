@@ -202,7 +202,7 @@ const searchSetting: Ref<SearchSettingType> = ref({
 // searched list
 const plugins = computed(() => {
   // filter
-  let pluginsList = Object.values(pluginsStore.$state.plugins as PluginDataBriefSummary).filter((plugin) => shouldShow(plugin));
+  let pluginsList = Object.values(pluginsStore.$state.pluginDataBriefSummary as PluginDataBriefSummary).filter((plugin) => shouldShow(plugin));
 
   // sort
   if (searchSetting.value.sorting === "name") {
