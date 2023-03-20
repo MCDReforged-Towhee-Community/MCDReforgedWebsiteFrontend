@@ -93,7 +93,7 @@ function viewAsset(tagName: string, assetName: string) {
   border-radius: 1rem;
   box-shadow: $shadow-basic;
 
-  background: var(--gray-2);
+  background: white;
 }
 
 #plugin {

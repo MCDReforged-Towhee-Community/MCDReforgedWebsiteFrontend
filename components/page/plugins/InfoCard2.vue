@@ -147,9 +147,11 @@ defineEmits<{
     margin: 0.5rem 0;
 
     cursor: pointer;
+    box-shadow: unset;
 
     :deep(.el-card__body) {
       padding: 0.5rem;
+      background-color: white;
 
       &:hover {
         background-color: var(--gray-1);

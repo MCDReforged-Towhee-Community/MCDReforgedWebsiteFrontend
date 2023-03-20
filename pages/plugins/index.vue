@@ -298,7 +298,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     border-radius: 1rem;
     box-shadow: $shadow-basic;
 
-    background: var(--gray-2);
+    background: white;
   }
 
   #plugins-search {
