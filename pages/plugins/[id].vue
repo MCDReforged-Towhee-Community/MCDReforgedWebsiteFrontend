@@ -1,6 +1,10 @@
 <template>
   <div id="plugin">
     <div id="aside">
+      <PagePluginsInfoCard1
+          class="box"
+          :brief="pluginBrief"
+      />
     </div>
     <div id="main">
     </div>
