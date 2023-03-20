@@ -5,3 +5,24 @@
 body {
   margin: 0;
 }
+
+.clickable {
+  color: var(--blue-6);
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--blue-5);
+  }
+}
+
+.clickable--underline {
+  color: var(--blue-6);
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--blue-5);
+    text-decoration: underline;
+  }
+}
