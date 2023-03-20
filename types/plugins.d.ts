@@ -1,3 +1,5 @@
+export type MCDRLocale = "en_us" | "zh_cn";
+
 // ----------------------------------------------------------------------------
 // Raw types from plugin catalogue
 // ----------------------------------------------------------------------------
@@ -24,7 +26,7 @@ export interface MetaInfo extends Readonly<object> {
     description: MetaInfoDescription;
 }
 
-export interface MetaInfoDescription extends Readonly<Record<MCDRLocale, string>> {
+export interface MetaInfoDescription extends Readonly<Partial<Record<MCDRLocale, string>>> {
     en_us: string;
     zh_cn?: string;
 }
@@ -71,7 +73,7 @@ export interface FormattedPluginInfo extends Readonly<object> {
     introduction: FormattedPluginInfoIntroduction;
 }
 
-export interface FormattedPluginInfoIntroduction extends Readonly<Record<MCDRLocale, string>> {
+export interface FormattedPluginInfoIntroduction extends Readonly<Partial<Record<MCDRLocale, string>>> {
     en_us: string;
     zh_cn?: string;
 }
