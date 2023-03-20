@@ -30,6 +30,12 @@ export const usePluginsStore = defineStore("plugins", {
     },
     actions: {
         async nuxtServerInit() {
+            // check if already fetched
+            if (this.plugins !== undefined) {
+                return;
+            }
+
+            // fetch plugins
             this.plugins = await $fetch("/api/pluginsBrief");
         },
     },

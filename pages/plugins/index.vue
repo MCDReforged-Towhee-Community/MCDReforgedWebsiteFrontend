@@ -153,19 +153,21 @@
         </div>
         <div class="plugins-list-card-data">
           <div class="plugins-list-card-data-item">
-            <ElIconStarFilled
-                v-if="isVoted(plugin.id)"
-                class="plugins-list-card-data-item-icon"
-            />
-            <ElIconStar
-                v-else
-                class="plugins-list-card-data-item-icon"
-            />
+            <ClientOnly>
+              <ElIconStarFilled
+                  v-if="votesStore.isVoted(plugin.id)"
+                  class="plugins-list-card-data-item-icon"
+              />
+              <ElIconStar
+                  v-else
+                  class="plugins-list-card-data-item-icon"
+              />
+            </ClientOnly>
             <div>
               {{ t("data.votes") }}
             </div>
             <div class="plugins-list-card-data-item-number">
-              {{ plugin.id in votes ? votes[plugin.id].vote : 0 }}
+              {{ votesStore.getVotesNumber(plugin.id) }}
             </div>
           </div>
           <div class="plugins-list-card-data-item">
@@ -197,7 +199,6 @@
 
 <script setup lang="ts">
 import {PluginDataBrief, PluginDataBriefSummary} from "~/types/plugins";
-import {VotesData} from "~/composables/useLeanCloud";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -205,29 +206,19 @@ import {VotesData} from "~/composables/useLeanCloud";
 const {t} = useI18n();
 
 // ----------------------------------------------------------------------------
-// plugins store
+// pinia stores
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
+const votesStore = usePluginsVotesStore();
 
 // fill the store
 // https://github.com/vuejs/pinia/issues/1080
-if (process.server) {
-  await pluginsStore.nuxtServerInit();
-}
+await pluginsStore.nuxtServerInit();
+await votesStore.nuxtServerInit();
 
 function getDescription(plugin: PluginDataBrief): string {
   return plugin.description[getMCDRLocale()] ?? "";
 }
-
-// ----------------------------------------------------------------------------
-// lean cloud
-// ----------------------------------------------------------------------------
-
-// votes
-const votes: VotesData = await useLeanCloud().fetchVotes();
-
-// plugins local storage
-const {isVoted} = useLocalStoragePlugins();
 
 // ----------------------------------------------------------------------------
 // search
@@ -262,8 +253,8 @@ const plugins = computed(() => {
     pluginsList.sort((a, b) => a.authors[0].name.localeCompare(b.authors[0].name));
   } else if (searchSetting.value.sorting === "votes") {
     pluginsList.sort((a, b) => {
-      const aVotes = a.id in votes ? votes[a.id].vote : 0;
-      const bVotes = b.id in votes ? votes[b.id].vote : 0;
+      const aVotes = votesStore.getVotesNumber(a.id);
+      const bVotes = votesStore.getVotesNumber(b.id);
       return bVotes - aVotes;
     });
   } else if (searchSetting.value.sorting === "updated_at") {
