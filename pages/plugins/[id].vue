@@ -5,6 +5,14 @@
           class="box"
           :brief="pluginBrief"
       />
+      <PagePluginsInfoCard2
+          class="box"
+          :brief="pluginBrief"
+          :data="pluginData"
+          @view-all="viewAllRelease"
+          @view-release="viewRelease"
+          @view-asset="viewAsset"
+      />
     </div>
     <div id="main">
     </div>
@@ -48,6 +56,30 @@ const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as Plug
 
 // introduction
 const introduction: ComputedRef<string> = computed(() => pluginData.info.introduction[getMCDRLocale()] ?? "");
+
+// ----------------------------------------------------------------------------
+// event handlers
+// ----------------------------------------------------------------------------
+/**
+ * View all release.
+ */
+function viewAllRelease() {
+  console.log("view all release");
+}
+
+/**
+ * View a release.
+ */
+function viewRelease(tagName: string) {
+  console.log("view release", tagName);
+}
+
+/**
+ * View an asset.
+ */
+function viewAsset(tagName: string, assetName: string) {
+  console.log("view asset", tagName, assetName);
+}
 </script>
 
 <style scoped lang="scss">
