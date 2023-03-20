@@ -35,12 +35,14 @@ const localeRef = ref(locale.value);
 </script>
 
 <style scoped lang="scss">
+@import "assets/variables.scss";
+
 #header {
   height: 4rem;
 
   #content {
     height: 100%;
-    padding: 0.5rem 5vw;
+    padding: 0.5rem min(20vw, 20rem);
     box-sizing: border-box;
 
     background-color: var(--stone-3);
@@ -48,6 +50,10 @@ const localeRef = ref(locale.value);
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media only screen and (width < $size-xl) {
+      padding: 0.5rem 1rem;
+    }
 
     .logo {
       height: 100%;
