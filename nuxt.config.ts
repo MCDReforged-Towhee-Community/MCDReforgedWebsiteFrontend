@@ -59,7 +59,6 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
     ],
 
-
     nitro: {
         rollupConfig: {
             // @ts-ignore
