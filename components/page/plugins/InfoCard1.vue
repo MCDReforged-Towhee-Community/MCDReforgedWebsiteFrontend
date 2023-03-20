@@ -3,7 +3,7 @@
     <div id="name">{{ brief.name }}</div>
     <div id="description">
       <BaseMarkdown
-          :model-value="brief.description[getMCDRLocale()]"
+          :model-value="brief.description[getMCDRLocale()] ?? ''"
           a-tag-blank-target
       />
     </div>
@@ -27,7 +27,10 @@
         {{ votesStore.getVotesNumber(brief.id) }}
       </div>
     </div>
-    <div class="data">
+    <div
+        v-if="brief.updated_at !== null"
+        class="data"
+    >
       <div>{{ t("updatedAt") }}</div>
       <div>{{ $d(new Date(brief.updated_at), "text") }}</div>
     </div>
