@@ -69,9 +69,18 @@ export interface FormattedPluginInfo extends Readonly<object> {
     repository: string;
     branch: string;
     related_path: string;
-    labels: string[];
+    labels: Label[];
     introduction: FormattedPluginInfoIntroduction;
 }
+
+export const LABELS = [
+    "information",
+    "tool",
+    "management",
+    "api",
+] as const;
+
+export type Label = typeof LABELS[number];
 
 export interface FormattedPluginInfoIntroduction extends Readonly<Partial<Record<MCDRLocale, string>>> {
     en_us: string;
@@ -99,7 +108,7 @@ export interface PluginDataBrief {
     version: string;
     authors: Author[];
     description: MetaInfoDescription;
-    labels: string[];
+    labels: Label[];
     updated_at: string | null;
     downloads: number;
 }

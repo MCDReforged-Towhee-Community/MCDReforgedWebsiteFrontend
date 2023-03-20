@@ -28,31 +28,11 @@
           class="plugins-search-item"
       >
         <ElCheckbox
-            v-for="label in ['information', 'tool', 'management', 'api']"
+            v-for="label in LABELS"
             :key="label"
             :label="label"
         >
-          <div class="plugins-search-item-labels-checkbox">
-            <ElIconInfoFilled
-                v-if="label === 'information'"
-                class="label-icon"
-            />
-            <ElIconTools
-                v-if="label === 'tool'"
-                class="label-icon"
-            />
-            <ElIconUserFilled
-                v-if="label === 'management'"
-                class="label-icon"
-            />
-            <ElIconShare
-                v-if="label === 'api'"
-                class="label-icon"
-            />
-            <div>
-              {{ t(`labels.${label}`) }}
-            </div>
-          </div>
+          <PagePluginsLabel :label="label"/>
         </ElCheckbox>
       </ElCheckboxGroup>
       <div>
@@ -121,34 +101,7 @@
             />
           </div>
           <div class="plugins-list-card-labels">
-            <div
-                v-if="plugin.labels.includes('information')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconInfoFilled class="label-icon"/>
-              {{ t("labels.information") }}
-            </div>
-            <div
-                v-if="plugin.labels.includes('tool')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconTools class="label-icon"/>
-              {{ t("labels.tool") }}
-            </div>
-            <div
-                v-if="plugin.labels.includes('management')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconUserFilled class="label-icon"/>
-              {{ t("labels.management") }}
-            </div>
-            <div
-                v-if="plugin.labels.includes('api')"
-                class="plugins-list-card-labels-label"
-            >
-              <ElIconShare class="label-icon"/>
-              {{ t("labels.api") }}
-            </div>
+            <PagePluginsLabels :labels="plugin.labels"/>
           </div>
         </div>
         <div class="plugins-list-card-data">
@@ -198,7 +151,12 @@
 </template>
 
 <script setup lang="ts">
-import {PluginDataBrief, PluginDataBriefSummary} from "~/types/plugins";
+import {
+  LABELS,
+  Label,
+  PluginDataBrief,
+  PluginDataBriefSummary,
+} from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -227,7 +185,7 @@ function getDescription(plugin: PluginDataBrief): string {
 interface SearchSettingType {
   name: string;
   author: string;
-  labels: string[];
+  labels: Label[];
   sorting: "name" | "author" | "votes" | "updated_at" | "downloads";
   reverse: boolean;
 }
@@ -306,7 +264,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
 
   // labels
   if (searchSetting.value.labels.length > 0) {
-    if (!searchSetting.value.labels.every((label: string) => plugin.labels.includes(label))) {
+    if (!searchSetting.value.labels.every((label: Label) => plugin.labels.includes(label))) {
       return false;
     }
   }
@@ -370,10 +328,6 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     #plugins-search-item-labels {
       display: flex;
       flex-direction: column;
-
-      .plugins-search-item-labels-checkbox {
-        display: flex;
-      }
     }
   }
 
@@ -451,19 +405,6 @@ function shouldShow(plugin: PluginDataBrief): boolean {
             color: var(--gray-7);
           }
         }
-
-        .plugins-list-card-labels {
-          display: flex;
-
-          .plugins-list-card-labels-label {
-            margin-right: 0.5rem;
-
-            color: var(--brown-8);
-
-            display: flex;
-            align-items: center;
-          }
-        }
       }
 
       .plugins-list-card-data {
@@ -497,11 +438,6 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     }
   }
 }
-
-.label-icon {
-  height: 1rem;
-  margin-right: 0.2rem;
-}
 </style>
 
 <i18n locale="en-US" lang="yaml">
@@ -512,11 +448,6 @@ search:
   labels: Labels
   sorting: Sorting
   reverse: Reverse
-labels:
-  information: Information
-  tool: Tool
-  management: Management
-  api: API
 sorting:
   name: Name
   author: Author
@@ -537,11 +468,6 @@ search:
   labels: 标签
   sorting: 排序
   reverse: 倒序
-labels:
-  information: 信息
-  tool: 工具
-  management: 管理
-  api: API
 sorting:
   name: 名称
   author: 作者
