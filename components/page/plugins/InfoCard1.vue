@@ -1,7 +1,12 @@
 <template>
   <div>
     <div id="name">{{ brief.name }}</div>
-    <div id="description">{{ brief.description[getMCDRLocale()] }}</div>
+    <div id="description">
+      <BaseMarkdown
+          :model-value="brief.description[getMCDRLocale()]"
+          a-tag-blank-target
+      />
+    </div>
     <PagePluginsLabels :labels="brief.labels"/>
     <ElDivider/>
     <div class="data">
@@ -104,6 +109,11 @@ async function decreaseVote() {
   margin: 0.5rem 0;
 
   color: var(--gray-7);
+
+  :deep(.markdown-body) {
+    background: unset;
+    color: var(--gray-7);
+  }
 }
 
 .data {
