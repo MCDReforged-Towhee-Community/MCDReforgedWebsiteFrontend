@@ -291,16 +291,6 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     flex-direction: column;
   }
 
-  .box {
-    padding: 1rem;
-    box-sizing: border-box;
-
-    border-radius: 1rem;
-    box-shadow: $shadow-basic;
-
-    background: white;
-  }
-
   #plugins-search {
     width: 19%;
 

@@ -85,17 +85,6 @@ function viewAsset(tagName: string, assetName: string) {
 <style scoped lang="scss">
 @import "assets/variables.scss";
 
-.box {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-
-  border-radius: 1rem;
-  box-shadow: $shadow-basic;
-
-  background: white;
-}
-
 #plugin {
   padding: 2rem min(20vw, 20rem);
 
