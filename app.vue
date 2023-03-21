@@ -1,5 +1,6 @@
 <template>
   <NuxtLayout>
+    <NuxtLoadingIndicator color="var(--blue-6)"/>
     <TheHeader/>
     <ElConfigProvider :locale="locale">
       <NuxtPage/>
