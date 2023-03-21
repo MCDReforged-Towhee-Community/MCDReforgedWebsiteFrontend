@@ -60,11 +60,16 @@
       />
     </div>
     <div id="plugins-list">
-      <PagePluginsIndexBriefCard
-          v-for="plugin in plugins"
-          :key="plugin.id"
-          :brief="plugin"
-      />
+      <TransitionGroup
+          name="plugins-list"
+          tag="div"
+      >
+        <PagePluginsIndexBriefCard
+            v-for="plugin in plugins"
+            :key="plugin.id"
+            :brief="plugin"
+        />
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -242,12 +247,29 @@ function shouldShow(plugin: PluginDataBrief): boolean {
 
   #plugins-list {
     width: 80%;
+    position: relative;
 
     @media only screen and (width < $size-lg) {
       width: 100%;
       margin-bottom: 1rem;
 
       position: unset;
+    }
+
+    .plugins-list-move,
+    .plugins-list-enter-active,
+    .plugins-list-leave-active {
+      transition: all 0.5s ease;
+    }
+
+    .plugins-list-enter-from,
+    .plugins-list-leave-to {
+      opacity: 0;
+      transform: translateX(10%);
+    }
+
+    .plugins-list-leave-active {
+      position: absolute;
     }
   }
 }

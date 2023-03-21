@@ -97,12 +97,14 @@ const props = defineProps<{
 @import "assets/css/variables.scss";
 
 #card {
+  width: 100%;
   min-height: 8rem;
   margin-bottom: 1rem;
-  color: var(--gray-7);
 
   display: flex;
   justify-content: space-between;
+
+  color: var(--gray-7);
 
   @media only screen and (width < $size-md) {
     flex-direction: column;
