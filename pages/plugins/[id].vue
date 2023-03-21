@@ -83,7 +83,7 @@ function viewAsset(tagName: string, assetName: string) {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/variables.scss";
+@import "assets/variables.scss";
 
 .box {
   margin-bottom: 1rem;
