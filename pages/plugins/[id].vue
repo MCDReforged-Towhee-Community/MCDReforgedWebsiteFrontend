@@ -83,7 +83,7 @@ function viewAsset(tagName: string, assetName: string) {
 </script>
 
 <style scoped lang="scss">
-@import "assets/variables.scss";
+@import "assets/css/variables.scss";
 
 #plugin {
   padding: 2rem min(20vw, 20rem);

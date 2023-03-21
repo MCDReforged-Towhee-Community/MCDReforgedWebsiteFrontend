@@ -140,7 +140,7 @@ function writeToClipboard() {
 </script>
 
 <style scoped lang="scss">
-@import "assets/variables.scss";
+@import "assets/css/variables.scss";
 
 .title {
   margin-bottom: 0.5rem;

@@ -102,7 +102,7 @@ async function decreaseVote() {
 </script>
 
 <style scoped lang="scss">
-@import "assets/main.scss";
+@import "assets/css/main.scss";
 
 #name {
   width: 80%;

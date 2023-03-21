@@ -35,7 +35,7 @@ const localeRef = ref(locale.value);
 </script>
 
 <style scoped lang="scss">
-@import "assets/variables.scss";
+@import "assets/css/variables.scss";
 
 #header {
   height: 4rem;

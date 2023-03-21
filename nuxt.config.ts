@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 
     css: [
         // project css
-        "@/assets/main.scss",
+        "assets/css/main.scss",
 
         // bytemd
         "bytemd/dist/index.css",
