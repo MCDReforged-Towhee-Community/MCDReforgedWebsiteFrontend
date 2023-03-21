@@ -60,92 +60,11 @@
       />
     </div>
     <div id="plugins-list">
-      <div
+      <PagePluginsIndexBriefCard
           v-for="plugin in plugins"
-          v-show="shouldShow(plugin)"
           :key="plugin.id"
-          class="box plugins-list-card"
-      >
-        <div class="plugins-list-card-info">
-          <div class="plugins-list-card-title">
-            <NuxtLink
-                class="plugins-list-card-title-name"
-                :to="`/plugins/${plugin.id}`"
-            >
-              {{ plugin.name }}
-            </NuxtLink>
-            <br class="hidden-md-and-up">
-            <div class="plugins-list-card-title-at">
-              @
-            </div>
-            <div class="plugins-list-card-title-authors">
-              <template
-                  v-for="(author, index) in plugin.authors"
-                  :key="`${plugin.id}_${author.name}`"
-              >
-                <div v-if="index > 0">{{ ", " }}</div>
-                <a
-                    class="plugins-list-card-title-authors-name--clickable"
-                    :href="author.link"
-                    target="_blank"
-                >
-                  {{ author.name }}
-                </a>
-              </template>
-            </div>
-          </div>
-          <div class="plugins-list-card-description">
-            <BaseMarkdown
-                :model-value="getDescription(plugin)"
-                a-tag-blank-target
-            />
-          </div>
-          <div class="plugins-list-card-labels">
-            <PagePluginsLabels :labels="plugin.labels"/>
-          </div>
-        </div>
-        <div class="plugins-list-card-data">
-          <div class="plugins-list-card-data-item">
-            <ClientOnly>
-              <ElIconStarFilled
-                  v-if="votesStore.isVoted(plugin.id)"
-                  class="plugins-list-card-data-item-icon"
-              />
-              <ElIconStar
-                  v-else
-                  class="plugins-list-card-data-item-icon"
-              />
-            </ClientOnly>
-            <div>
-              {{ t("data.votes") }}
-            </div>
-            <div class="plugins-list-card-data-item-number">
-              {{ votesStore.getVotesNumber(plugin.id) }}
-            </div>
-          </div>
-          <div class="plugins-list-card-data-item">
-            <ElIconDownload class="plugins-list-card-data-item-icon"/>
-            <div>
-              {{ t("data.downloads") }}
-            </div>
-            <div class="plugins-list-card-data-item-number">
-              {{ plugin.downloads }}
-            </div>
-          </div>
-          <div
-              v-if="plugin.updated_at !== null"
-              class="plugins-list-card-data-item"
-          >
-            <ElIconRefresh class="plugins-list-card-data-item-icon"/>
-            <div>
-              {{ t("data.updated_at") }}
-            </div>
-            <div class="plugins-list-card-data-item-number">
-              {{ $d(new Date(plugin.updated_at), "text") }}
-            </div>
-          </div>
-        </div>
-      </div>
+          :brief="plugin"
+      />
     </div>
   </div>
 </template>
@@ -330,102 +249,6 @@ function shouldShow(plugin: PluginDataBrief): boolean {
 
       position: unset;
     }
-
-    .plugins-list-card {
-      min-height: 8rem;
-      margin-bottom: 1rem;
-      color: var(--gray-7);
-
-      display: flex;
-      justify-content: space-between;
-
-      @media only screen and (width < $size-md) {
-        flex-direction: column;
-      }
-
-      .plugins-list-card-info {
-        max-width: 70%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        @media only screen and (width < $size-md) {
-          max-width: 100%;
-        }
-
-        .plugins-list-card-title {
-          * {
-            display: inline;
-          }
-
-          .plugins-list-card-title-name {
-            color: black;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-            overflow-wrap: anywhere;
-
-            &:hover {
-              color: var(--blue-6);
-              text-decoration: underline;
-            }
-          }
-
-          .plugins-list-card-title-authors {
-            .plugins-list-card-title-authors-name {
-              color: var(--gray-7);
-              cursor: default;
-
-              &--clickable {
-                color: var(--gray-7);
-              }
-
-              &--clickable:hover {
-                color: var(--blue-6);
-              }
-            }
-          }
-        }
-
-        .plugins-list-card-description {
-          overflow-wrap: anywhere;
-
-          :deep(.markdown-body) {
-            background: unset;
-            color: var(--gray-7);
-          }
-        }
-      }
-
-      .plugins-list-card-data {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-end;
-
-        @media only screen and (width < $size-md) {
-          margin-top: 1rem;
-          display: unset;
-        }
-
-        .plugins-list-card-data-item {
-          display: flex;
-          align-items: center;
-
-          font-size: 1.2rem;
-          white-space: nowrap;
-
-          .plugins-list-card-data-item-icon {
-            height: 1.2rem;
-          }
-
-          .plugins-list-card-data-item-number {
-            margin: 0 0.25rem;
-            font-weight: bold;
-          }
-        }
-      }
-    }
   }
 }
 </style>
@@ -444,10 +267,6 @@ sorting:
   votes: Votes
   updated_at: Updated At
   downloads: Downloads
-data:
-  votes: Votes
-  downloads: Downloads
-  updated_at: Updated At
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -464,8 +283,4 @@ sorting:
   votes: 喜欢
   updated_at: 最后更新
   downloads: 下载量
-data:
-  votes: 喜欢
-  downloads: 下载
-  updated_at: 更新于
 </i18n>
