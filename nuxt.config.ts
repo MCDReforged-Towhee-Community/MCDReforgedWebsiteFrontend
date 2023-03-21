@@ -1,6 +1,6 @@
 import {nodeResolve} from "@rollup/plugin-node-resolve";
 
-const baseURL = "https://mcdr.zhanganzhi.com";
+const baseURL = "https://www.mcdreforged.org";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
