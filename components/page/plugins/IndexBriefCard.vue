@@ -155,6 +155,7 @@ const props = defineProps<{
     }
 
     .card-description {
+      margin: 0.25rem 0;
       overflow-wrap: anywhere;
 
       :deep(.markdown-body) {
