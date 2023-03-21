@@ -1,25 +1,21 @@
 <template>
   <div>
-    <div id="authors">
-      <div class="title">{{ t("authors") }}</div>
-      <div
-          v-for="author in brief.authors"
-          :key="author.name"
-          class="author-item"
+    <div id="install">
+      <div class="title">{{ t("install") }}</div>
+      <el-tooltip
+          :content="t('installTooltip.default')"
+          placement="top"
       >
-        <img
-            class="github-img"
-            src="https://github.com/favicon.ico"
-            :alt="author.name"
-        />
-        <a
-            class="link"
-            :href="author.link"
-            target="_blank"
+        <button
+            id="install-box"
+            @click="writeToClipboard"
+            @keydown.enter="writeToClipboard"
         >
-          {{ author.name }}
-        </a>
-      </div>
+          <ElIconArrowRight id="install-arrow"/>
+          <span id="install-text">{{ installCommand }}</span>
+          <ElIconCopyDocument id="install-copy"/>
+        </button>
+      </el-tooltip>
     </div>
     <ElDivider/>
     <div id="files">
@@ -74,6 +70,28 @@
       </div>
     </div>
     <ElDivider/>
+    <div id="authors">
+      <div class="title">{{ t("authors") }}</div>
+      <div
+          v-for="author in brief.authors"
+          :key="author.name"
+          class="author-item"
+      >
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            :alt="author.name"
+        />
+        <a
+            class="link"
+            :href="author.link"
+            target="_blank"
+        >
+          {{ author.name }}
+        </a>
+      </div>
+    </div>
+    <ElDivider/>
     <div id="repository">
       <div class="title">{{ t("repository") }}</div>
       <div id="repository-link">
@@ -90,24 +108,6 @@
           {{ data.info.repository.split("/").slice(-2).join("/") }}
         </a>
       </div>
-    </div>
-    <ElDivider/>
-    <div id="install">
-      <div class="title">{{ t("install") }}</div>
-      <el-tooltip
-          :content="t('installTooltip.default')"
-          placement="top"
-      >
-        <button
-            id="install-box"
-            @click="writeToClipboard"
-            @keydown.enter="writeToClipboard"
-        >
-          <ElIconArrowRight id="install-arrow"/>
-          <span id="install-text">{{ installCommand }}</span>
-          <ElIconCopyDocument id="install-copy"/>
-        </button>
-      </el-tooltip>
     </div>
   </div>
 </template>
@@ -172,14 +172,45 @@ function writeToClipboard() {
   }
 }
 
-#authors {
-  display: flex;
-  flex-direction: column;
+#install {
+  #install-box {
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
 
-  .author-item {
-    margin-top: 0.5rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+
+    cursor: pointer;
+    font-size: 0.8rem;
+
+    background: none;
+    border-radius: 0.5rem;
+    border: 1px solid var(--gray-4);
+
+    #install-arrow {
+      height: 0.8rem;
+      margin-right: 0.2rem;
+    }
+
+    #install-text {
+      margin-right: auto;
+    }
+
+    #install-copy {
+      display: none;
+
+      height: 0.8rem;
+    }
+
+    &:hover {
+      background: var(--blue-2);
+
+      #install-copy {
+        display: unset;
+      }
+    }
   }
 }
 
@@ -247,52 +278,21 @@ function writeToClipboard() {
   }
 }
 
-#repository {
-  #repository-link {
+#authors {
+  display: flex;
+  flex-direction: column;
+
+  .author-item {
+    margin-top: 0.5rem;
     display: flex;
     align-items: center;
   }
 }
 
-#install {
-  #install-box {
-    width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-
+#repository {
+  #repository-link {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-
-    cursor: pointer;
-    font-size: 0.8rem;
-
-    background: none;
-    border-radius: 0.5rem;
-    border: 1px solid var(--gray-4);
-
-    #install-arrow {
-      height: 0.8rem;
-      margin-right: 0.2rem;
-    }
-
-    #install-text {
-      margin-right: auto;
-    }
-
-    #install-copy {
-      display: none;
-
-      height: 0.8rem;
-    }
-
-    &:hover {
-      background: var(--blue-2);
-
-      #install-copy {
-        display: unset;
-      }
-    }
   }
 }
 </style>
