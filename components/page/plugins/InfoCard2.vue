@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <div id="install">
       <div class="title">{{ t("install") }}</div>
       <el-tooltip

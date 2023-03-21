@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <div id="name">{{ brief.name }}</div>
     <div id="description">
       <BaseMarkdown

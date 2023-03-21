@@ -1,12 +1,8 @@
 <template>
   <div id="plugin">
     <div id="aside">
-      <PagePluginsInfoCard1
-          class="box"
-          :brief="pluginBrief"
-      />
+      <PagePluginsInfoCard1 :brief="pluginBrief"/>
       <PagePluginsInfoCard2
-          class="box"
           :brief="pluginBrief"
           :data="pluginData"
           @view-all="viewAllRelease"
@@ -103,6 +99,9 @@ function viewAsset(tagName: string, assetName: string) {
 
 #aside {
   width: 29%;
+
+  display: grid;
+  grid-gap: 1rem;
 
   @media only screen and (width < $size-lg) {
     width: 100%;
