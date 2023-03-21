@@ -19,9 +19,8 @@ defineProps<{
 <style scoped lang="scss">
 #labels {
   display: flex;
-  flex-wrap: wrap;
 
-  *{
+  * {
     margin-right: 0.5rem;
   }
 }
