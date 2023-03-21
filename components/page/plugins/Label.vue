@@ -1,5 +1,5 @@
 <template>
-  <ElTag>
+  <ElTag disable-transitions>
     <div
         v-if="label === 'information'"
         class="label"
