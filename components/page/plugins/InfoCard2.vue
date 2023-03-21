@@ -8,12 +8,12 @@
           class="author-item"
       >
         <img
-            class="authors-avatar"
+            class="github-img"
             src="https://github.com/favicon.ico"
             :alt="author.name"
         />
         <a
-            class="authors-link"
+            class="link"
             :href="author.link"
             target="_blank"
         >
@@ -73,6 +73,24 @@
         </ElCard>
       </div>
     </div>
+    <ElDivider/>
+    <div id="repository">
+      <div class="title">{{ t("repository") }}</div>
+      <div id="repository-link">
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            alt="GitHub"
+        />
+        <a
+            class="link"
+            :href="`${data.info.repository}/tree/${data.info.branch}/${data.info.related_path}`"
+            target="_blank"
+        >
+          {{ data.info.repository.split("/").slice(-2).join("/") }}
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -97,6 +115,7 @@ defineEmits<{
 @import "assets/variables.scss";
 
 .title {
+  margin-bottom: 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -107,6 +126,24 @@ defineEmits<{
   background: unset;
 }
 
+.github-img {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+
+  border-radius: 50%;
+}
+
+.link {
+  color: var(--gray-7);
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--blue-6);
+  }
+}
+
 #authors {
   display: flex;
   flex-direction: column;
@@ -115,24 +152,6 @@ defineEmits<{
     margin-top: 0.5rem;
     display: flex;
     align-items: center;
-
-    .authors-avatar {
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.5rem;
-
-      border-radius: 50%;
-    }
-
-    .authors-link {
-      color: var(--gray-7);
-
-      cursor: pointer;
-
-      &:hover {
-        color: var(--blue-6);
-      }
-    }
   }
 }
 
@@ -199,16 +218,25 @@ defineEmits<{
     }
   }
 }
+
+#repository {
+  #repository-link {
+    display: flex;
+    align-items: center;
+  }
+}
 </style>
 
 <i18n locale="en-US" lang="yaml">
 authors: Authors
 files: Recent Files
 viewAll: View All
+repository: Repository
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
 authors: 作者
 files: 最新文件
 viewAll: 查看全部
+repository: 仓库
 </i18n>
