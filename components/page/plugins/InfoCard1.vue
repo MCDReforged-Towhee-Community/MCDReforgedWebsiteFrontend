@@ -38,13 +38,11 @@
     <ClientOnly>
       <ElButton
           id="vote"
-          :icon="votesStore.isVoted(brief.id) ? ElIconStarFilled:ElIconStar"
-          @click="votesStore.isVoted(brief.id) ? decreaseVote() : increaseVote()"
+          :icon="isVoted ? ElIconStarFilled : ElIconStar"
+          @click="isVoted ? decreaseVote() : increaseVote()"
           :loading="!!voting"
       >
-        {{
-          votesStore.isVoted(brief.id) ? t("decreaseVote.button") : t("increaseVote.button")
-        }}
+        {{ isVoted ? t("decreaseVote.button") : t("increaseVote.button") }}
       </ElButton>
     </ClientOnly>
   </div>
@@ -54,12 +52,17 @@
 import {PluginDataBrief} from "~/types/plugins";
 
 const {t} = useI18n();
-const votesStore = usePluginsVotesStore();
 const voting = ref(false);
 
 const props = defineProps<{
   brief: PluginDataBrief;
 }>();
+
+// ----------------------------------------------------------------------------
+// votes store
+// ----------------------------------------------------------------------------
+const votesStore = usePluginsVotesStore();
+const isVoted = computed(() => votesStore.isVoted(props.brief.id));
 
 /**
  * Increase vote number and save to local storage.
