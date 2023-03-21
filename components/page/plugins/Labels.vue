@@ -9,8 +9,10 @@
 </template>
 
 <script setup lang="ts">
+import {Label} from "~/types/plugins";
+
 defineProps<{
-  labels: string[];
+  labels: Label[];
 }>();
 </script>
 
@@ -18,5 +20,9 @@ defineProps<{
 #labels {
   display: flex;
   flex-wrap: wrap;
+
+  *{
+    margin-right: 0.5rem;
+  }
 }
 </style>

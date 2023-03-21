@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ElTag>
     <div
         v-if="label === 'information'"
         class="label"
@@ -28,21 +28,21 @@
       <ElIconShare class="label-icon"/>
       <div class="label-text">{{ t("api") }}</div>
     </div>
-  </div>
+  </ElTag>
 </template>
 
 <script setup lang="ts">
+import {Label} from "~/types/plugins";
+
 const {t} = useI18n();
 
 defineProps<{
-  label: string;
+  label: Label;
 }>();
 </script>
 
 <style scoped lang="scss">
 .label {
-  margin-right: 0.5rem;
-
   display: flex;
   align-items: center;
 
