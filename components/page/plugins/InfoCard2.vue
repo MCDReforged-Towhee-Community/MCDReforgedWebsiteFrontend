@@ -91,6 +91,24 @@
         </a>
       </div>
     </div>
+    <ElDivider/>
+    <div id="install">
+      <div class="title">{{ t("install") }}</div>
+      <el-tooltip
+          :content="t('installTooltip.default')"
+          placement="top"
+      >
+        <button
+            id="install-box"
+            @click="writeToClipboard"
+            @keydown.enter="writeToClipboard"
+        >
+          <ElIconArrowRight id="install-arrow"/>
+          <span id="install-text">{{ installCommand }}</span>
+          <ElIconCopyDocument id="install-copy"/>
+        </button>
+      </el-tooltip>
+    </div>
   </div>
 </template>
 
@@ -99,7 +117,7 @@ import {PluginData, PluginDataBrief} from "~/types/plugins";
 
 const {t} = useI18n();
 
-defineProps<{
+const prop = defineProps<{
   brief: PluginDataBrief;
   data: PluginData;
 }>();
@@ -109,6 +127,16 @@ defineEmits<{
   (e: "viewRelease", tagName: string): void;
   (e: "viewAsset", tagName: string, assetName: string): void;
 }>();
+
+const installCommand = `!!al i ${prop.data.meta.id}`;
+
+function writeToClipboard() {
+  navigator.clipboard.writeText(installCommand);
+  ElMessage({
+    message: t("installTooltip.copied"),
+    type: "success",
+  });
+}
 </script>
 
 <style scoped lang="scss">
@@ -225,6 +253,48 @@ defineEmits<{
     align-items: center;
   }
 }
+
+#install {
+  #install-box {
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    font-size: 0.8rem;
+
+    background: none;
+    border-radius: 0.5rem;
+    border: 1px solid var(--gray-4);
+
+    #install-arrow {
+      height: 0.8rem;
+      margin-right: 0.2rem;
+    }
+
+    #install-text {
+      margin-right: auto;
+    }
+
+    #install-copy {
+      display: none;
+
+      height: 0.8rem;
+    }
+
+    &:hover {
+      background: var(--blue-2);
+
+      #install-copy {
+        display: unset;
+      }
+    }
+  }
+}
 </style>
 
 <i18n locale="en-US" lang="yaml">
@@ -232,6 +302,10 @@ authors: Authors
 files: Recent Files
 viewAll: View All
 repository: Repository
+install: Install
+installTooltip:
+  default: Copy Command
+  copied: Copied!
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -239,4 +313,8 @@ authors: 作者
 files: 最新文件
 viewAll: 查看全部
 repository: 仓库
+install: 安装
+installTooltip:
+  default: 复制命令
+  copied: 已复制！
 </i18n>
