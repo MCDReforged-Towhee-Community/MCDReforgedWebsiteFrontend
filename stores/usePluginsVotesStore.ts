@@ -20,9 +20,15 @@ function request(method: HTTPMethod, url: string, data: object = {}) {
     });
 }
 
+/**
+ * Get plugins_voted from localStorage.
+ */
+function getVoted(): RemovableRef<Record<string, boolean>> {
+    return useLocalStorage<Record<string, boolean>>("plugins_voted", {});
+}
+
 interface PluginsVotesStoreState {
     votes: Record<string, Votes> | undefined;
-    voted: RemovableRef<Record<string, boolean>> | undefined;
 }
 
 /**
@@ -41,7 +47,6 @@ export interface Votes {
 export const usePluginsVotesStore = defineStore("pluginsVotes", {
     state: (): PluginsVotesStoreState => ({
         votes: undefined,
-        voted: useLocalStorage("plugins_voted", {}),
     }),
     getters: {
         /**
@@ -74,10 +79,10 @@ export const usePluginsVotesStore = defineStore("pluginsVotes", {
         /**
          * Check if the plugin is voted.
          */
-        isVoted: (state): (id: string) => boolean => {
+        isVoted: (): (id: string) => boolean => {
             return (id) => {
-                if (state.voted !== undefined && id in state.voted) {
-                    return state.voted[id];
+                if (getVoted() !== undefined && id in getVoted().value) {
+                    return getVoted().value[id];
                 } else {
                     return false;
                 }
@@ -165,7 +170,7 @@ export const usePluginsVotesStore = defineStore("pluginsVotes", {
             // increase votes
             await this.increaseVotesRequest(votes.objectId);
             this.votes![id].vote += 1;
-            this.voted![id] = true;
+            getVoted().value[id] = true;
         },
 
         /**
@@ -191,12 +196,7 @@ export const usePluginsVotesStore = defineStore("pluginsVotes", {
             // decrease votes
             await this.decreaseVotesRequest(votes.objectId);
             this.votes![id].vote -= 1;
-            this.voted![id] = false;
+            getVoted().value[id] = false;
         },
-    },
-    hydrate(state) {
-        // @ts-ignore
-        // https://github.com/vuejs/pinia/issues/2086
-        state.voted = useLocalStorage("plugins_voted", {});
     },
 });
