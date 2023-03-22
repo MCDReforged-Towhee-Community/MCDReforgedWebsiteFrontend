@@ -8,11 +8,12 @@ import {RemovableRef, useLocalStorage} from "@vueuse/core";
  * @param data Data.
  */
 function request(method: HTTPMethod, url: string, data: object = {}) {
-    return $fetch(`${useRuntimeConfig().public.leanCloud.serverURL}/1.1${url}`, {
+    const leanCloudConfig = useRuntimeConfig().public.leanCloud;
+    return $fetch(`${leanCloudConfig.serverURL}/1.1${url}`, {
         method,
         headers: {
-            "X-LC-Id": useRuntimeConfig().public.leanCloud.appId,
-            "X-LC-Key": useRuntimeConfig().public.leanCloud.appKey,
+            "X-LC-Id": leanCloudConfig.appId,
+            "X-LC-Key": leanCloudConfig.appKey,
             "Content-Type": "application/json"
         },
         body: method === "POST" || method === "PUT" ? data : undefined,
