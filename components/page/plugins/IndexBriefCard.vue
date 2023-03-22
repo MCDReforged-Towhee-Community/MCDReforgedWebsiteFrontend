@@ -42,7 +42,7 @@
       <div class="card-data-item">
         <ClientOnly>
           <ElIconStarFilled
-              v-if="votesStore.isVoted(brief.id)"
+              v-if="pluginsStore.isVoted(brief.id)"
               class="card-data-item-icon"
           />
           <ElIconStar
@@ -54,7 +54,7 @@
           {{ t("votes") }}
         </div>
         <div class="card-data-item-number">
-          {{ votesStore.getVotesNumber(brief.id) }}
+          {{ brief.votes }}
         </div>
       </div>
       <div class="card-data-item">
@@ -86,7 +86,7 @@
 import {PluginDataBrief} from "~/types/plugins";
 
 const {t} = useI18n();
-const votesStore = usePluginsVotesStore();
+const pluginsStore = usePluginsStore();
 
 const props = defineProps<{
   brief: PluginDataBrief;

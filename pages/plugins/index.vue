@@ -91,12 +91,15 @@ const {t} = useI18n();
 // pinia stores
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
-const votesStore = usePluginsVotesStore();
 
 // fill the store
 // https://github.com/vuejs/pinia/issues/1080
 await pluginsStore.nuxtServerInit();
-await votesStore.nuxtServerInit();
+
+// update votes on mounted
+onMounted(() => {
+  pluginsStore.updatePluginVotes();
+});
 
 // ----------------------------------------------------------------------------
 // search
@@ -130,11 +133,7 @@ const plugins = computed(() => {
   } else if (searchSetting.value.sorting === "author") {
     pluginsList.sort((a, b) => a.authors[0].name.localeCompare(b.authors[0].name));
   } else if (searchSetting.value.sorting === "votes") {
-    pluginsList.sort((a, b) => {
-      const aVotes = votesStore.getVotesNumber(a.id);
-      const bVotes = votesStore.getVotesNumber(b.id);
-      return bVotes - aVotes;
-    });
+    pluginsList.sort((a, b) => b.votes - a.votes);
   } else if (searchSetting.value.sorting === "updated_at") {
     pluginsList.sort((a, b) => {
       const aUpdatedAt = new Date(a.updated_at ?? 0);

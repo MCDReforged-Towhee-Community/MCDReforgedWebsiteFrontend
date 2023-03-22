@@ -29,12 +29,15 @@ const id = useRoute().params.id as string;
 // votes store
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
-const votesStore = usePluginsVotesStore();
 
 // fill the store
 // https://github.com/vuejs/pinia/issues/1080
 await pluginsStore.nuxtServerInit();
-await votesStore.nuxtServerInit();
+
+// update votes on mounted
+onMounted(() => {
+  pluginsStore.updatePluginVotes();
+});
 
 // check if plugin exists
 if (!pluginsStore.exists(id)) {

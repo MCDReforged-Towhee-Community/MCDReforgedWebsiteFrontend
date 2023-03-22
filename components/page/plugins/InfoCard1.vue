@@ -24,7 +24,7 @@
         <div>{{ t("votes") }}</div>
       </div>
       <div class="data-number">
-        {{ votesStore.getVotesNumber(brief.id) }}
+        {{ brief.votes }}
       </div>
     </div>
     <div
@@ -61,8 +61,8 @@ const props = defineProps<{
 // ----------------------------------------------------------------------------
 // votes store
 // ----------------------------------------------------------------------------
-const votesStore = usePluginsVotesStore();
-const isVoted = computed(() => votesStore.isVoted(props.brief.id));
+const pluginsStore = usePluginsStore();
+const isVoted = computed(() => pluginsStore.isVoted(props.brief.id));
 
 /**
  * Increase vote number and save to local storage.
@@ -70,7 +70,7 @@ const isVoted = computed(() => votesStore.isVoted(props.brief.id));
 async function increaseVote() {
   try {
     voting.value = true;
-    await votesStore.increaseVote(props.brief.id);
+    await pluginsStore.increaseVote(props.brief.id);
     voting.value = false;
   } catch (e) {
     console.error(e);
@@ -88,7 +88,7 @@ async function increaseVote() {
 async function decreaseVote() {
   try {
     voting.value = true;
-    await votesStore.decreaseVote(props.brief.id);
+    await pluginsStore.decreaseVote(props.brief.id);
     voting.value = false;
   } catch (e) {
     console.error(e);
