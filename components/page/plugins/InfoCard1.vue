@@ -132,6 +132,8 @@ async function decreaseVote() {
     display: flex;
     align-items: center;
 
+    white-space: nowrap;
+
     .data-name-icon {
       height: 1.2rem;
     }
