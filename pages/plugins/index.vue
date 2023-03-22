@@ -98,10 +98,6 @@ const votesStore = usePluginsVotesStore();
 await pluginsStore.nuxtServerInit();
 await votesStore.nuxtServerInit();
 
-function getDescription(plugin: PluginDataBrief): string {
-  return plugin.description[getMCDRLocale()] ?? "";
-}
-
 // ----------------------------------------------------------------------------
 // search
 // ----------------------------------------------------------------------------
