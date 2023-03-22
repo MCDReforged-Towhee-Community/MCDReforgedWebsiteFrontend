@@ -57,6 +57,7 @@ export default defineNuxtConfig({
         "@nuxtjs/i18n",
         "@nuxtjs/robots",
         "@pinia/nuxt",
+        "nuxt-simple-sitemap",
     ],
 
     nitro: {
@@ -137,5 +138,9 @@ export default defineNuxtConfig({
             "defineStore",
             "storeToRefs",
         ],
+    },
+
+    sitemap: {
+        siteUrl: baseURL,
     },
 });
