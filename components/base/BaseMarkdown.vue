@@ -62,10 +62,12 @@ interface Props {
   isEditor?: boolean;
   aTagBlankTarget?: boolean;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   isEditor: false,
   aTagBlankTarget: false,
 });
+
 defineEmits(["update:modelValue"]);
 
 // locale
@@ -100,7 +102,7 @@ const plugins = computed<BytemdPlugin[]>(() => {
     math({locale: getLocale("math")}),
     mediumZoom(),
     mermaid({locale: getLocale("mermaid")}),
-  ]
+  ];
   if (props.aTagBlankTarget) {
     temp.push(aTagBlankTargetPlugin);
   }
