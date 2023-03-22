@@ -106,7 +106,7 @@ const props = defineProps<{
 
   color: var(--gray-7);
 
-  @media only screen and (width < $size-md) {
+  @media only screen and (max-width: $size-md) {
     flex-direction: column;
   }
 
@@ -116,7 +116,7 @@ const props = defineProps<{
     flex-direction: column;
     justify-content: space-between;
 
-    @media only screen and (width < $size-md) {
+    @media only screen and (max-width: $size-md) {
       max-width: 100%;
     }
 
@@ -171,7 +171,7 @@ const props = defineProps<{
     justify-content: space-around;
     align-items: flex-end;
 
-    @media only screen and (width < $size-md) {
+    @media only screen and (max-width: $size-md) {
       margin-top: 1rem;
       display: unset;
     }

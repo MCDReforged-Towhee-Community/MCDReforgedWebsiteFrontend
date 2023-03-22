@@ -88,11 +88,11 @@ function viewAsset(tagName: string, assetName: string) {
   justify-content: space-between;
   align-items: flex-start;
 
-  @media only screen and (width < $size-xl) {
+  @media only screen and (max-width: $size-xl) {
     padding: 1rem;
   }
 
-  @media only screen and (width < $size-lg) {
+  @media only screen and (max-width: $size-lg) {
     flex-direction: column;
   }
 }
@@ -103,7 +103,7 @@ function viewAsset(tagName: string, assetName: string) {
   display: grid;
   grid-gap: 1rem;
 
-  @media only screen and (width < $size-lg) {
+  @media only screen and (max-width: $size-lg) {
     width: 100%;
     margin-bottom: 1rem;
   }
@@ -112,7 +112,7 @@ function viewAsset(tagName: string, assetName: string) {
 #main {
   width: 70%;
 
-  @media only screen and (width < $size-lg) {
+  @media only screen and (max-width: $size-lg) {
     width: 100%;
   }
 }

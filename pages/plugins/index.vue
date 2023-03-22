@@ -203,11 +203,11 @@ function shouldShow(plugin: PluginDataBrief): boolean {
   justify-content: space-between;
   align-items: flex-start;
 
-  @media only screen and (width < $size-xl) {
+  @media only screen and (max-width: $size-xl) {
     padding: 1rem;
   }
 
-  @media only screen and (width < $size-lg) {
+  @media only screen and (max-width: $size-lg) {
     flex-direction: column;
   }
 
@@ -217,7 +217,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     position: sticky;
     top: 1rem;
 
-    @media only screen and (width < $size-lg) {
+    @media only screen and (max-width: $size-lg) {
       width: 100%;
       margin-bottom: 1rem;
 
@@ -245,7 +245,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     width: 80%;
     position: relative;
 
-    @media only screen and (width < $size-lg) {
+    @media only screen and (max-width: $size-lg) {
       width: 100%;
       margin-bottom: 1rem;
 

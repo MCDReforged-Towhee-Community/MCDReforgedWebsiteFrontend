@@ -51,7 +51,7 @@ const localeRef = ref(locale.value);
     justify-content: space-between;
     align-items: center;
 
-    @media only screen and (width < $size-xl) {
+    @media only screen and (max-width: $size-xl) {
       padding: 0.5rem 1rem;
     }
 
