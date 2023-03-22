@@ -1,10 +1,13 @@
-import {
-    PluginDataBriefSummary,
-    PluginDataSummary,
-} from "~/types/plugins";
+import {PluginDataBriefSummary} from "~/types/plugins";
 
 async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
-    const pluginDataSummary: PluginDataSummary = await $fetch("/api/plugins");
+    const [
+        pluginDataSummary,
+        pluginsVotes,
+    ] = await Promise.all([
+        $fetch("/api/plugins"),
+        $fetch("/api/pluginsVotes"),
+    ]);
     const pluginDataBriefSummary: PluginDataBriefSummary = {};
 
     for (const id in pluginDataSummary) {
@@ -33,7 +36,8 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
             description: meta.description,
             labels: info.labels,
             updated_at: updated_at,
-            downloads: downloads
+            downloads: downloads,
+            votes: pluginsVotes[id]?.vote ?? 0,
         };
     }
 

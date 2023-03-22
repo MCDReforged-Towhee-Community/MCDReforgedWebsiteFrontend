@@ -111,6 +111,7 @@ export interface PluginDataBrief {
     labels: Label[];
     updated_at: string | null;
     downloads: number;
+    votes: number;
 }
 
 export type PluginVotesSummary = Record<string, PluginVotes>;
