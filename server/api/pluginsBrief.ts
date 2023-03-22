@@ -1,6 +1,6 @@
 import {
     PluginDataBriefSummary,
-    PluginDataSummary
+    PluginDataSummary,
 } from "~/types/plugins";
 
 async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
