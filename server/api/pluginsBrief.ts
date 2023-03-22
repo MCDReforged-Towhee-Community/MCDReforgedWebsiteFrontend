@@ -40,6 +40,10 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
     return pluginDataBriefSummary;
 }
 
-export default defineEventHandler(async (): Promise<PluginDataBriefSummary> => {
-    return await getPluginDataBriefSummary();
-});
+export default defineCachedEventHandler(
+    async (): Promise<PluginDataBriefSummary> => await getPluginDataBriefSummary(),
+    {
+        name: "plugins",
+        maxAge: 60 * 10,
+    }
+);
