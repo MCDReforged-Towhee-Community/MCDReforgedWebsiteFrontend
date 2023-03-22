@@ -1,8 +1,5 @@
 export default [
     {
-        UserAgent: "*",
-        Disallow: [
-            "/plugins",
-        ],
+        Sitemap: `${useRuntimeConfig().public.baseURL}/sitemap.xml`,
     },
 ];
