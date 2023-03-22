@@ -53,6 +53,7 @@ export default defineNuxtConfig({
 
     modules: [
         "@element-plus/nuxt",
+        "@nuxt/devtools",
         "@nuxtjs/google-fonts",
         "@nuxtjs/i18n",
         "@nuxtjs/robots",
