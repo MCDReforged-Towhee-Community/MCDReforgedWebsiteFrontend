@@ -257,11 +257,7 @@ function writeToClipboard() {
     }
 
     .files-asset-text {
-      width: 60%;
-
-      @media only screen and (width < $size-md) {
-        width: 80%;
-      }
+      width: 80%;
 
       .files-asset-text-name {
         color: var(--gray-7);
