@@ -1,8 +1,16 @@
 <template>
   <div id="plugin">
+    <ElBacktop
+        style="left: 40px;"
+        :visibility-height="backtopVisibilityHeight"
+    />
     <aside id="aside">
-      <PagePluginsInfoCard1 :brief="pluginBrief"/>
+      <PagePluginsInfoCard1
+          ref="infoCard1"
+          :brief="pluginBrief"
+      />
       <PagePluginsInfoCard2
+          ref="infoCard2"
           :brief="pluginBrief"
           :data="pluginData"
           @view-all="viewAllRelease"
@@ -85,6 +93,7 @@
 <script setup lang="ts">
 import {ComputedRef} from "vue";
 import {PluginData, PluginDataBrief} from "~/types/plugins";
+import {PagePluginsInfoCard1, PagePluginsInfoCard2} from "#components";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -92,6 +101,16 @@ import {PluginData, PluginDataBrief} from "~/types/plugins";
 const {t} = useI18n();
 const id = useRoute().params.id as string;
 
+// ----------------------------------------------------------------------------
+// component refs
+// ----------------------------------------------------------------------------
+const infoCard1 = ref<InstanceType<typeof PagePluginsInfoCard1> | null>(null);
+const infoCard2 = ref<InstanceType<typeof PagePluginsInfoCard2> | null>(null);
+const backtopVisibilityHeight = ref(0);
+
+onMounted(() => {
+  backtopVisibilityHeight.value = (infoCard1.value!.$el.clientHeight + infoCard2.value!.$el.clientHeight) / 2;
+});
 // ----------------------------------------------------------------------------
 // votes store
 // ----------------------------------------------------------------------------

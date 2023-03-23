@@ -1,5 +1,6 @@
 <template>
   <div id="plugins">
+    <ElBacktop style="left: 40px;"/>
     <div
         id="plugins-search"
         class="box"
