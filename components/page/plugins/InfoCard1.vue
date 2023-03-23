@@ -68,10 +68,9 @@ const isVoted = computed(() => pluginsStore.isVoted(props.brief.id));
  * Increase vote number and save to local storage.
  */
 async function increaseVote() {
+  voting.value = true;
   try {
-    voting.value = true;
     await pluginsStore.increaseVote(props.brief.id);
-    voting.value = false;
   } catch (e) {
     console.error(e);
     ElNotification({
@@ -79,6 +78,8 @@ async function increaseVote() {
       message: t("increaseVote.message"),
       type: "error",
     });
+  } finally {
+    voting.value = false;
   }
 }
 
@@ -86,10 +87,9 @@ async function increaseVote() {
  * Decrease vote number and save to local storage.
  */
 async function decreaseVote() {
+  voting.value = true;
   try {
-    voting.value = true;
     await pluginsStore.decreaseVote(props.brief.id);
-    voting.value = false;
   } catch (e) {
     console.error(e);
     ElNotification({
@@ -97,6 +97,8 @@ async function decreaseVote() {
       message: t("decreaseVote.message"),
       type: "error",
     });
+  } finally {
+    voting.value = false;
   }
 }
 </script>
