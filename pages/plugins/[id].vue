@@ -27,6 +27,56 @@
             name="versions"
         >
         </el-tab-pane>
+        <el-tab-pane
+            v-if="requirements.length > 0 || dependencies.length > 0"
+            :label="t('main.relations.title')"
+            name="relations"
+        >
+          <div
+              v-if="requirements.length > 0"
+              id="main-tabs-relations-requirements"
+          >
+            <div class="main-tabs-relations-title">
+              {{ t("main.relations.requirements") }}
+            </div>
+            <ClientOnly>
+              <el-table :data="requirements">
+                <el-table-column
+                    prop="package"
+                    :label="t('main.relations.package')"
+                />
+                <el-table-column
+                    prop="version"
+                    :label="t('main.relations.version')"
+                />
+              </el-table>
+            </ClientOnly>
+          </div>
+          <div
+              v-if="dependencies.length > 0"
+              id="main-tabs-relations-dependencies"
+          >
+            <div class="main-tabs-relations-title">
+              {{ t("main.relations.dependencies") }}
+            </div>
+            <ClientOnly>
+              <el-table :data="dependencies">
+                <el-table-column
+                    prop="plugin"
+                    :label="t('main.relations.plugin')"
+                >
+                  <template #default="scope">
+                    <PagePluginsPluginName :id="scope.row.plugin"/>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="version"
+                    :label="t('main.relations.version')"
+                />
+              </el-table>
+            </ClientOnly>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </main>
   </div>
@@ -73,10 +123,24 @@ const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as Plug
 // introduction
 const introduction: ComputedRef<string> = computed(() => pluginData.info.introduction[getMCDRLocale()] ?? "");
 
+// requirements
+const requirements = pluginData.meta.requirements.map((requirement) => {
+  const name = /^[^<>=~^]+/.exec(requirement)![0];
+  return {
+    package: name,
+    version: requirement.replace(name, ""),
+  };
+});
+
+// dependencies
+const dependencies = Object
+    .entries(pluginData.meta.dependencies)
+    .map(([plugin, version]) => ({plugin, version}));
+
 // ----------------------------------------------------------------------------
 // tab
 // ----------------------------------------------------------------------------
-type Tab = "introduction" | "versions";
+type Tab = "introduction" | "versions" | "relations";
 const tab: Ref<Tab> = ref("introduction");
 
 // ----------------------------------------------------------------------------
@@ -138,6 +202,20 @@ function viewAsset(tagName: string, assetName: string) {
 
   #main-tabs {
     padding: 1rem 2rem;
+
+    :deep(.el-table tr:hover>td.el-table__cell) {
+      background-color: var(--el-table-tr-bg-color);
+    }
+
+    #main-tabs-relations-requirements {
+      margin-bottom: 1rem;
+    }
+
+    .main-tabs-relations-title {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
   }
 }
 </style>
@@ -152,6 +230,13 @@ error:
 main:
   introduction: Introduction
   versions: Versions
+  relations:
+    title: Relations
+    requirements: Python Requirements
+    dependencies: Plugin Dependencies
+    package: Package
+    plugin: Plugin
+    version: Version
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -167,4 +252,11 @@ error:
 main:
   introduction: 介绍
   versions: 版本
+  relations:
+    title: 关联
+    requirements: Python 依赖
+    dependencies: 插件依赖
+    package: 包名
+    plugin: 插件
+    version: 版本
 </i18n>
