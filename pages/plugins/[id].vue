@@ -85,15 +85,9 @@ function viewAsset(tagName: string, assetName: string) {
 @import "assets/css/variables.scss";
 
 #plugin {
-  padding: 2rem min(20vw, 20rem);
-
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
-  @media only screen and (max-width: $size-xl) {
-    padding: 1rem;
-  }
 
   @media only screen and (max-width: $size-lg) {
     flex-direction: column;

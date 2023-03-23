@@ -1,10 +1,12 @@
 <template>
   <NuxtLayout>
-    <NuxtLoadingIndicator color="var(--blue-6)"/>
-    <TheHeader/>
-    <ElConfigProvider :locale="locale">
-      <NuxtPage/>
-    </ElConfigProvider>
+    <div id="_layout">
+      <NuxtLoadingIndicator color="var(--blue-6)"/>
+      <TheHeader/>
+      <ElConfigProvider :locale="locale">
+        <NuxtPage/>
+      </ElConfigProvider>
+    </div>
   </NuxtLayout>
 </template>
 
@@ -30,3 +32,11 @@ useHead({title: () => i18n.t("global.title")});
 // i18n head attributes
 useHead(useLocaleHead({addSeoAttributes: true}));
 </script>
+
+<style scoped lang="scss">
+#_layout {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+</style>

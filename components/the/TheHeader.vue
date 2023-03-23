@@ -42,7 +42,7 @@ const localeRef = ref(locale.value);
 
   #content {
     height: 100%;
-    padding: 0.5rem min(20vw, 20rem);
+    padding: 0.5rem 0;
     box-sizing: border-box;
 
     background-color: var(--stone-3);
@@ -50,10 +50,6 @@ const localeRef = ref(locale.value);
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    @media only screen and (max-width: $size-xl) {
-      padding: 0.5rem 1rem;
-    }
 
     .logo {
       height: 100%;
