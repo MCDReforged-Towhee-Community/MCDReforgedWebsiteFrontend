@@ -289,6 +289,8 @@ function writeToClipboard() {
   #repository-link {
     display: flex;
     align-items: center;
+
+    overflow-wrap: anywhere;
   }
 }
 </style>
