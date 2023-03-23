@@ -143,5 +143,6 @@ export default defineNuxtConfig({
 
     sitemap: {
         siteUrl: baseURL,
+        autoLastmod: false,
     },
 });
