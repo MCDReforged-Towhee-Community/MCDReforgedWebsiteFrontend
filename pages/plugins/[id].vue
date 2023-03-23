@@ -11,6 +11,23 @@
       />
     </aside>
     <main id="main">
+      <el-tabs
+          id="main-tabs"
+          class="box"
+          v-model="tab"
+      >
+        <el-tab-pane
+            :label="t('main.introduction')"
+            name="introduction"
+        >
+          <BaseMarkdown :model-value="introduction" a-tag-blank-target/>
+        </el-tab-pane>
+        <el-tab-pane
+            :label="t('main.versions')"
+            name="versions"
+        >
+        </el-tab-pane>
+      </el-tabs>
     </main>
   </div>
 </template>
@@ -57,13 +74,19 @@ const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as Plug
 const introduction: ComputedRef<string> = computed(() => pluginData.info.introduction[getMCDRLocale()] ?? "");
 
 // ----------------------------------------------------------------------------
+// tab
+// ----------------------------------------------------------------------------
+type Tab = "introduction" | "versions";
+const tab: Ref<Tab> = ref("introduction");
+
+// ----------------------------------------------------------------------------
 // event handlers
 // ----------------------------------------------------------------------------
 /**
  * View all release.
  */
 function viewAllRelease() {
-  console.log("view all release");
+  tab.value = "versions";
 }
 
 /**
@@ -112,6 +135,10 @@ function viewAsset(tagName: string, assetName: string) {
   @media only screen and (max-width: $size-lg) {
     width: 100%;
   }
+
+  #main-tabs {
+    padding: 1rem 2rem;
+  }
 }
 </style>
 
@@ -122,6 +149,9 @@ error:
   decreaseVote:
     title: Error
     message: Cannot decrease vote number.
+main:
+  introduction: Introduction
+  versions: Versions
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -134,4 +164,7 @@ error:
   decreaseVote:
     title: 错误
     message: 无法减少投票数。
+main:
+  introduction: 介绍
+  versions: 版本
 </i18n>
