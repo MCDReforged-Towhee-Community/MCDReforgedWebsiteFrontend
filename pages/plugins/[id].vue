@@ -1,6 +1,6 @@
 <template>
   <div id="plugin">
-    <div id="aside">
+    <aside id="aside">
       <PagePluginsInfoCard1 :brief="pluginBrief"/>
       <PagePluginsInfoCard2
           :brief="pluginBrief"
@@ -9,9 +9,9 @@
           @view-release="viewRelease"
           @view-asset="viewAsset"
       />
-    </div>
-    <div id="main">
-    </div>
+    </aside>
+    <main id="main">
+    </main>
   </div>
 </template>
 
