@@ -35,16 +35,16 @@
       <div>{{ $d(new Date(brief.updated_at), "text") }}</div>
     </div>
     <ElDivider/>
-    <ClientOnly>
-      <ElButton
-          id="vote"
-          :icon="isVoted ? ElIconStarFilled : ElIconStar"
-          @click="isVoted ? decreaseVote() : increaseVote()"
-          :loading="!!voting"
-      >
-        {{ isVoted ? t("decreaseVote.button") : t("increaseVote.button") }}
-      </ElButton>
-    </ClientOnly>
+    <ElButton
+        id="vote"
+        @click="isVoted ? decreaseVote() : increaseVote()"
+        :loading="!!voting"
+    >
+      <template #icon>
+        <PagePluginsVoteStar :id="brief.id"/>
+      </template>
+      {{ isVoted ? t("decreaseVote.button") : t("increaseVote.button") }}
+    </ElButton>
   </div>
 </template>
 
