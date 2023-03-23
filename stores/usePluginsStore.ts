@@ -112,10 +112,8 @@ export const usePluginsStore = defineStore("plugins", {
         async updatePluginVotes() {
             this.pluginVotesSummary = await useLeanCloud().fetchVotes();
 
-            for (const id in this.pluginVotesSummary) {
-                if (this.pluginDataBriefSummary !== undefined && id in this.pluginDataBriefSummary) {
-                    this.pluginDataBriefSummary[id].votes = this.pluginVotesSummary[id].vote;
-                }
+            for (const id in this.pluginDataBriefSummary) {
+                this.pluginDataBriefSummary[id].votes = this.pluginVotesSummary[id]?.vote ?? 0;
             }
         },
 
