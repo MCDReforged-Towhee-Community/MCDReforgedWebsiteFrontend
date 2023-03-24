@@ -12,10 +12,10 @@ export default defineNuxtConfig({
                     content: "width=device-width, initial-scale=1"
                 },
                 {charset: "utf-8"},
-                {name: "description", content: "MCDR Plugin Catalogue"},
+                {name: "description", content: "MCDReforged Website"},
                 {
                     name: "keywords",
-                    content: "MCDReforged, MCDR, Minecraft, Plugin Catalogue"
+                    content: "MCDReforged, MCDR, Minecraft"
                 },
             ],
             link: [

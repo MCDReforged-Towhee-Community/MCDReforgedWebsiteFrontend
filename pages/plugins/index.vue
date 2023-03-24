@@ -88,6 +88,9 @@ import {
 // ----------------------------------------------------------------------------
 const {t} = useI18n();
 
+// title
+useHead({title: () => t("title")});
+
 // ----------------------------------------------------------------------------
 // pinia stores
 // ----------------------------------------------------------------------------
@@ -266,6 +269,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
 </style>
 
 <i18n locale="en-US" lang="yaml">
+title: MCDR Plugin Catalogue
 search:
   title: Filter
   name: Name
@@ -282,6 +286,7 @@ sorting:
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
+title: MCDR 插件目录
 search:
   title: 搜索
   name: 名称
