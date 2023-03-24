@@ -45,7 +45,7 @@
           :placeholder="t('search.sorting')"
       >
         <ElOption
-            v-for="sorting in ['name', 'author', 'votes', 'updated_at', 'downloads']"
+            v-for="sorting in SORTS"
             :key="sorting"
             :label="t(`sorting.${sorting}`)"
             :value="sorting"
@@ -108,12 +108,14 @@ onMounted(() => {
 // ----------------------------------------------------------------------------
 // search
 // ----------------------------------------------------------------------------
+const SORTS = ["name", "author", "votes", "updated_at", "downloads"] as const;
+type Sort = typeof SORTS[number];
 
 interface SearchSettingType {
   name: string;
   author: string;
   labels: Label[];
-  sorting: "name" | "author" | "votes" | "updated_at" | "downloads";
+  sorting: Sort;
   reverse: boolean;
 }
 
