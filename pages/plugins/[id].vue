@@ -111,6 +111,7 @@ const backtopVisibilityHeight = ref(0);
 onMounted(() => {
   backtopVisibilityHeight.value = (infoCard1.value!.$el.clientHeight + infoCard2.value!.$el.clientHeight) / 2;
 });
+
 // ----------------------------------------------------------------------------
 // votes store
 // ----------------------------------------------------------------------------
