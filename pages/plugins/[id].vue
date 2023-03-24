@@ -28,7 +28,9 @@
             :label="t('main.introduction')"
             name="introduction"
         >
-          <BaseMarkdown :model-value="introduction" a-tag-blank-target/>
+          <ElSkeleton animated :loading="loading">
+            <BaseMarkdown :model-value="introduction" a-tag-blank-target/>
+          </ElSkeleton>
         </el-tab-pane>
         <el-tab-pane
             :label="t('main.versions')"
@@ -110,6 +112,15 @@ const backtopVisibilityHeight = ref(0);
 
 onMounted(() => {
   backtopVisibilityHeight.value = (infoCard1.value!.$el.clientHeight + infoCard2.value!.$el.clientHeight) / 2;
+});
+
+// ----------------------------------------------------------------------------
+// main box loading
+// ----------------------------------------------------------------------------
+const loading = ref<boolean>(true);
+
+onMounted(() => {
+  loading.value = false;
 });
 
 // ----------------------------------------------------------------------------
