@@ -144,7 +144,7 @@ const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as Plug
 const introduction: ComputedRef<string> = computed(() => pluginData.info.introduction[getMCDRLocale()] ?? "");
 
 // requirements
-const requirements = pluginData.meta.requirements.map((requirement) => {
+const requirements = pluginData.meta.requirements.map((requirement: string) => {
   const name = /^[^<>=~^]+/.exec(requirement)![0];
   return {
     package: name,
