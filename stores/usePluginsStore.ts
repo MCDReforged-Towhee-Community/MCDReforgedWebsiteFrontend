@@ -102,8 +102,13 @@ export const usePluginsStore = defineStore("plugins", {
             }
 
             // fetch data
-            this.pluginDataBriefSummary = await $fetch("/api/pluginsBrief");
-            this.pluginVotesSummary = await $fetch("/api/pluginsVotes");
+            [
+                this.pluginDataBriefSummary,
+                this.pluginVotesSummary,
+            ] = await Promise.all([
+                $fetch("/api/pluginsBrief"),
+                $fetch("/api/pluginsVotes"),
+            ]);
         },
 
         /**
