@@ -17,7 +17,7 @@
             v-model="localeRef"
             @change="val => setLocale(val)"
         >
-          <el-option
+          <ElOption
               v-for="item in locales"
               :key="item.name"
               :value="item.code"

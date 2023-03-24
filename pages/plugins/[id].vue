@@ -19,25 +19,25 @@
       />
     </aside>
     <main id="main">
-      <el-tabs
+      <ElTabs
           id="main-tabs"
           class="box"
           v-model="tab"
       >
-        <el-tab-pane
+        <ElTabPane
             :label="t('main.introduction')"
             name="introduction"
         >
           <ElSkeleton animated :loading="loading">
             <BaseMarkdown :model-value="introduction" a-tag-blank-target/>
           </ElSkeleton>
-        </el-tab-pane>
-        <el-tab-pane
+        </ElTabPane>
+        <ElTabPane
             :label="t('main.versions')"
             name="versions"
         >
-        </el-tab-pane>
-        <el-tab-pane
+        </ElTabPane>
+        <ElTabPane
             v-if="requirements.length > 0 || dependencies.length > 0"
             :label="t('main.relations.title')"
             name="relations"
@@ -50,16 +50,16 @@
               {{ t("main.relations.requirements") }}
             </div>
             <ClientOnly>
-              <el-table :data="requirements">
-                <el-table-column
+              <ElTable :data="requirements">
+                <ElTableColumn
                     prop="package"
                     :label="t('main.relations.package')"
                 />
-                <el-table-column
+                <ElTableColumn
                     prop="version"
                     :label="t('main.relations.version')"
                 />
-              </el-table>
+              </ElTable>
             </ClientOnly>
           </div>
           <div
@@ -70,24 +70,24 @@
               {{ t("main.relations.dependencies") }}
             </div>
             <ClientOnly>
-              <el-table :data="dependencies">
-                <el-table-column
+              <ElTable :data="dependencies">
+                <ElTableColumn
                     prop="plugin"
                     :label="t('main.relations.plugin')"
                 >
                   <template #default="scope">
                     <PagePluginsPluginName :id="scope.row.plugin"/>
                   </template>
-                </el-table-column>
-                <el-table-column
+                </ElTableColumn>
+                <ElTableColumn
                     prop="version"
                     :label="t('main.relations.version')"
                 />
-              </el-table>
+              </ElTable>
             </ClientOnly>
           </div>
-        </el-tab-pane>
-      </el-tabs>
+        </ElTabPane>
+      </ElTabs>
     </main>
   </div>
 </template>

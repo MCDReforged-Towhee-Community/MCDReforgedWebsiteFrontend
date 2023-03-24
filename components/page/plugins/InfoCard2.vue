@@ -2,7 +2,7 @@
   <div class="box">
     <div id="install">
       <div class="title">{{ t("install") }}</div>
-      <el-tooltip
+      <ElTooltip
           :content="t('installTooltip.default')"
           placement="top"
       >
@@ -15,7 +15,7 @@
           <span id="install-text">{{ installCommand }}</span>
           <ElIconCopyDocument id="install-copy"/>
         </button>
-      </el-tooltip>
+      </ElTooltip>
     </div>
     <ElDivider/>
     <div id="files">
@@ -61,7 +61,7 @@
               download
               @click.stop
           >
-            <el-button
+            <ElButton
                 type="primary"
                 :icon="ElIconDownload"
             />
