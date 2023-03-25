@@ -20,7 +20,7 @@
     >
       <PagePluginsBaseReleaseDrawer
           v-model:is-drawer-open="isDrawerOpen"
-          v-model:release="advancedReleaseInfo"
+          v-model:advanced-release-info="advancedReleaseInfo"
       />
       <ElEmpty v-if="releases.length === 0"/>
       <PagePluginsBaseFileCard

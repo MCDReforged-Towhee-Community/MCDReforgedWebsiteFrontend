@@ -3,7 +3,7 @@
       :model-value="isDrawerOpen"
       append-to-body
       size="50%"
-      :title="release?.version ?? ''"
+      :title="advancedReleaseInfo?.version ?? ''"
       @closed="$emit('update:isDrawerOpen', false)"
   >
     <ElCollapse v-model="activeCollapses">
@@ -17,7 +17,7 @@
           :title="t('description')"
       >
         <BaseMarkdown
-            :model-value="release?.release.description ?? ''"
+            :model-value="advancedReleaseInfo?.release.description ?? ''"
             a-tag-blank-target
         />
       </ElCollapseItem>
@@ -25,6 +25,15 @@
           name="files"
           :title="t('files')"
       >
+        <PagePluginsBaseFileCard
+            v-for="asset in advancedReleaseInfo?.release.assets"
+            :key="asset.name"
+            :name="asset.name"
+            :size="asset.size"
+            :downloads="asset.download_count"
+            :created-at="asset.created_at"
+            :download-url="asset.browser_download_url"
+        />
       </ElCollapseItem>
       <ElCollapseItem
           name="requirements"
@@ -52,15 +61,15 @@ const {t} = useI18n();
 
 interface Props {
   isDrawerOpen: boolean;
-  release: AdvancedReleaseInfo | null;
+  advancedReleaseInfo: AdvancedReleaseInfo | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isDrawerOpen: false,
 })
-const {isDrawerOpen, release} = toRefs(props);
-const requirements: ComputedRef<string[]> = computed(() => release.value?.release.meta.requirements ?? []);
-const dependencies: ComputedRef<Record<string, string>> = computed(() => release.value?.release.meta.dependencies ?? {});
+const {isDrawerOpen, advancedReleaseInfo} = toRefs(props);
+const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value?.release.meta.requirements ?? []);
+const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value?.release.meta.dependencies ?? {});
 
 const activeCollapses = ref(["meta", "description", "files"]);
 
