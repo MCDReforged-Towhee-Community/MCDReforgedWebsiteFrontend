@@ -88,14 +88,14 @@ const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as Plug
  * View all release.
  */
 function viewAllRelease() {
-  mainTabs.value.showVersionsTab();
+  mainTabs.value!.showVersionsTab();
 }
 
 /**
  * View a release.
  */
 function viewRelease(tagName: string) {
-  mainTabs.value.showVersionsTab();
+  mainTabs.value!.showVersionsTab();
   console.log("view release", tagName);
 }
 
@@ -103,7 +103,7 @@ function viewRelease(tagName: string) {
  * View an asset.
  */
 function viewAsset(tagName: string, assetName: string) {
-  mainTabs.value.showVersionsTab();
+  mainTabs.value!.showVersionsTab();
   console.log("view asset", tagName, assetName);
 }
 </script>
