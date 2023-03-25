@@ -9,11 +9,6 @@
   >
     <ElCollapse v-model="activeCollapses">
       <ElCollapseItem
-          name="meta"
-          :title="t('meta')"
-      >
-      </ElCollapseItem>
-      <ElCollapseItem
           name="description"
           :title="t('description')"
       >
@@ -92,7 +87,7 @@ const dependencies: ComputedRef<Record<string, string>> = computed(() => advance
 // ----------------------------------------------------------------------------
 const direction = ref<"ltr" | "rtl" | "ttb" | "btt">("rtl");
 const size = ref<"50%" | "80%">("50%");
-const activeCollapses = ref(["meta", "description", "files"]);
+const activeCollapses = ref(["description", "files"]);
 
 function updateDrawerProps() {
   if (window.innerWidth <= 1024) {
@@ -117,7 +112,6 @@ onMounted(() => {
 </style>
 
 <i18n locale="en-US" lang="yaml">
-meta: Meta
 description: Description
 files: Files
 requirements: Requirements
@@ -125,7 +119,6 @@ dependencies: Dependencies
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
-meta: 元数据
 description: 描述
 files: 文件
 requirements: Python 依赖
