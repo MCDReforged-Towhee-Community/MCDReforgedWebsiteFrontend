@@ -128,3 +128,14 @@ export interface PluginVotes {
     id: string;
     vote: number;
 }
+
+// ----------------------------------------------------------------------------
+// View types
+// ----------------------------------------------------------------------------
+export interface AdvancedReleaseInfo {
+    version: string;
+    downloads: number;
+    createdAt: string;
+    mainAsset: AssetInfo;
+    release: ReleaseInfo;
+}

@@ -96,7 +96,7 @@ function viewAllRelease() {
  */
 function viewRelease(tagName: string) {
   mainTabs.value!.showVersionsTab();
-  console.log("view release", tagName);
+  mainTabs.value!.viewRelease(tagName);
 }
 
 /**
@@ -104,7 +104,7 @@ function viewRelease(tagName: string) {
  */
 function viewAsset(tagName: string, assetName: string) {
   mainTabs.value!.showVersionsTab();
-  console.log("view asset", tagName, assetName);
+  mainTabs.value!.viewRelease(tagName);
 }
 </script>
 

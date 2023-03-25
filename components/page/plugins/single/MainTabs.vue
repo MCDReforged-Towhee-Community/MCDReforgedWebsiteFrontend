@@ -18,6 +18,10 @@
         :label="t('versions.title')"
         name="versions"
     >
+      <PagePluginsBaseReleaseDrawer
+          v-model:is-drawer-open="isDrawerOpen"
+          v-model:release="advancedReleaseInfo"
+      />
       <div
           v-for="release in releases"
           :key="release.version"
@@ -84,7 +88,12 @@
 
 <script setup lang="ts">
 import {ComputedRef} from "vue";
-import {PluginData, ReleaseInfo, AssetInfo} from "~/types/plugins";
+import {
+  PluginData,
+  ReleaseInfo,
+  AssetInfo,
+  AdvancedReleaseInfo,
+} from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -121,15 +130,6 @@ const {data} = props;
 // introduction
 const introduction: ComputedRef<string> = computed(() => data.info.introduction[getMCDRLocale()] ?? "");
 
-// releases
-interface AdvancedReleaseInfo {
-  version: string;
-  downloads: number;
-  createdAt: string;
-  mainAsset: AssetInfo;
-  release: ReleaseInfo;
-}
-
 /**
  * Get the main asset of a release.
  * @param {ReleaseInfo} release release info.
@@ -165,6 +165,20 @@ const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => (
 }));
 
 // ----------------------------------------------------------------------------
+// release drawer
+// ----------------------------------------------------------------------------
+const isDrawerOpen = ref<boolean>(false);
+const advancedReleaseInfo = ref<AdvancedReleaseInfo | null>(null);
+
+/**
+ * Show release drawer.
+ */
+function showDrawer(release: AdvancedReleaseInfo) {
+  isDrawerOpen.value = true;
+  advancedReleaseInfo.value = release;
+}
+
+// ----------------------------------------------------------------------------
 // exposes
 // ----------------------------------------------------------------------------
 /**
@@ -181,13 +195,14 @@ function showVersionsTab() {
 /**
  * Show release drawer.
  */
-function showDrawer(release: AdvancedReleaseInfo) {
-  console.log("showDrawer", release);
+function viewRelease(tagName: string) {
+  let release = releases.find(release => release.release.tag_name === tagName);
+  showDrawer(release!);
 }
 
 defineExpose({
   showVersionsTab,
-  showDrawer,
+  viewRelease,
 });
 </script>
 
