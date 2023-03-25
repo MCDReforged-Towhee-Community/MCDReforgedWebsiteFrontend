@@ -55,54 +55,28 @@
       </div>
     </ElTabPane>
     <ElTabPane
-        v-if="requirements.length > 0 || dependencies.length > 0"
+        v-if="data.meta.requirements.length > 0 || Object.keys(data.meta.dependencies).length > 0"
         id="relations"
         :label="t('relations.title')"
         name="relations"
     >
       <div
-          v-if="requirements.length > 0"
           id="relations-requirements"
+          v-if="data.meta.requirements.length > 0"
       >
         <div class="relations-title">
           {{ t("relations.requirements") }}
         </div>
-        <ClientOnly>
-          <ElTable :data="requirements">
-            <ElTableColumn
-                prop="package"
-                :label="t('relations.package')"
-            />
-            <ElTableColumn
-                prop="version"
-                :label="t('relations.version')"
-            />
-          </ElTable>
-        </ClientOnly>
+        <PagePluginsBaseRequirements :requirements="data.meta.requirements"/>
       </div>
       <div
-          v-if="dependencies.length > 0"
           id="relations-dependencies"
+          v-if="Object.keys(data.meta.dependencies).length > 0"
       >
         <div class="relations-title">
           {{ t("relations.dependencies") }}
         </div>
-        <ClientOnly>
-          <ElTable :data="dependencies">
-            <ElTableColumn
-                prop="plugin"
-                :label="t('relations.plugin')"
-            >
-              <template #default="{row}">
-                <PagePluginsBasePluginName :id="row.plugin"/>
-              </template>
-            </ElTableColumn>
-            <ElTableColumn
-                prop="version"
-                :label="t('relations.version')"
-            />
-          </ElTable>
-        </ClientOnly>
+        <PagePluginsBaseDependcies :dependencies="data.meta.dependencies"/>
       </div>
     </ElTabPane>
   </ElTabs>
@@ -142,10 +116,10 @@ onMounted(() => {
 // ----------------------------------------------------------------------------
 // plugin data
 // ----------------------------------------------------------------------------
-const {data: pluginData} = props;
+const {data} = props;
 
 // introduction
-const introduction: ComputedRef<string> = computed(() => pluginData.info.introduction[getMCDRLocale()] ?? "");
+const introduction: ComputedRef<string> = computed(() => data.info.introduction[getMCDRLocale()] ?? "");
 
 // releases
 interface AdvancedReleaseInfo {
@@ -182,27 +156,13 @@ function formatSize(size: number): string {
   }
 }
 
-const releases: AdvancedReleaseInfo[] = pluginData.release.releases.map((release) => ({
+const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => ({
   version: release.parsed_version,
   downloads: release.assets.reduce((sum, asset) => sum + asset.download_count, 0),
   createdAt: release.created_at,
   mainAsset: getMainAsset(release),
   release: release,
 }));
-
-// requirements
-const requirements = pluginData.meta.requirements.map((requirement: string) => {
-  const name = /^[^<>=~^]+/.exec(requirement)![0];
-  return {
-    package: name,
-    version: requirement.replace(name, ""),
-  };
-});
-
-// dependencies
-const dependencies = Object
-    .entries(pluginData.meta.dependencies)
-    .map(([plugin, version]) => ({plugin, version}));
 
 // ----------------------------------------------------------------------------
 // exposes
@@ -314,18 +274,14 @@ defineExpose({
 }
 
 #relations {
-  :deep(.el-table tr:hover>td.el-table__cell) {
-    background-color: var(--el-table-tr-bg-color);
-  }
-
-  #relations-requirements {
-    margin-bottom: 1rem;
-  }
-
   .relations-title {
     margin-bottom: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
+  }
+
+  #relations-requirements {
+    margin-bottom: 1rem;
   }
 }
 </style>
@@ -339,9 +295,6 @@ relations:
   title: Relations
   requirements: Python Requirements
   dependencies: Plugin Dependencies
-  package: Package
-  plugin: Plugin
-  version: Version
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -353,7 +306,4 @@ relations:
   title: 关联
   requirements: Python 依赖
   dependencies: 插件依赖
-  package: 包名
-  plugin: 插件
-  version: 版本
 </i18n>
