@@ -62,7 +62,12 @@ const props = defineProps<{
 // votes store
 // ----------------------------------------------------------------------------
 const pluginsStore = usePluginsStore();
-const isVoted = computed(() => pluginsStore.isVoted(props.brief.id));
+const isVoted = ref(false);
+
+// update votes on mounted
+onMounted(() => {
+  isVoted.value = pluginsStore.isVoted(props.brief.id);
+});
 
 /**
  * Increase vote number and save to local storage.
