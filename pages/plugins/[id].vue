@@ -82,7 +82,7 @@ const pluginData: PluginData = await pluginsStore.getPluginData(id) as PluginDat
 const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as PluginDataBrief;
 
 // set title
-useHead({title: () => `${t("global.title")} - ${pluginBrief.name}`});
+useHead({title: () => `${t("title")} - ${pluginBrief.name}`});
 
 // ----------------------------------------------------------------------------
 // event handlers
@@ -146,6 +146,7 @@ function viewAsset(tagName: string, assetName: string) {
 </style>
 
 <i18n locale="en-US" lang="yaml">
+title: Plugin
 error:
   404:
     message: Plugin "{id}" does not exists!
@@ -155,6 +156,7 @@ error:
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
+title: 插件
 error:
   404:
     message: 插件 "{id}" 不存在！
