@@ -35,7 +35,7 @@
         </ElTabPane>
         <ElTabPane
             id="main-tabs-versions"
-            :label="t('main.versions')"
+            :label="t('main.versions.title')"
             name="versions"
         >
         </ElTabPane>
@@ -265,7 +265,8 @@ error:
     message: Cannot decrease vote number.
 main:
   introduction: Introduction
-  versions: Versions
+  versions:
+    title: Versions
   relations:
     title: Relations
     requirements: Python Requirements
@@ -287,7 +288,8 @@ error:
     message: 无法减少投票数。
 main:
   introduction: 介绍
-  versions: 版本
+  versions:
+    title: 版本
   relations:
     title: 关联
     requirements: Python 依赖
