@@ -94,7 +94,24 @@
     <ElDivider/>
     <div id="repository">
       <div class="title">{{ t("repository") }}</div>
-      <div id="repository-link">
+      <div
+          id="repository-link-1"
+          class="repository-link"
+      >
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            alt="GitHub"
+        />
+        <a
+            class="link"
+            :href="`${data.info.repository}`"
+            target="_blank"
+        >
+          {{ repositoryName }}
+        </a>
+      </div>
+      <div class="repository-link">
         <img
             class="github-img"
             src="https://github.com/favicon.ico"
@@ -105,7 +122,7 @@
             :href="`${data.info.repository}/tree/${data.info.branch}/${data.info.related_path}`"
             target="_blank"
         >
-          {{ data.info.repository.split("/").slice(-2).join("/") }}
+          {{ repositoryPagePath }}
         </a>
       </div>
     </div>
@@ -129,6 +146,8 @@ defineEmits<{
 }>();
 
 const installCommand = `!!al i ${prop.data.meta.id}`;
+const repositoryName = prop.data.info.repository.split("/").slice(-2).join("/");
+const repositoryPagePath = joinPath(repositoryName, prop.data.info.branch, prop.data.info.related_path);
 
 function writeToClipboard() {
   navigator.clipboard.writeText(installCommand);
@@ -286,7 +305,11 @@ function writeToClipboard() {
 }
 
 #repository {
-  #repository-link {
+  #repository-link-1 {
+    margin-bottom: 0.2rem;
+  }
+
+  .repository-link {
     display: flex;
     align-items: center;
 
