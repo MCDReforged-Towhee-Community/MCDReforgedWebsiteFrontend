@@ -71,11 +71,6 @@ defineEmits([
 </script>
 
 <style scoped lang="scss">
-.title {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
 </style>
 
 <i18n locale="en-US" lang="yaml">
