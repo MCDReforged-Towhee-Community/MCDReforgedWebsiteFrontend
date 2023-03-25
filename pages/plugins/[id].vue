@@ -25,6 +25,7 @@
           v-model="tab"
       >
         <ElTabPane
+            id="main-tabs-introduction"
             :label="t('main.introduction')"
             name="introduction"
         >
@@ -33,12 +34,14 @@
           </ElSkeleton>
         </ElTabPane>
         <ElTabPane
+            id="main-tabs-versions"
             :label="t('main.versions')"
             name="versions"
         >
         </ElTabPane>
         <ElTabPane
             v-if="requirements.length > 0 || dependencies.length > 0"
+            id="main-tabs-relations"
             :label="t('main.relations.title')"
             name="relations"
         >
@@ -234,18 +237,20 @@ function viewAsset(tagName: string, assetName: string) {
   #main-tabs {
     padding: 1rem 2rem;
 
-    :deep(.el-table tr:hover>td.el-table__cell) {
-      background-color: var(--el-table-tr-bg-color);
-    }
+    #main-tabs-relations {
+      :deep(.el-table tr:hover>td.el-table__cell) {
+        background-color: var(--el-table-tr-bg-color);
+      }
 
-    #main-tabs-relations-requirements {
-      margin-bottom: 1rem;
-    }
+      #main-tabs-relations-requirements {
+        margin-bottom: 1rem;
+      }
 
-    .main-tabs-relations-title {
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-      font-weight: bold;
+      .main-tabs-relations-title {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
     }
   }
 }
