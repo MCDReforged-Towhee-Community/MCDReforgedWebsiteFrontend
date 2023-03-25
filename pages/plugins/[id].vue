@@ -81,6 +81,9 @@ if (!pluginsStore.exists(id)) {
 const pluginData: PluginData = await pluginsStore.getPluginData(id) as PluginData;
 const pluginBrief: PluginDataBrief = pluginsStore.getPluginDataBrief(id) as PluginDataBrief;
 
+// set title
+useHead({title: () => `${t("global.title")} - ${pluginBrief.name}`});
+
 // ----------------------------------------------------------------------------
 // event handlers
 // ----------------------------------------------------------------------------
