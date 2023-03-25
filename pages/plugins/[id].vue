@@ -78,8 +78,8 @@
                     prop="plugin"
                     :label="t('main.relations.plugin')"
                 >
-                  <template #default="scope">
-                    <PagePluginsPluginName :id="scope.row.plugin"/>
+                  <template #default="{row}">
+                    <PagePluginsPluginName :id="row.plugin"/>
                   </template>
                 </ElTableColumn>
                 <ElTableColumn
