@@ -67,6 +67,7 @@ function formatSize(size: number): string {
 
 <style scoped lang="scss">
 @import "assets/css/variables.scss";
+
 .file {
   margin: 0.25rem;
   padding: 0.5rem;
