@@ -5,11 +5,11 @@
         :visibility-height="backtopVisibilityHeight"
     />
     <aside id="aside">
-      <PagePluginsInfoCard1
+      <PagePluginsSingleInfoCard1
           ref="infoCard1"
           :brief="pluginBrief"
       />
-      <PagePluginsInfoCard2
+      <PagePluginsSingleInfoCard2
           ref="infoCard2"
           :brief="pluginBrief"
           :data="pluginData"
@@ -120,7 +120,7 @@
                     :label="t('main.relations.plugin')"
                 >
                   <template #default="{row}">
-                    <PagePluginsPluginName :id="row.plugin"/>
+                    <PagePluginsBasePluginName :id="row.plugin"/>
                   </template>
                 </ElTableColumn>
                 <ElTableColumn
@@ -144,7 +144,10 @@ import {
   PluginData,
   PluginDataBrief,
 } from "~/types/plugins";
-import {PagePluginsInfoCard1, PagePluginsInfoCard2} from "#components";
+import {
+  PagePluginsSingleInfoCard1,
+  PagePluginsSingleInfoCard2,
+} from "#components";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -155,8 +158,8 @@ const id = useRoute().params.id as string;
 // ----------------------------------------------------------------------------
 // component refs
 // ----------------------------------------------------------------------------
-const infoCard1 = ref<InstanceType<typeof PagePluginsInfoCard1> | null>(null);
-const infoCard2 = ref<InstanceType<typeof PagePluginsInfoCard2> | null>(null);
+const infoCard1 = ref<InstanceType<typeof PagePluginsSingleInfoCard1> | null>(null);
+const infoCard2 = ref<InstanceType<typeof PagePluginsSingleInfoCard2> | null>(null);
 const backtopVisibilityHeight = ref(0);
 
 onMounted(() => {

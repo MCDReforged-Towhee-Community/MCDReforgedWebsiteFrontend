@@ -35,12 +35,12 @@
         />
       </div>
       <div class="card-labels">
-        <PagePluginsLabels :labels="brief.labels"/>
+        <PagePluginsBaseLabels :labels="brief.labels"/>
       </div>
     </div>
     <div class="card-data">
       <div class="card-data-item">
-        <PagePluginsVoteStar
+        <PagePluginsBaseVoteStar
             class="card-data-item-icon"
             :id="brief.id"
         />
@@ -87,7 +87,7 @@ const props = defineProps<{
 </script>
 
 <style scoped lang="scss">
-@import "assets/css/variables.scss";
+@import "../../../../assets/css/variables";
 
 #card {
   width: 100%;

@@ -33,7 +33,7 @@
             :key="label"
             :label="label"
         >
-          <PagePluginsLabel :label="label"/>
+          <PagePluginsBaseLabel :label="label"/>
         </ElCheckbox>
       </ElCheckboxGroup>
       <div>

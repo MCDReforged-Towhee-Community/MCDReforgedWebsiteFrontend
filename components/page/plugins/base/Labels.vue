@@ -1,6 +1,6 @@
 <template>
   <div id="labels">
-    <PagePluginsLabel
+    <PagePluginsBaseLabel
         v-for="label in labels"
         :key="label"
         :label="label"

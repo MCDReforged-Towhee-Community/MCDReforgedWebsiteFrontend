@@ -7,7 +7,7 @@
           a-tag-blank-target
       />
     </div>
-    <PagePluginsLabels :labels="brief.labels"/>
+    <PagePluginsBaseLabels :labels="brief.labels"/>
     <ElDivider/>
     <div class="data">
       <div class="data-name">
@@ -41,7 +41,7 @@
         :loading="!!voting"
     >
       <template #icon>
-        <PagePluginsVoteStar :id="brief.id"/>
+        <PagePluginsBaseVoteStar :id="brief.id"/>
       </template>
       {{ isVoted ? t("decreaseVote.button") : t("increaseVote.button") }}
     </ElButton>
