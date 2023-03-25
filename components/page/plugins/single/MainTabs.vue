@@ -22,6 +22,7 @@
           v-model:is-drawer-open="isDrawerOpen"
           v-model:release="advancedReleaseInfo"
       />
+      <ElEmpty v-if="releases.length === 0"/>
       <div
           v-for="release in releases"
           :key="release.version"
