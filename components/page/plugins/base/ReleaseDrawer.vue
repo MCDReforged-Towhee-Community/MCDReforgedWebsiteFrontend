@@ -2,7 +2,8 @@
   <ElDrawer
       :model-value="isDrawerOpen"
       append-to-body
-      size="50%"
+      :direction="direction"
+      :size="size"
       :title="advancedReleaseInfo?.version ?? ''"
       @closed="$emit('update:isDrawerOpen', false)"
   >
@@ -57,8 +58,14 @@
 import {ComputedRef} from "vue";
 import {AdvancedReleaseInfo} from "~/types/plugins";
 
+// ----------------------------------------------------------------------------
+// basic constants
+// ----------------------------------------------------------------------------
 const {t} = useI18n();
 
+// ----------------------------------------------------------------------------
+// props and emits
+// ----------------------------------------------------------------------------
 interface Props {
   isDrawerOpen: boolean;
   advancedReleaseInfo: AdvancedReleaseInfo | null;
@@ -67,16 +74,43 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   isDrawerOpen: false,
 })
-const {isDrawerOpen, advancedReleaseInfo} = toRefs(props);
-const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value?.release.meta.requirements ?? []);
-const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value?.release.meta.dependencies ?? {});
-
-const activeCollapses = ref(["meta", "description", "files"]);
 
 defineEmits([
   "update:isDrawerOpen",
   "update:release",
 ]);
+
+// ----------------------------------------------------------------------------
+// reactive variables
+// ----------------------------------------------------------------------------
+const {isDrawerOpen, advancedReleaseInfo} = toRefs(props);
+const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value?.release.meta.requirements ?? []);
+const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value?.release.meta.dependencies ?? {});
+
+// ----------------------------------------------------------------------------
+// El components props
+// ----------------------------------------------------------------------------
+const direction = ref<"ltr" | "rtl" | "ttb" | "btt">("rtl");
+const size = ref<"50%" | "80%">("50%");
+const activeCollapses = ref(["meta", "description", "files"]);
+
+function updateDrawerProps() {
+  if (window.innerWidth <= 1024) {
+    direction.value = "btt";
+    size.value = "80%";
+  } else {
+    direction.value = "rtl";
+    size.value = "50%";
+  }
+}
+
+if (process.client) {
+  useEventListener(window, "resize", updateDrawerProps);
+}
+
+onMounted(() => {
+  updateDrawerProps();
+});
 </script>
 
 <style scoped lang="scss">
