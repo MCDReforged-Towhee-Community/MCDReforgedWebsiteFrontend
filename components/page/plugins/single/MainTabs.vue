@@ -23,41 +23,16 @@
           v-model:release="advancedReleaseInfo"
       />
       <ElEmpty v-if="releases.length === 0"/>
-      <div
+      <PagePluginsBaseFileCard
           v-for="release in releases"
           :key="release.version"
-          class="version"
-          tabindex="0"
-          @keydown.enter.self="showDrawer(release)"
+          :name="release.mainAsset.name"
+          :size="release.mainAsset.size"
+          :downloads="release.downloads"
+          :created-at="release.createdAt"
+          :download-url="release.mainAsset.browser_download_url"
           @click="showDrawer(release)"
-      >
-        <a
-            class="version-button"
-            tabindex="-1"
-            :href="release.mainAsset.browser_download_url"
-            download
-            @click.stop
-        >
-          <ElButton
-              type="primary"
-              :icon="ElIconDownload"
-          />
-        </a>
-        <div class="version-name">
-          {{ release.mainAsset.name }}
-        </div>
-        <div class="version-size">
-          {{ formatSize(release.mainAsset.size) }}
-        </div>
-        <div class="version-data version-downloads">
-          <ElIconDownload class="version-icon"/>
-          {{ release.downloads }}
-        </div>
-        <div class="version-data version-created">
-          <ElIconCalendar class="version-icon"/>
-          {{ $d(new Date(release.createdAt), "text") }}
-        </div>
-      </div>
+      />
     </ElTabPane>
     <ElTabPane
         v-if="data.meta.requirements.length > 0 || Object.keys(data.meta.dependencies).length > 0"
@@ -140,23 +115,6 @@ function getMainAsset(release: ReleaseInfo): AssetInfo {
   return release.assets.find(asset => asset.name.endsWith(".mcdr") || asset.name.endsWith(".pyz"))!;
 }
 
-/**
- * Format size number to string.
- * @param {number} size size in bytes.
- * @return {string} formatted size.
- */
-function formatSize(size: number): string {
-  if (size < 1024) {
-    return `${size} B`;
-  } else if (size < 1024 * 1024) {
-    return `${(size / 1024).toFixed(2)} KB`;
-  } else if (size < 1024 * 1024 * 1024) {
-    return `${(size / 1024 / 1024).toFixed(2)} MB`;
-  } else {
-    return `${(size / 1024 / 1024 / 1024).toFixed(2)} GB`;
-  }
-}
-
 const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => ({
   version: release.parsed_version,
   downloads: release.assets.reduce((sum, asset) => sum + asset.download_count, 0),
@@ -212,81 +170,6 @@ defineExpose({
 
 #tabs {
   padding: 1rem 2rem;
-}
-
-#versions {
-  .version {
-    margin: 0.25rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-
-    cursor: pointer;
-
-    display: grid;
-    grid-template-columns: 1fr 8fr 4fr;
-
-    &:hover {
-      background-color: var(--gray-1);
-    }
-
-    .version-button {
-      grid-column: 1;
-      grid-row: 1 / 3;
-
-      margin-right: 1rem;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .version-name {
-      grid-column: 2;
-      grid-row: 1;
-
-      overflow-wrap: anywhere;
-    }
-
-    .version-size {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    .version-downloads {
-      grid-column: 3;
-      grid-row: 1;
-    }
-
-    .version-created {
-      grid-column: 3;
-      grid-row: 2;
-    }
-
-    .version-data {
-      display: flex;
-      align-items: center;
-    }
-
-    .version-icon {
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.5rem;
-    }
-
-    @media only screen and (max-width: $size-md) {
-      grid-template-columns: 1fr 8fr;
-
-      .version-downloads {
-        grid-column: 2;
-        grid-row: 3;
-      }
-
-      .version-created {
-        grid-column: 2;
-        grid-row: 4;
-      }
-    }
-  }
 }
 
 #relations {
