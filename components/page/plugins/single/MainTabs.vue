@@ -19,6 +19,7 @@
         name="versions"
     >
       <PagePluginsBaseReleaseDrawer
+          v-if="releases.length !== 0"
           v-model:is-drawer-open="isDrawerOpen"
           v-model:advanced-release-info="advancedReleaseInfo"
       />
@@ -128,13 +129,16 @@ const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => (
 // ----------------------------------------------------------------------------
 const isDrawerOpen = ref<boolean>(false);
 const advancedReleaseInfo = ref<AdvancedReleaseInfo | null>(null);
+if (releases.length > 0) {
+  advancedReleaseInfo.value = releases[0];
+}
 
 /**
  * Show release drawer.
  */
 function showDrawer(release: AdvancedReleaseInfo) {
-  isDrawerOpen.value = true;
   advancedReleaseInfo.value = release;
+  isDrawerOpen.value = true;
 }
 
 // ----------------------------------------------------------------------------

@@ -22,13 +22,13 @@ const props = defineProps<{
   requirements: string[];
 }>();
 
-const requirements = props.requirements.map((requirement: string) => {
+const requirements = computed(() => props.requirements.map((requirement: string) => {
   const name = /^[^<>=~^]+/.exec(requirement)![0];
   return {
     package: name,
     version: requirement.replace(name, ""),
   };
-});
+}));
 </script>
 
 <style scoped lang="scss">

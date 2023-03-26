@@ -26,9 +26,9 @@ const props = defineProps<{
   dependencies: Record<string, string>;
 }>();
 
-const dependencies = Object
+const dependencies = computed(() => Object
     .entries(props.dependencies)
-    .map(([plugin, version]) => ({plugin, version}));
+    .map(([plugin, version]) => ({plugin, version})));
 </script>
 
 <style scoped lang="scss">

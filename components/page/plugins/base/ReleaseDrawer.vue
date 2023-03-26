@@ -4,7 +4,7 @@
       append-to-body
       :direction="direction"
       :size="size"
-      :title="advancedReleaseInfo?.version ?? ''"
+      :title="version"
       @closed="$emit('update:isDrawerOpen', false)"
   >
     <ElCollapse v-model="activeCollapses">
@@ -13,7 +13,7 @@
           :title="t('description')"
       >
         <BaseMarkdown
-            :model-value="advancedReleaseInfo?.release.description ?? ''"
+            :model-value="description"
             a-tag-blank-target
         />
       </ElCollapseItem>
@@ -22,7 +22,7 @@
           :title="t('files')"
       >
         <PagePluginsBaseFileCard
-            v-for="asset in advancedReleaseInfo?.release.assets"
+            v-for="asset in assets"
             :key="asset.name"
             :name="asset.name"
             :size="asset.size"
@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import {ComputedRef} from "vue";
-import {AdvancedReleaseInfo} from "~/types/plugins";
+import {AssetInfo, AdvancedReleaseInfo} from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants
@@ -63,24 +63,27 @@ const {t} = useI18n();
 // ----------------------------------------------------------------------------
 interface Props {
   isDrawerOpen: boolean;
-  advancedReleaseInfo: AdvancedReleaseInfo | null;
+  advancedReleaseInfo: AdvancedReleaseInfo;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isDrawerOpen: false,
-})
+});
 
 defineEmits([
   "update:isDrawerOpen",
-  "update:release",
+  "update:advancedReleaseInfo",
 ]);
 
 // ----------------------------------------------------------------------------
 // reactive variables
 // ----------------------------------------------------------------------------
 const {isDrawerOpen, advancedReleaseInfo} = toRefs(props);
-const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value?.release.meta.requirements ?? []);
-const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value?.release.meta.dependencies ?? {});
+const version: ComputedRef<string> = computed(() => advancedReleaseInfo.value.version);
+const description: ComputedRef<string> = computed(() => advancedReleaseInfo.value.release.description);
+const assets: ComputedRef<AssetInfo[]> = computed(() => advancedReleaseInfo.value.release.assets);
+const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value.release.meta.requirements);
+const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value.release.meta.dependencies);
 
 // ----------------------------------------------------------------------------
 // El components props
