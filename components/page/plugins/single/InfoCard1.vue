@@ -54,19 +54,20 @@ import {PluginDataBrief} from "~/types/plugins";
 const {t} = useI18n();
 const voting = ref(false);
 
-const props = defineProps<{
+const {brief} = defineProps<{
   brief: PluginDataBrief;
 }>();
 
 // ----------------------------------------------------------------------------
 // votes store
 // ----------------------------------------------------------------------------
+const isMounted = ref(false);
 const pluginsStore = usePluginsStore();
-const isVoted = ref(false);
+const isVoted = computed(() => isMounted.value ? pluginsStore.isVoted(brief.id) : false);
 
-// update votes on mounted
+// update voted on mounted
 onMounted(() => {
-  isVoted.value = pluginsStore.isVoted(props.brief.id);
+  isMounted.value = true;
 });
 
 /**
@@ -75,7 +76,7 @@ onMounted(() => {
 async function increaseVote() {
   voting.value = true;
   try {
-    await pluginsStore.increaseVote(props.brief.id);
+    await pluginsStore.increaseVote(brief.id);
   } catch (e) {
     console.error(e);
     ElNotification({
@@ -94,7 +95,7 @@ async function increaseVote() {
 async function decreaseVote() {
   voting.value = true;
   try {
-    await pluginsStore.decreaseVote(props.brief.id);
+    await pluginsStore.decreaseVote(brief.id);
   } catch (e) {
     console.error(e);
     ElNotification({

@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import {ComputedRef} from "vue";
+
 const pluginsStore = usePluginsStore();
 const {id} = defineProps<{
   id: string;
@@ -16,11 +18,12 @@ const starComponent = resolveComponent("ElIconStar");
 const starFilledComponent = resolveComponent("ElIconStarFilled");
 
 // is voted
-const isVoted = ref(false);
+const isMounted = ref(false);
+const isVoted = computed(() => isMounted.value ? pluginsStore.isVoted(id) : false);
 
-// update votes on mounted
+// update voted on mounted
 onMounted(() => {
-  isVoted.value = pluginsStore.isVoted(id);
+  isMounted.value = true;
 });
 </script>
 
