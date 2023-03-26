@@ -8,17 +8,10 @@ export const useLeanCloud = () => {
      * @param url URL.
      * @param data Data.
      */
-    function request(method: HTTPMethod, url: string, data: object = {}) {
-        const leanCloudConfig = useRuntimeConfig().public.leanCloud;
-        return $fetch(`${leanCloudConfig.serverURL}/1.1${url}`, {
-            method,
-            headers: {
-                "X-LC-Id": leanCloudConfig.appId,
-                "X-LC-Key": leanCloudConfig.appKey,
-                "Content-Type": "application/json"
-            },
-            body: method === "POST" || method === "PUT" ? data : undefined,
-            query: method === "GET" ? data : {},
+    async function request(method: HTTPMethod, url: string, data: object = {}) {
+        return await $fetch(`/api/leanCloudProxy`, {
+            method: "POST",
+            body: {method, url, data},
         });
     }
 
