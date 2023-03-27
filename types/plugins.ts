@@ -15,11 +15,12 @@ export interface AuthorSummary extends Readonly<object> {
 }
 
 export interface MetaInfo extends Readonly<object> {
-    schema_version: 2;
+    schema_version: 3;
     id: string;
     name: string;
     version: string;
     repository: string;
+    link: string;
     authors: string[];
     dependencies: Record<string, string>;
     requirements: string[];
@@ -37,7 +38,7 @@ export interface Author extends Readonly<object> {
 }
 
 export interface ReleaseSummary extends Readonly<object> {
-    schema_version: 6;
+    schema_version: 7;
     id: string;
     latest_version: string;
     releases: ReleaseInfo[];
