@@ -19,7 +19,7 @@
         name="versions"
     >
       <PagePluginsBaseReleaseDrawer
-          v-if="releases.length !== 0"
+          v-if="advancedReleaseInfo !== null"
           v-model:is-drawer-open="isDrawerOpen"
           v-model:advanced-release-info="advancedReleaseInfo"
       />
