@@ -7,6 +7,7 @@ export type MCDRLocale = "en_us" | "zh_cn";
 export interface PluginMetaSummary extends Readonly<object> {
     plugin_amount: number;
     plugins: Record<string, MetaInfo>;
+    plugin_info: Record<string, FormattedPluginInfo>;
 }
 
 export interface AuthorSummary extends Readonly<object> {
@@ -20,7 +21,7 @@ export interface MetaInfo extends Readonly<object> {
     name: string;
     version: string;
     repository: string;
-    link: string;
+    link?: string;
     authors: string[];
     dependencies: Record<string, string>;
     requirements: string[];
