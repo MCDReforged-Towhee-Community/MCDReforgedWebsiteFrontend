@@ -69,63 +69,6 @@
         </ElCard>
       </div>
     </div>
-    <ElDivider/>
-    <div id="authors">
-      <div class="title">{{ t("authors") }}</div>
-      <div
-          v-for="author in brief.authors"
-          :key="author.name"
-          class="author-item"
-      >
-        <img
-            class="github-img"
-            src="https://github.com/favicon.ico"
-            :alt="author.name"
-        />
-        <a
-            class="link"
-            :href="author.link"
-            target="_blank"
-        >
-          {{ author.name }}
-        </a>
-      </div>
-    </div>
-    <ElDivider/>
-    <div id="repository">
-      <div class="title">{{ t("repository") }}</div>
-      <div
-          id="repository-link-1"
-          class="repository-link"
-      >
-        <img
-            class="github-img"
-            src="https://github.com/favicon.ico"
-            alt="GitHub"
-        />
-        <a
-            class="link"
-            :href="`${data.info.repository}`"
-            target="_blank"
-        >
-          {{ repositoryName }}
-        </a>
-      </div>
-      <div class="repository-link">
-        <img
-            class="github-img"
-            src="https://github.com/favicon.ico"
-            alt="GitHub"
-        />
-        <a
-            class="link"
-            :href="`${data.info.repository}/tree/${data.info.branch}/${data.info.related_path}`"
-            target="_blank"
-        >
-          {{ repositoryPagePath }}
-        </a>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -135,8 +78,8 @@ import {PluginData, PluginDataBrief} from "~/types/plugins";
 const {t} = useI18n();
 
 const prop = defineProps<{
-  brief: PluginDataBrief;
   data: PluginData;
+  brief: PluginDataBrief;
 }>();
 
 defineEmits<{
@@ -146,8 +89,6 @@ defineEmits<{
 }>();
 
 const installCommand = `!!al i ${prop.data.meta.id}`;
-const repositoryName = prop.data.info.repository.split("/").slice(-2).join("/");
-const repositoryPagePath = joinPath(repositoryName, prop.data.info.branch, prop.data.info.related_path);
 
 function writeToClipboard() {
   navigator.clipboard.writeText(installCommand);
@@ -171,24 +112,6 @@ function writeToClipboard() {
   padding: unset;
   border: unset;
   background: unset;
-}
-
-.github-img {
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
-
-  border-radius: 50%;
-}
-
-.link {
-  color: var(--gray-7);
-
-  cursor: pointer;
-
-  &:hover {
-    color: var(--blue-6);
-  }
 }
 
 #install {
@@ -292,37 +215,11 @@ function writeToClipboard() {
     }
   }
 }
-
-#authors {
-  display: flex;
-  flex-direction: column;
-
-  .author-item {
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-  }
-}
-
-#repository {
-  #repository-link-1 {
-    margin-bottom: 0.2rem;
-  }
-
-  .repository-link {
-    display: flex;
-    align-items: center;
-
-    overflow-wrap: anywhere;
-  }
-}
 </style>
 
 <i18n locale="en-US" lang="yaml">
-authors: Authors
 files: Recent Files
 viewAll: View All
-repository: Repository
 install: Install
 installTooltip:
   default: Copy Command
@@ -330,10 +227,8 @@ installTooltip:
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
-authors: 作者
 files: 最新文件
 viewAll: 查看全部
-repository: 仓库
 install: 安装
 installTooltip:
   default: 复制命令

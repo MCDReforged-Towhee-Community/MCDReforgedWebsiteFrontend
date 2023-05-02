@@ -35,6 +35,63 @@
       <div>{{ $d(new Date(brief.updated_at), "text") }}</div>
     </div>
     <ElDivider/>
+    <div id="authors">
+      <div class="title">{{ t("authors") }}</div>
+      <div
+          v-for="author in brief.authors"
+          :key="author.name"
+          class="author-item"
+      >
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            :alt="author.name"
+        />
+        <a
+            class="link"
+            :href="author.link"
+            target="_blank"
+        >
+          {{ author.name }}
+        </a>
+      </div>
+    </div>
+    <ElDivider/>
+    <div id="repository">
+      <div class="title">{{ t("repository") }}</div>
+      <div
+          id="repository-link-1"
+          class="repository-link"
+      >
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            alt="GitHub"
+        />
+        <a
+            class="link"
+            :href="`${data.info.repository}`"
+            target="_blank"
+        >
+          {{ repositoryName }}
+        </a>
+      </div>
+      <div class="repository-link">
+        <img
+            class="github-img"
+            src="https://github.com/favicon.ico"
+            alt="GitHub"
+        />
+        <a
+            class="link"
+            :href="`${data.info.repository}/tree/${data.info.branch}/${data.info.related_path}`"
+            target="_blank"
+        >
+          {{ repositoryPagePath }}
+        </a>
+      </div>
+    </div>
+    <ElDivider/>
     <ElButton
         id="vote"
         @click="isVoted ? decreaseVote() : increaseVote()"
@@ -49,14 +106,18 @@
 </template>
 
 <script setup lang="ts">
-import {PluginDataBrief} from "~/types/plugins";
+import {PluginData, PluginDataBrief} from "~/types/plugins";
 
 const {t} = useI18n();
 const voting = ref(false);
 
-const {brief} = defineProps<{
+const {data, brief} = defineProps<{
+  data: PluginData;
   brief: PluginDataBrief;
 }>();
+
+const repositoryName = data.info.repository.split("/").slice(-2).join("/");
+const repositoryPagePath = joinPath(repositoryName, data.info.branch, data.info.related_path);
 
 // ----------------------------------------------------------------------------
 // votes store
@@ -112,6 +173,30 @@ async function decreaseVote() {
 <style scoped lang="scss">
 @import "assets/css/main.scss";
 
+.title {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.github-img {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+
+  border-radius: 50%;
+}
+
+.link {
+  color: var(--gray-7);
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--blue-6);
+  }
+}
+
 #name {
   width: 80%;
   font-size: 1.5rem;
@@ -152,6 +237,30 @@ async function decreaseVote() {
   }
 }
 
+#authors {
+  display: flex;
+  flex-direction: column;
+
+  .author-item {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+#repository {
+  #repository-link-1 {
+    margin-bottom: 0.2rem;
+  }
+
+  .repository-link {
+    display: flex;
+    align-items: center;
+
+    overflow-wrap: anywhere;
+  }
+}
+
 #vote {
   width: 100%;
 }
@@ -161,6 +270,8 @@ async function decreaseVote() {
 downloads: downloads
 votes: votes
 updatedAt: Updated at
+authors: Authors
+repository: Repository
 increaseVote:
   button: Vote
   title: Error
@@ -175,6 +286,8 @@ decreaseVote:
 downloads: 下载
 votes: 点赞
 updatedAt: 更新于
+authors: 作者
+repository: 仓库
 increaseVote:
   button: 点赞
   title: 错误

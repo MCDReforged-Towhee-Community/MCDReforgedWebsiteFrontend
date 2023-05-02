@@ -7,12 +7,13 @@
     <aside id="aside">
       <PagePluginsSingleInfoCard1
           ref="infoCard1"
+          :data="pluginData"
           :brief="pluginBrief"
       />
       <PagePluginsSingleInfoCard2
           ref="infoCard2"
-          :brief="pluginBrief"
           :data="pluginData"
+          :brief="pluginBrief"
           @view-all="viewAllRelease"
           @view-release="viewRelease"
           @view-asset="viewAsset"
