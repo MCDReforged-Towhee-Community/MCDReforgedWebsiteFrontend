@@ -1,5 +1,3 @@
-import {nodeResolve} from "@rollup/plugin-node-resolve";
-
 const baseURL = "https://www.mcdreforged.org";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -61,16 +59,6 @@ export default defineNuxtConfig({
         "nuxt-simple-sitemap",
     ],
 
-    nitro: {
-        rollupConfig: {
-            // @ts-ignore
-            plugins: [
-                // https://github.com/element-plus/element-plus/issues/10979#issuecomment-1473107778
-                nodeResolve({exportConditions: ['node']}),
-            ],
-        },
-    },
-
     runtimeConfig: {
         public: {
             baseURL: baseURL,
@@ -113,25 +101,7 @@ export default defineNuxtConfig({
         defaultLocale: "en-US",
         strategy: "no_prefix",
         langDir: "locales",
-        vueI18n: {
-            fallbackLocale: "en-US",
-            datetimeFormats: {
-                "en-US": {
-                    text: {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    },
-                },
-                "zh-CN": {
-                    text: {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                    },
-                },
-            },
-        },
+        vueI18n: "./i18n.config.ts",
     },
 
     pinia: {
