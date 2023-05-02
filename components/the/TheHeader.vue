@@ -4,7 +4,7 @@
       <NuxtLink class="logo" to="/">
         <img
             class="logo"
-            src="https://raw.githubusercontent.com/Fallen-Breath/MCDReforged/master/logo_long.png"
+            src="https://avatars.githubusercontent.com/u/63280128"
             alt="logo"
         >
       </NuxtLink>
@@ -56,8 +56,8 @@ const localeRef = ref(locale.value);
     }
 
     #nav {
-      margin-left: auto;
-      margin-right: 1rem;
+      margin-left: 1rem;
+      margin-right: auto;
       padding: 0;
       display: flex;
 
