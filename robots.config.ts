@@ -1,5 +1,5 @@
 export default [
-    {
-        Sitemap: `${useRuntimeConfig().public.baseURL}/sitemap.xml`,
-    },
+  {
+    Sitemap: `${useRuntimeConfig().public.baseURL}/sitemap.xml`,
+  },
 ];

@@ -1,5 +1,5 @@
 export default {
-    global: {
-        "title": "MCDReforged",
-    }
+  global: {
+    "title": "MCDReforged",
+  }
 };
