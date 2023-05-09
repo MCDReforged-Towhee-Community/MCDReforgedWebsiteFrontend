@@ -134,6 +134,17 @@ export interface PluginVotes {
 // ----------------------------------------------------------------------------
 // View types
 // ----------------------------------------------------------------------------
+export const SEARCH_SORTS = ["name", "author", "votes", "updated_at", "downloads"] as const;
+export type SearchSorting = typeof SEARCH_SORTS[number];
+
+export interface SearchSetting {
+  name: string;
+  author: string;
+  labels: Label[];
+  sorting: SearchSorting;
+  reverse: boolean;
+}
+
 export interface AdvancedReleaseInfo {
   version: string;
   downloads: number;

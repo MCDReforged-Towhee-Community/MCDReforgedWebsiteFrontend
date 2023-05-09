@@ -5,6 +5,7 @@ import {
   PluginDataBrief,
   PluginVotesSummary,
   PluginVotes,
+  SearchSetting,
 } from "~/types/plugins";
 import {useLeanCloud} from "~/composables/useLeanCloud";
 import {RemovableRef, useLocalStorage} from "@vueuse/core";
@@ -13,6 +14,7 @@ interface PluginStoreState {
   pluginDataSummary: PluginDataSummary;
   pluginDataBriefSummary: PluginDataBriefSummary | undefined;
   pluginVotesSummary: PluginVotesSummary | undefined;
+  searchSetting: SearchSetting
 }
 
 /**
@@ -27,6 +29,13 @@ export const usePluginsStore = defineStore("plugins", {
     pluginDataSummary: {},
     pluginDataBriefSummary: undefined,
     pluginVotesSummary: undefined,
+    searchSetting: {
+      name: "",
+      author: "",
+      labels: [],
+      sorting: "votes",
+      reverse: false,
+    },
   }),
   getters: {
     /**
@@ -176,6 +185,14 @@ export const usePluginsStore = defineStore("plugins", {
       this.pluginVotesSummary![id].vote -= 1;
       this.pluginDataBriefSummary![id].votes -= 1;
       getVoted().value[id] = false;
+    },
+
+    /**
+     * Set search setting.
+     * @param {SearchSetting} setting Search setting.
+     */
+    setSearchSetting(setting: SearchSetting) {
+      this.searchSetting = setting;
     },
   },
 });

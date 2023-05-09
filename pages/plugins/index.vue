@@ -45,7 +45,7 @@
           :placeholder="t('search.sorting')"
       >
         <ElOption
-            v-for="sorting in SORTS"
+            v-for="sorting in SEARCH_SORTS"
             :key="sorting"
             :label="t(`sorting.${sorting}`)"
             :value="sorting"
@@ -81,6 +81,7 @@ import {
   Label,
   PluginDataBrief,
   PluginDataBriefSummary,
+  SEARCH_SORTS,
 } from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
@@ -108,25 +109,11 @@ onMounted(() => {
 // ----------------------------------------------------------------------------
 // search
 // ----------------------------------------------------------------------------
-const SORTS = ["name", "author", "votes", "updated_at", "downloads"] as const;
-type Sort = typeof SORTS[number];
-
-interface SearchSettingType {
-  name: string;
-  author: string;
-  labels: Label[];
-  sorting: Sort;
-  reverse: boolean;
-}
-
-// search setting model
-const searchSetting: Ref<SearchSettingType> = ref({
-  name: "",
-  author: "",
-  labels: [],
-  sorting: "votes",
-  reverse: false,
-}) as Ref<SearchSettingType>;
+// search setting
+const searchSetting = computed({
+  get: () => pluginsStore.$state.searchSetting,
+  set: (value) => pluginsStore.setSearchSetting(value),
+});
 
 // searched list
 const plugins = computed(() => {
