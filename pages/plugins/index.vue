@@ -263,7 +263,7 @@ function shouldShow(plugin: PluginDataBrief): boolean {
     .plugins-list-enter-from,
     .plugins-list-leave-to {
       opacity: 0;
-      transform: translateX(10%);
+      transform: translateY(10%);
     }
 
     .plugins-list-leave-active {
