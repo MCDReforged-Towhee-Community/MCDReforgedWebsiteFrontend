@@ -64,6 +64,7 @@
       <TransitionGroup
           name="plugins-list"
           tag="div"
+          v-infinite-scroll="load"
       >
         <PagePluginsIndexBriefCard
             v-for="plugin in plugins"
@@ -107,6 +108,20 @@ onMounted(() => {
 });
 
 // ----------------------------------------------------------------------------
+// infinite scroll
+// ----------------------------------------------------------------------------
+const limit = ref(10);
+let maxLimit = 0;
+
+function load() {
+  if (limit.value <= maxLimit - 10) {
+    limit.value += 10;
+  } else if (limit.value < maxLimit) {
+    limit.value = maxLimit;
+  }
+}
+
+// ----------------------------------------------------------------------------
 // search
 // ----------------------------------------------------------------------------
 // search setting
@@ -119,6 +134,7 @@ const searchSetting = computed({
 const plugins = computed(() => {
   // filter
   let pluginsList = Object.values(pluginsStore.$state.pluginDataBriefSummary as PluginDataBriefSummary).filter((plugin) => shouldShow(plugin));
+  maxLimit = pluginsList.length;
 
   // sort
   if (searchSetting.value.sorting === "name") {
@@ -142,7 +158,7 @@ const plugins = computed(() => {
     pluginsList.reverse()
   }
 
-  return pluginsList;
+  return pluginsList.slice(0, limit.value);
 });
 
 function shouldShow(plugin: PluginDataBrief): boolean {
