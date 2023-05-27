@@ -88,7 +88,7 @@ defineEmits<{
   (e: "viewAsset", tagName: string, assetName: string): void;
 }>();
 
-const installCommand = `!!al i ${prop.data.meta.id}`;
+const installCommand = `!!mpm install ${prop.data.meta.id}`;
 
 function writeToClipboard() {
   navigator.clipboard.writeText(installCommand);
