@@ -1,7 +1,7 @@
 FROM node:16
 
-WORKDIR /MCDReforgedWebsite
-COPY . /MCDReforgedWebsite
+WORKDIR /MCDReforgedWebsiteFrontend
+COPY . /MCDReforgedWebsiteFrontend
 
 RUN npm install
 RUN npm run build

@@ -1,6 +1,6 @@
-# MCDReforged Website
+# MCDReforged Website Frontend
 
-This is the source code of MCDReforged website.
+This is the source code of MCDReforged website frontend.
 
 Please notice that this website is still under development, and the content is
 not complete.

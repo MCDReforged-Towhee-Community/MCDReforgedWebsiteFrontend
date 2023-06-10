@@ -1,4 +1,7 @@
 {
+  "name": "mcdreforged_website_frontend",
+  "version": "1.0.0",
+  "description": "MCDReforgedWebsiteFrontend",
   "private": true,
   "scripts": {
     "build": "nuxt build",
