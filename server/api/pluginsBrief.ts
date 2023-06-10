@@ -37,7 +37,7 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
       labels: info.labels,
       updated_at: updated_at,
       downloads: downloads,
-      votes: pluginsVotes[id]?.vote ?? 0,
+      votes: pluginsVotes[id] ?? 0,
     };
   }
 

@@ -4,10 +4,9 @@ import {
   PluginDataBriefSummary,
   PluginDataBrief,
   PluginVotesSummary,
-  PluginVotes,
   SearchSetting,
 } from "~/types/plugins";
-import {useLeanCloud} from "~/composables/useLeanCloud";
+import {useBackend} from "~/composables/useBackend";
 import {RemovableRef, useLocalStorage} from "@vueuse/core";
 
 interface PluginStoreState {
@@ -80,10 +79,10 @@ export const usePluginsStore = defineStore("plugins", {
     /**
      * Get plugin votes by id.
      */
-    getPluginVotes(state): (id: string) => PluginVotes | undefined {
+    getPluginVotes(state): (id: string) => number | undefined {
       return (id) => {
         if (state.pluginVotesSummary !== undefined && id in state.pluginVotesSummary) {
-          return state.pluginVotesSummary![id];
+          return state.pluginVotesSummary[id];
         } else {
           return undefined;
         }
@@ -121,13 +120,13 @@ export const usePluginsStore = defineStore("plugins", {
     },
 
     /**
-     * Update plugins votes from LeanCloud.
+     * Update plugins votes.
      */
     async updatePluginVotes() {
-      this.pluginVotesSummary = await useLeanCloud().fetchVotes();
+      this.pluginVotesSummary = await useBackend().fetchVotes();
 
       for (const id in this.pluginDataBriefSummary) {
-        this.pluginDataBriefSummary[id].votes = this.pluginVotesSummary[id]?.vote ?? 0;
+        this.pluginDataBriefSummary[id].votes = this.pluginVotesSummary[id] ?? 0;
       }
     },
 
@@ -146,16 +145,16 @@ export const usePluginsStore = defineStore("plugins", {
       }
 
       // get votes
-      let votes = this.getPluginVotes(id);
+      const votes = this.getPluginVotes(id);
       if (votes === undefined) {
         // create votes
-        votes = await useLeanCloud().createVotesRequest(id);
-        this.pluginVotesSummary![id] = votes;
+        await useBackend().createVotesRequest(id);
+        this.pluginVotesSummary![id] = 0;
       }
 
       // increase votes
-      await useLeanCloud().increaseVotesRequest(votes.objectId);
-      this.pluginVotesSummary![id].vote += 1;
+      await useBackend().increaseVotesRequest(id);
+      this.pluginVotesSummary![id] += 1;
       this.pluginDataBriefSummary![id].votes += 1;
       getVoted().value[id] = true;
     },
@@ -181,8 +180,8 @@ export const usePluginsStore = defineStore("plugins", {
       }
 
       // decrease votes
-      await useLeanCloud().decreaseVotesRequest(votes.objectId);
-      this.pluginVotesSummary![id].vote -= 1;
+      await useBackend().decreaseVotesRequest(id);
+      this.pluginVotesSummary![id] -= 1;
       this.pluginDataBriefSummary![id].votes -= 1;
       getVoted().value[id] = false;
     },

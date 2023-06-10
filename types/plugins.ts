@@ -116,20 +116,7 @@ export interface PluginDataBrief {
   votes: number;
 }
 
-export type PluginVotesSummary = Record<string, PluginVotes>;
-
-/**
- * LeanCloud plugin votes.
- * @interface PluginVotes
- * @property {string} objectId Object id.
- * @property {string} id Plugin id.
- * @property {number} vote Vote number.
- */
-export interface PluginVotes {
-  objectId: string;
-  id: string;
-  vote: number;
-}
+export type PluginVotesSummary = Record<string, number>;
 
 // ----------------------------------------------------------------------------
 // View types
