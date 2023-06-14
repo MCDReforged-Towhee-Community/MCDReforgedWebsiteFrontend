@@ -23,7 +23,11 @@ export const useBackend = () => {
    * @returns {Promise<PluginVotesSummary>} PluginVotesSummary.
    */
   async function fetchVotes(): Promise<PluginVotesSummary> {
-    return await request("GET", "") as PluginVotesSummary;
+    try {
+      return await request("GET", "") as PluginVotesSummary;
+    } catch (e) {
+      return {};
+    }
   }
 
   /**
