@@ -22,6 +22,10 @@ export default defineNuxtConfig({
           type: "image/x-icon",
           href: "https://avatars.githubusercontent.com/u/63280128"
         },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css?family=Noto+Sans+SC:100,300,400,500,700,900"
+        },
       ],
     },
   },
@@ -52,7 +56,6 @@ export default defineNuxtConfig({
   modules: [
     "@element-plus/nuxt",
     "@nuxt/devtools",
-    "@nuxtjs/google-fonts",
     "@nuxtjs/i18n",
     "@nuxtjs/robots",
     "@pinia/nuxt",
@@ -72,15 +75,6 @@ export default defineNuxtConfig({
   telemetry: false,
 
   // modules options
-  googleFonts: {
-    families: {
-      "Noto+Sans+SC": true,
-      Raleway: {
-        wght: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-      },
-    },
-  },
-
   i18n: {
     baseUrl: baseURL,
     locales: [

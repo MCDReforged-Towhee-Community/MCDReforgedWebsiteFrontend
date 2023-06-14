@@ -21,7 +21,6 @@
     "@bytemd/vue-next": "^1.21.0",
     "@element-plus/nuxt": "^1.0.4",
     "@nuxt/devtools": "^0.4.5",
-    "@nuxtjs/google-fonts": "^3.0.0",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.9",
