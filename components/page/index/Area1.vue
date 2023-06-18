@@ -26,9 +26,6 @@ const {t} = useI18n();
 
 <style scoped lang="scss">
 #area-1 {
-  width: 80%;
-  margin: 5rem auto;
-
   display: flex;
   flex-direction: column;
   align-items: center;

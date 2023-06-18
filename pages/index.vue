@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="index">
     <PageIndexArea1/>
-    <ElDivider/>
+    <PageIndexArea2/>
   </div>
 </template>
 
@@ -13,7 +13,13 @@ const {t} = useI18n();
 </script>
 
 <style scoped>
+#index {
+    width: 80%;
+    margin: 5rem auto;
 
+    display: grid;
+    grid-gap: 1rem;
+}
 </style>
 
 <i18n locale="en-US" lang="yaml">
