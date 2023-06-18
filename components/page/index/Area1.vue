@@ -59,7 +59,7 @@ const {t} = useI18n();
   #description {
     margin-top: 1rem;
 
-    * {
+    :deep(*) {
       margin: 0.5rem 0;
     }
   }
