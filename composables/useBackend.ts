@@ -9,10 +9,10 @@ export const useBackend = () => {
    * @param data Data.
    */
   async function request(method: HTTPMethod, url: string, data: object = {}) {
-    return await $fetch(useRuntimeConfig().public.api.url + url, {
+    return await $fetch(useRuntimeConfig().public.backend.url + url, {
       method: method,
       headers: {
-        "Authorization": useRuntimeConfig().public.api.authorization,
+        "Authorization": useRuntimeConfig().public.backend.authorization,
       },
       body: method === "PUT" ? data : undefined,
     });

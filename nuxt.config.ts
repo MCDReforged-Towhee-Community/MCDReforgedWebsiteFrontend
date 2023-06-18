@@ -65,8 +65,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: baseURL,
-      api: {
-        url: "http://api.mcdreforged.org:5511",
+      backend: {
+        url: "https://api.mcdreforged.org:5513",
         authorization: "Bearer 123",
       },
     },
