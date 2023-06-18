@@ -5,6 +5,6 @@ export default defineCachedEventHandler(
   async (): Promise<PluginVotesSummary> => await useBackend().fetchVotes(),
   {
     name: "pluginsVotes",
-    maxAge: 60 * 10,
+    maxAge: 60,
   }
 );
