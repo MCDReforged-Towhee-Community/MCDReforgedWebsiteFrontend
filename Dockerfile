@@ -1,11 +1,13 @@
 FROM node:16
 
 WORKDIR /MCDReforgedWebsiteFrontend
-COPY . /MCDReforgedWebsiteFrontend
+COPY . /MCDReforgedWebsiteFrontendBuild
 
 RUN npm install
 RUN npm run build
+RUN mv .output/server/* /MCDReforgedWebsiteFrontend \
+&& rm /MCDReforgedWebsiteFrontendBuild
 
 EXPOSE 3000
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "index.mjs"]
