@@ -1,17 +1,21 @@
 <template>
   <div>
     <a :href="t('documentLink')" target="_blank">
-      <ElButton class="button" size="large">
+      <ElButton
+          class="button"
+          size="large"
+          plain
+      >
         {{ t("document") }}
       </ElButton>
     </a>
     <NuxtLink to="/plugins">
-      <ElButton class="button" size="large" type="primary" plain>
-        {{ t("plugins") }}
-      </ElButton>
-    </NuxtLink>
-    <NuxtLink to="/plugins">
-      <ElButton class="button" size="large" type="success" plain>
+      <ElButton
+          class="button"
+          size="large"
+          type="success"
+          plain
+      >
         {{ t("plugins") }}
       </ElButton>
     </NuxtLink>
@@ -29,6 +33,7 @@ const {t} = useI18n();
 <style scoped lang="scss">
 .button {
   margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 </style>
 
