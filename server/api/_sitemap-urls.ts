@@ -25,6 +25,6 @@ export default defineCachedEventHandler(
   },
   {
     name: "sitemap-dynamic-urls",
-    maxAge: process.dev ? 1 : 60 * 10,
+    maxAge: process.dev ? 1 : 60 * 5,
   }
 );
