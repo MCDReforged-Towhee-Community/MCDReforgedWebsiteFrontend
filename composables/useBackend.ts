@@ -9,13 +9,18 @@ export const useBackend = () => {
    * @param data Data.
    */
   async function request(method: HTTPMethod, path: string, data: object = {}) {
-    return await $fetch(useRuntimeConfig().public.backend.url + path, {
-      method: method,
-      headers: {
-        "Authorization": useRuntimeConfig().public.backend.authorization,
-      },
-      body: method === "PUT" ? data : undefined,
-    });
+    try {
+      return await $fetch(useRuntimeConfig().public.backend.url + path, {
+        method: method,
+        headers: {
+          "Authorization": useRuntimeConfig().public.backend.authorization,
+        },
+        body: method === "PUT" ? data : undefined,
+      });
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
   }
 
   /**
@@ -23,11 +28,7 @@ export const useBackend = () => {
    * @returns {Promise<PluginVotesSummary>} PluginVotesSummary.
    */
   async function fetchVotes(): Promise<PluginVotesSummary> {
-    try {
-      return await request("GET", "") as PluginVotesSummary;
-    } catch (e) {
-      return {};
-    }
+    return await request("GET", "") as PluginVotesSummary;
   }
 
   /**
