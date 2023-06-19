@@ -5,11 +5,11 @@ export const useBackend = () => {
   /**
    * Request to Backend.
    * @param method HTTP method.
-   * @param url URL.
+   * @param path Path.
    * @param data Data.
    */
-  async function request(method: HTTPMethod, url: string, data: object = {}) {
-    return await $fetch(useRuntimeConfig().public.backend.url + url, {
+  async function request(method: HTTPMethod, path: string, data: object = {}) {
+    return await $fetch(useRuntimeConfig().public.backend.url + path, {
       method: method,
       headers: {
         "Authorization": useRuntimeConfig().public.backend.authorization,
