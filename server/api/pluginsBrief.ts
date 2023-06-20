@@ -48,6 +48,6 @@ export default defineCachedEventHandler(
   async (): Promise<PluginDataBriefSummary> => await getPluginDataBriefSummary(),
   {
     name: "pluginsBrief",
-    maxAge: 60 * 5,
+    maxAge: 60,
   }
 );
