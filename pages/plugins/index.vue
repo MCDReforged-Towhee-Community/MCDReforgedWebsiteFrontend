@@ -12,12 +12,14 @@
           v-model="searchSetting.name"
           class="plugins-search-item"
           :placeholder="t('search.name')"
+          clearable
           :prefix-icon="ElIconSearch"
       />
       <ElInput
           v-model="searchSetting.author"
           class="plugins-search-item"
           :placeholder="t('search.author')"
+          clearable
           :prefix-icon="ElIconAvatar"
       />
       <div>
