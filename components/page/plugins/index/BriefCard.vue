@@ -40,22 +40,30 @@
     </div>
     <div class="card-data">
       <div class="card-data-item">
+        <ElButton
+            :icon="ElIconDownload"
+            circle
+            @click="download"
+        />
+        <ElButton
+            circle
+            @click="isVoted ? decreaseVote() : increaseVote()"
+            :loading="!!voting"
+        >
+          <template #icon>
+            <PagePluginsBaseVoteStar :id="brief.id"/>
+          </template>
+        </ElButton>
+      </div>
+      <div class="card-data-item">
         <PagePluginsBaseVoteStar
             class="card-data-item-icon"
             :id="brief.id"
         />
-        <div>
-          {{ t("votes") }}
-        </div>
         <div class="card-data-item-number">
           {{ brief.votes }}
         </div>
-      </div>
-      <div class="card-data-item">
         <ElIconDownload class="card-data-item-icon"/>
-        <div>
-          {{ t("downloads") }}
-        </div>
         <div class="card-data-item-number">
           {{ brief.downloads }}
         </div>
@@ -77,17 +85,89 @@
 </template>
 
 <script setup lang="ts">
-import {PluginDataBrief} from "~/types/plugins";
+import {
+  PluginData,
+  PluginDataBrief,
+} from "~/types/plugins";
 
 const {t} = useI18n();
 
-const props = defineProps<{
+const {brief} = defineProps<{
   brief: PluginDataBrief;
 }>();
+
+async function getPluginData(): Promise<PluginData> {
+  return await pluginsStore.getPluginData(brief.id) as PluginData;
+}
+
+// ----------------------------------------------------------------------------
+// download button
+// ----------------------------------------------------------------------------
+async function download(): Promise<void> {
+  const pluginData = await getPluginData();
+  if (pluginData.release.releases.length === 0 || pluginData.release.releases[0].assets.length === 0) {
+    ElMessage.error(t("no_release"));
+  } else {
+    const downloadElement = document.createElement("a");
+    downloadElement.href = pluginData.release.releases[0].assets[0].browser_download_url;
+    downloadElement.click();
+  }
+}
+
+// ----------------------------------------------------------------------------
+// votes store
+// ----------------------------------------------------------------------------
+const voting = ref(false);
+const isMounted = ref(false);
+const pluginsStore = usePluginsStore();
+const isVoted = computed(() => isMounted.value ? pluginsStore.isVoted(brief.id) : false);
+
+// update voted on mounted
+onMounted(() => {
+  isMounted.value = true;
+});
+
+/**
+ * Increase vote number and save to local storage.
+ */
+async function increaseVote() {
+  voting.value = true;
+  try {
+    await pluginsStore.increaseVote(brief.id);
+  } catch (e) {
+    console.error(e);
+    ElNotification({
+      title: t("increaseVote.title"),
+      message: t("increaseVote.message"),
+      type: "error",
+    });
+  } finally {
+    voting.value = false;
+  }
+}
+
+/**
+ * Decrease vote number and save to local storage.
+ */
+async function decreaseVote() {
+  voting.value = true;
+  try {
+    await pluginsStore.decreaseVote(brief.id);
+  } catch (e) {
+    console.error(e);
+    ElNotification({
+      title: t("decreaseVote.title"),
+      message: t("decreaseVote.message"),
+      type: "error",
+    });
+  } finally {
+    voting.value = false;
+  }
+}
 </script>
 
 <style scoped lang="scss">
-@import "../../../../assets/css/variables";
+@import "assets/css/variables";
 
 #card {
   width: 100%;
@@ -191,13 +271,11 @@ const props = defineProps<{
 </style>
 
 <i18n locale="en-US" lang="yaml">
-votes: Votes
-downloads: Downloads
+no_release: This plugin has no release.
 updated_at: Updated At
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
-votes: 喜欢
-downloads: 下载
+no_release: 此插件没有任何已发布的文件。
 updated_at: 更新于
 </i18n>
