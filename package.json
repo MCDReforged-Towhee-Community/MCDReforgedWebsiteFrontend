@@ -19,7 +19,7 @@
     "@bytemd/plugin-medium-zoom": "^1.21.0",
     "@bytemd/plugin-mermaid": "^1.21.0",
     "@bytemd/vue-next": "^1.21.0",
-    "@element-plus/nuxt": "^1.0.4",
+    "@element-plus/nuxt": "^1.0.5",
     "@nuxt/devtools": "^0.4.5",
     "@nuxtjs/i18n": "^8.0.0-beta.10",
     "@nuxtjs/robots": "^3.0.0",
