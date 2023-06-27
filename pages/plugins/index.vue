@@ -61,6 +61,14 @@
           class="plugins-search-item"
           :label="t('search.reverse')"
       />
+      <div>
+        {{ t("search.selected") }}
+      </div>
+      <ElCheckbox
+          v-model="searchSetting.selected"
+          class="plugins-search-item"
+          :label="t('search.selected')"
+      />
     </div>
     <div id="plugins-list">
       <TransitionGroup
@@ -72,9 +80,32 @@
             v-for="plugin in plugins"
             :key="plugin.id"
             :brief="plugin"
+            :is-selected="selectedPlugins.includes(plugin.id)"
+            @switch-selected="switchSelected"
         />
       </TransitionGroup>
     </div>
+    <Transition name="fade">
+      <div
+          id="plugins-toolbar"
+          class="box"
+          v-show="selectedPlugins.length > 0"
+      >
+        <ElTooltip
+            :content="t('downloadAll')"
+            placement="top"
+        >
+          <ElBadge :value="selectedPlugins.length" type="primary">
+            <ElButton
+                class="plugins-toolbar-button"
+                @click="downloadAll"
+            >
+              <ElIconDownload class="plugins-toolbar-button-icon"/>
+            </ElButton>
+          </ElBadge>
+        </ElTooltip>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -160,6 +191,11 @@ const plugins = computed(() => {
     pluginsList.reverse()
   }
 
+  // selected
+  if (searchSetting.value.selected) {
+    pluginsList = pluginsList.filter((plugin) => selectedPlugins.value.includes(plugin.id));
+  }
+
   return pluginsList.slice(0, limit.value);
 });
 
@@ -200,6 +236,29 @@ function shouldShow(plugin: PluginDataBrief): boolean {
   }
 
   return true;
+}
+
+// ----------------------------------------------------------------------------
+// selected plugins
+// ----------------------------------------------------------------------------
+// selected plugins
+const selectedPlugins = computed({
+  get: () => pluginsStore.$state.selectedPlugins,
+  set: (value) => pluginsStore.setSelectedPlugins(value),
+});
+
+function switchSelected(id: string, selected: boolean) {
+  if (selected) {
+    selectedPlugins.value.push(id);
+  } else {
+    selectedPlugins.value = selectedPlugins.value.filter((pluginId) => pluginId !== id);
+  }
+}
+
+function downloadAll() {
+  for (const plugin of selectedPlugins.value) {
+    new MCDRPlugin(plugin).downloadLatest(true);
+  }
 }
 </script>
 
@@ -272,6 +331,48 @@ function shouldShow(plugin: PluginDataBrief): boolean {
       position: absolute;
     }
   }
+
+  #plugins-toolbar {
+    height: 4rem;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 1rem;
+
+    color: white;
+    background: var(--gray-10);
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  .plugins-toolbar-button {
+    width: 2rem;
+    height: 2rem;
+    border: unset;
+    background: unset;
+
+    .plugins-toolbar-button-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+
+      &:hover {
+        color: var(--blue-5);
+      }
+    }
+  }
 }
 </style>
 
@@ -284,12 +385,14 @@ search:
   labels: Labels
   sorting: Sorting
   reverse: Reverse
+  selected: Selected Plugins Only
 sorting:
   name: Name
   author: Author
   votes: Votes
   updated_at: Updated At
   downloads: Downloads
+downloadAll: Download All Selected Plugins
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
@@ -301,10 +404,12 @@ search:
   labels: 标签
   sorting: 排序
   reverse: 倒序
+  selected: 仅显示已选插件
 sorting:
   name: 名称
   author: 作者
   votes: 喜欢
   updated_at: 最后更新
   downloads: 下载量
+downloadAll: 下载所有选中插件
 </i18n>

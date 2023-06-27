@@ -1,10 +1,17 @@
 <template>
-  <div id="card" class="box">
+  <div
+      id="card"
+      :class="{box: true, selected: isSelected}"
+      tabindex="0"
+      @keydown.enter.self="switchSelected"
+      @click="switchSelected"
+  >
     <div class="card-info">
       <div class="card-title">
         <NuxtLink
-            class="card-title-name"
+            class="card-title-name card-data-no-hover"
             :to="`/plugins/${brief.id}`"
+            @click.stop
         >
           {{ brief.name }}
         </NuxtLink>
@@ -19,9 +26,10 @@
           >
             <div v-if="index > 0">{{ ", " }}</div>
             <a
-                class="card-title-authors-name--clickable"
+                class="card-title-authors-name--clickable card-data-no-hover"
                 :href="author.link"
                 target="_blank"
+                @click.stop
             >
               {{ author.name }}
             </a>
@@ -41,19 +49,21 @@
     <div class="card-data">
       <div class="card-data-item">
         <ElButton
-            :icon="ElIconDownload"
+            class="card-data-no-hover"
             circle
-            @click="download"
-        />
-        <ElButton
-            circle
-            @click="isVoted ? decreaseVote() : increaseVote()"
+            @click.stop="isVoted ? decreaseVote() : increaseVote()"
             :loading="!!voting"
         >
           <template #icon>
             <PagePluginsBaseVoteStar :id="brief.id"/>
           </template>
         </ElButton>
+        <ElButton
+            class="card-data-no-hover"
+            :icon="ElIconDownload"
+            circle
+            @click.stop="download"
+        />
       </div>
       <div class="card-data-item">
         <PagePluginsBaseVoteStar
@@ -63,6 +73,7 @@
         <div class="card-data-item-number">
           {{ brief.votes }}
         </div>
+        <div style="margin: 0 0.25rem"></div>
         <ElIconDownload class="card-data-item-icon"/>
         <div class="card-data-item-number">
           {{ brief.downloads }}
@@ -85,37 +96,35 @@
 </template>
 
 <script setup lang="ts">
-import {
-  PluginData,
-  PluginDataBrief,
-} from "~/types/plugins";
+import {PluginDataBrief} from "~/types/plugins";
 
 const {t} = useI18n();
 
-const {brief} = defineProps<{
+const props = defineProps<{
   brief: PluginDataBrief;
+  isSelected: boolean;
+}>();
+const {brief} = props;
+const isSelected = ref(props.isSelected);
+
+const $emit = defineEmits<{
+  (e: "switchSelected", id: string, selected: boolean): void;
 }>();
 
-async function getPluginData(): Promise<PluginData> {
-  return await pluginsStore.getPluginData(brief.id) as PluginData;
+// ----------------------------------------------------------------------------
+// select card
+// ----------------------------------------------------------------------------
+
+function switchSelected(): void {
+  isSelected.value = !isSelected.value;
+  $emit("switchSelected", brief.id, isSelected.value);
 }
 
-// ----------------------------------------------------------------------------
-// download button
-// ----------------------------------------------------------------------------
-async function download(): Promise<void> {
-  const pluginData = await getPluginData();
-  if (pluginData.release.releases.length === 0 || pluginData.release.releases[0].assets.length === 0) {
-    ElMessage.error(t("no_release"));
-  } else {
-    const downloadElement = document.createElement("a");
-    downloadElement.href = pluginData.release.releases[0].assets[0].browser_download_url;
-    downloadElement.click();
-  }
-}
+const backgroundColor = computed(() => isSelected.value ? "var(--blue-2)" : "white");
+const hoverBackgroundColor = computed(() => isSelected.value ? "var(--blue-2)" : "var(--blue-1)");
 
 // ----------------------------------------------------------------------------
-// votes store
+// vote button
 // ----------------------------------------------------------------------------
 const voting = ref(false);
 const isMounted = ref(false);
@@ -164,6 +173,17 @@ async function decreaseVote() {
     voting.value = false;
   }
 }
+
+// ----------------------------------------------------------------------------
+// download button
+// ----------------------------------------------------------------------------
+function download() {
+  try {
+    new MCDRPlugin(brief.id).downloadLatest();
+  } catch (e) {
+    ElMessage.error(t("no_release"));
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -174,13 +194,20 @@ async function decreaseVote() {
   min-height: 8rem;
   margin-bottom: 1rem;
 
+  cursor: pointer;
+
   display: flex;
   justify-content: space-between;
 
   color: var(--gray-7);
+  background: v-bind(backgroundColor);
 
   @media only screen and (max-width: $size-md) {
     flex-direction: column;
+  }
+
+  &:not(:has(.card-data-no-hover:hover)):hover {
+    background: v-bind(hoverBackgroundColor);
   }
 
   .card-info {
@@ -246,7 +273,9 @@ async function decreaseVote() {
 
     @media only screen and (max-width: $size-md) {
       margin-top: 1rem;
-      display: unset;
+
+      flex-direction: column-reverse;
+      align-items: flex-start;
     }
 
     .card-data-item {

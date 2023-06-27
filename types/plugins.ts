@@ -130,6 +130,7 @@ export interface SearchSetting {
   labels: Label[];
   sorting: SearchSorting;
   reverse: boolean;
+  selected: boolean;
 }
 
 export interface AdvancedReleaseInfo {

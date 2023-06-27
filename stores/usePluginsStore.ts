@@ -13,7 +13,8 @@ interface PluginStoreState {
   pluginDataSummary: PluginDataSummary;
   pluginDataBriefSummary: PluginDataBriefSummary | undefined;
   pluginVotesSummary: PluginVotesSummary | undefined;
-  searchSetting: SearchSetting
+  searchSetting: SearchSetting;
+  selectedPlugins: string[];
 }
 
 /**
@@ -34,7 +35,9 @@ export const usePluginsStore = defineStore("plugins", {
       labels: [],
       sorting: "votes",
       reverse: false,
+      selected: false,
     },
+    selectedPlugins: [],
   }),
   getters: {
     /**
@@ -190,8 +193,16 @@ export const usePluginsStore = defineStore("plugins", {
      * Set search setting.
      * @param {SearchSetting} setting Search setting.
      */
-    setSearchSetting(setting: SearchSetting) {
+    setSearchSetting(setting: SearchSetting): void {
       this.searchSetting = setting;
     },
+
+    /**
+     * Set selected plugins.
+     * @param {string[]} plugins Selected plugins.
+     */
+    setSelectedPlugins(plugins: string[]): void {
+      this.selectedPlugins = plugins;
+    }
   },
 });
