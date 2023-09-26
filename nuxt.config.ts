@@ -1,4 +1,4 @@
-const baseURL = "https://www.mcdreforged.org";
+const baseURL = "https://mcdr.zhanganzhi.com";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
