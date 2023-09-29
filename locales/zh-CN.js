@@ -1,5 +1,5 @@
 export default {
   global: {
-    "title": "MCDReforged",
+    "title": "MCDReforged 网站和插件目录",
   }
 };
