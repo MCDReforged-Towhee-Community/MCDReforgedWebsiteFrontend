@@ -135,11 +135,6 @@ const pluginsStore = usePluginsStore();
 // https://github.com/vuejs/pinia/issues/1080
 await pluginsStore.nuxtServerInit();
 
-// update votes on mounted
-onMounted(() => {
-  pluginsStore.updatePluginVotes();
-});
-
 // ----------------------------------------------------------------------------
 // infinite scroll
 // ----------------------------------------------------------------------------

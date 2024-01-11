@@ -120,18 +120,8 @@ export const usePluginsStore = defineStore("plugins", {
         $fetch("/api/pluginsBrief"),
         $fetch("/api/pluginsVotes"),
       ]);
-    },
 
-    /**
-     * Update plugins votes.
-     */
-    async updatePluginVotes() {
-      if (this.pluginVotesSummary !== undefined) {
-        return;
-      }
-
-      this.pluginVotesSummary = await useBackend().fetchVotes();
-
+      // update votes in brief
       for (const id in this.pluginDataBriefSummary) {
         this.pluginDataBriefSummary[id].votes = this.pluginVotesSummary[id] ?? 0;
       }
