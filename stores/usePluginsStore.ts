@@ -126,6 +126,10 @@ export const usePluginsStore = defineStore("plugins", {
      * Update plugins votes.
      */
     async updatePluginVotes() {
+      if (this.pluginVotesSummary !== undefined) {
+        return;
+      }
+
       this.pluginVotesSummary = await useBackend().fetchVotes();
 
       for (const id in this.pluginDataBriefSummary) {
