@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.1.0](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/compare/v1.0.0...v1.1.0) (2024-01-11)
+
+
+### Features
+
+* 🔧 update backend url ([9d30367](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/9d303670761b08ca2970896aef7456c1c24082cb))
+* 🔧 update base url ([558961f](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/558961fae3a86357e590eacf9f48cb998aab9f0d))
+* **api:** ✨ set some api maxAge to 60 seconds ([09a6fd7](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/09a6fd7b88fa99521f3df525ea3c27a6105d127f))
+* **api:** ✨ udate api cache age ([25a052d](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/25a052de35632f54026e41a94e78b99ea2a0b931))
+* **composables:** 🔊 add error log in useBackend ([8cd0a50](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/8cd0a506082abfef112dc20f4fb697f16c620f76))
+* **pages:** ✨ add download and like button on plugins index ([b2e5148](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/b2e5148f40c05b8e41a9f9080eb503ac2e0b8a1d))
+* **pages:** ✨ improve plugins index ([7215238](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/72152384fafb27caa14afd8cbdef90b1f3741aae))
+* **pages:** ✨ let plugins search input clearable ([6961338](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/696133869dac19867d8b5535d5200ce04a7360a3))
+* **pages:** ✨ update title ([f328a85](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/f328a85c35059274227bcc8b36c50b4aaaae0517))
+
+
+### Bug Fixes
+
+* 👽️ fix due to external API breaking change ([1e74dea](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/1e74dea73e5b4ae9720557f8be92243c979c3373))
+* **api:** 🐛 change funtion parameter name ([6f2bc13](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/6f2bc135da6f58cde5f7185de9d0a1ddd9ff053d))
+
+
+### Performance Improvements
+
+* **pinia:** ⚡️ reduce fetchVotes ([451d75b](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/451d75b6255937cd33a8353c695cb961e2c91aff))
+
 ## 1.0.0 (2023-06-18)
 
 
