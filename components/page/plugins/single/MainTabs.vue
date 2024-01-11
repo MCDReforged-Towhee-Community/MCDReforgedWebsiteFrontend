@@ -67,8 +67,6 @@
 import {ComputedRef} from "vue";
 import {
   PluginData,
-  ReleaseInfo,
-  AssetInfo,
   AdvancedReleaseInfo,
 } from "~/types/plugins";
 
@@ -107,20 +105,11 @@ const {data} = props;
 // introduction
 const introduction: ComputedRef<string> = computed(() => data.info.introduction[getMCDRLocale()] ?? "");
 
-/**
- * Get the main asset of a release.
- * @param {ReleaseInfo} release release info.
- * @return {AssetInfo} main asset.
- */
-function getMainAsset(release: ReleaseInfo): AssetInfo {
-  return release.assets.find(asset => asset.name.endsWith(".mcdr") || asset.name.endsWith(".pyz"))!;
-}
-
 const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => ({
-  version: release.parsed_version,
-  downloads: release.assets.reduce((sum, asset) => sum + asset.download_count, 0),
+  version: release.meta.version,
+  downloads: release.asset.download_count,
   createdAt: release.created_at,
-  mainAsset: getMainAsset(release),
+  mainAsset: release.asset,
   release: release,
 }));
 

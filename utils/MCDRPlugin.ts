@@ -20,10 +20,10 @@ export class MCDRPlugin {
 
   async downloadLatest(newTab: boolean = false) {
     const pluginData = await this.pluginData();
-    if (pluginData.release.releases.length === 0 || pluginData.release.releases[0].assets.length === 0) {
+    if (pluginData.release.releases.length === 0) {
       throw new Error("No release found");
     } else {
-      const downloadUrl = pluginData.release.releases[0].assets[0].browser_download_url;
+      const downloadUrl = pluginData.release.releases[0].asset.browser_download_url;
       if (newTab) {
         window.open(downloadUrl, "_blank");
       } else {

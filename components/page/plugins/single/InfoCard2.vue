@@ -38,26 +38,24 @@
             class="button clickable--underline files-version"
             @click="$emit('viewRelease', release.tag_name)"
         >
-          {{ release.parsed_version }}
+          {{ release.meta.version }}
         </button>
         <ElCard
-            v-for="asset in release.assets"
-            :key="asset.name"
             class="files-asset"
             tabindex="0"
-            @keydown.enter.self="$emit('viewAsset', release.tag_name, asset.name)"
-            @click="$emit('viewAsset', release.tag_name, asset.name)"
+            @keydown.enter.self="$emit('viewAsset', release.tag_name, release.asset.name)"
+            @click="$emit('viewAsset', release.tag_name, release.asset.name)"
         >
           <div class="files-asset-text">
-            <div class="files-asset-text-name">{{ asset.name }}</div>
+            <div class="files-asset-text-name">{{ release.asset.name }}</div>
             <div class="files-asset-text-date">
-              {{ $d(new Date(asset.created_at), "text") }}
+              {{ $d(new Date(release.asset.created_at), "text") }}
             </div>
           </div>
           <a
               class="files-asset-download"
               tabindex="-1"
-              :href="asset.browser_download_url"
+              :href="release.asset.browser_download_url"
               download
               @click.stop
           >

@@ -4,10 +4,22 @@ export type MCDRLocale = "en_us" | "zh_cn";
 // Raw types from plugin catalogue
 // ----------------------------------------------------------------------------
 
+export interface Everything extends Readonly<object> {
+  authors: AuthorSummary;
+  plugins: Record<string, AllOfAPlugin>;
+}
+
+export interface AllOfAPlugin extends Readonly<object> {
+  meta: MetaInfo;
+  plugin: PluginInfo;
+  release: ReleaseSummary;
+  repository: RepositoryInfo;
+}
+
 export interface PluginMetaSummary extends Readonly<object> {
   plugin_amount: number;
   plugins: Record<string, MetaInfo>;
-  plugin_info: Record<string, FormattedPluginInfo>;
+  plugin_info: Record<string, PluginInfo>;
 }
 
 export interface AuthorSummary extends Readonly<object> {
@@ -15,12 +27,16 @@ export interface AuthorSummary extends Readonly<object> {
   authors: Record<string, Author>;
 }
 
+export interface Author extends Readonly<object> {
+  name: string;
+  link: string;
+}
+
 export interface MetaInfo extends Readonly<object> {
-  schema_version: 3;
+  schema_version: 4;
   id: string;
   name: string;
   version: string;
-  repository: string;
   link?: string;
   authors: string[];
   dependencies: Record<string, string>;
@@ -33,46 +49,15 @@ export interface MetaInfoDescription extends Readonly<Partial<Record<MCDRLocale,
   zh_cn?: string;
 }
 
-export interface Author extends Readonly<object> {
-  name: string;
-  link: string;
-}
-
-export interface ReleaseSummary extends Readonly<object> {
-  schema_version: 7;
-  id: string;
-  latest_version: string;
-  releases: ReleaseInfo[];
-}
-
-export interface ReleaseInfo extends Readonly<object> {
-  url: string;
-  name: string;
-  tag_name: string;
-  created_at: string;
-  assets: AssetInfo[];
-  description: string;
-  prerelease: boolean;
-  parsed_version: string;
-  meta: MetaInfo;
-}
-
-export interface AssetInfo extends Readonly<object> {
-  name: string;
-  size: number;
-  download_count: number;
-  created_at: string;
-  browser_download_url: string;
-}
-
-export interface FormattedPluginInfo extends Readonly<object> {
+export interface PluginInfo extends Readonly<object> {
   schema_version: 1;
   id: string;
+  authors: string[];
   repository: string;
   branch: string;
   related_path: string;
   labels: Label[];
-  introduction: FormattedPluginInfoIntroduction;
+  introduction: PluginInfoIntroduction;
 }
 
 export const LABELS = [
@@ -84,9 +69,47 @@ export const LABELS = [
 
 export type Label = typeof LABELS[number];
 
-export interface FormattedPluginInfoIntroduction extends Readonly<Partial<Record<MCDRLocale, string>>> {
+export interface PluginInfoIntroduction extends Readonly<Partial<Record<MCDRLocale, string>>> {
   en_us: string;
   zh_cn?: string;
+}
+
+export interface ReleaseSummary extends Readonly<object> {
+  schema_version: 8;
+  id: string;
+  latest_version: string;
+  releases: ReleaseInfo[];
+}
+
+export interface ReleaseInfo extends Readonly<object> {
+  url: string;
+  name: string;
+  tag_name: string;
+  created_at: string;
+  description: string;
+  prerelease: boolean;
+  asset: AssetInfo;
+  meta: MetaInfo;
+}
+
+export interface AssetInfo extends Readonly<object> {
+  id: number;
+  name: string;
+  size: number;
+  download_count: number;
+  created_at: string;
+  browser_download_url: string;
+}
+
+export interface RepositoryInfo extends Readonly<object> {
+  url: string;
+  name: string;
+  full_name: string;
+  description: string;
+  archived: boolean;
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
 }
 
 // ----------------------------------------------------------------------------
@@ -98,7 +121,7 @@ export type PluginDataSummary = Record<string, PluginData>;
 export interface PluginData {
   meta: MetaInfo;
   release: ReleaseSummary;
-  info: FormattedPluginInfo;
+  info: PluginInfo;
   authors: Author[];
 }
 

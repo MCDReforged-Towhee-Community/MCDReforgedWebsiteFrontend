@@ -21,10 +21,8 @@ async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
 
     // downloads
     let downloads: number = 0;
-    for (const {assets} of release.releases) {
-      for (const {download_count} of assets) {
-        downloads += download_count;
-      }
+    for (const {asset} of release.releases) {
+      downloads += asset.download_count;
     }
 
     // add to pluginDataBriefSummary

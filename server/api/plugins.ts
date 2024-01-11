@@ -1,10 +1,13 @@
-import {unzipSync} from "fflate";
 import {
-  PluginMetaSummary,
+  gunzipSync,
+} from "fflate";
+import {
+  Everything,
   AuthorSummary,
+  Author,
   MetaInfo,
   ReleaseSummary,
-  FormattedPluginInfo,
+  PluginInfo,
   PluginDataSummary,
 } from "~/types/plugins";
 
@@ -15,25 +18,23 @@ function parse(dataAsU8Array: Uint8Array): object {
 async function getPluginDataSummary(): Promise<PluginDataSummary> {
   // fetch
   const pluginDataSummary: PluginDataSummary = {};
-  const zipRaw: Blob = await $fetch("https://codeload.github.com/MCDReforged/PluginCatalogue/zip/refs/heads/meta") as Blob;
-  const zip = unzipSync(new Uint8Array(await zipRaw.arrayBuffer()));
+  const everythingGzRaw: Blob = await $fetch("https://github.com/MCDReforged/PluginCatalogue/raw/meta/everything.json.gz") as Blob;
+  const everything: Everything = parse(gunzipSync(new Uint8Array(await everythingGzRaw.arrayBuffer()))) as Everything;
 
   // authors
-  const {authors}: AuthorSummary = parse(zip["PluginCatalogue-meta/authors.json"]) as AuthorSummary;
+  const {authors}: AuthorSummary = everything.authors;
 
   // merge data
-  const pluginMetaSummary: PluginMetaSummary = parse(zip["PluginCatalogue-meta/plugins.json"]) as PluginMetaSummary;
-  for (const pluginID in pluginMetaSummary.plugins) {
-    const meta: MetaInfo = pluginMetaSummary.plugins[pluginID];
-    const release: ReleaseSummary = parse(zip[`PluginCatalogue-meta/${pluginID}/release.json`]) as ReleaseSummary;
-    const info: FormattedPluginInfo = parse(zip[`PluginCatalogue-meta/${pluginID}/plugin.json`]) as FormattedPluginInfo;
+  const plugins = everything.plugins;
+  for (const pluginID in plugins) {
+    const allOfAPlugin = plugins[pluginID];
     pluginDataSummary[pluginID] = {
-      meta: meta,
-      release: release,
-      info: info,
-      authors: meta.authors.map((author) => ({
+      meta: allOfAPlugin.meta,
+      release: allOfAPlugin.release,
+      info: allOfAPlugin.plugin,
+      authors: allOfAPlugin.meta.authors.map((author: string): Author => ({
         name: author,
-        link: authors[author].link
+        link: authors[author]?.link ?? author,
       })),
     };
   }

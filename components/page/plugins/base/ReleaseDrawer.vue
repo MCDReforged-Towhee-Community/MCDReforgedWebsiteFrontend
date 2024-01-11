@@ -22,8 +22,6 @@
           :title="t('files')"
       >
         <PagePluginsBaseFileCard
-            v-for="asset in assets"
-            :key="asset.name"
             :name="asset.name"
             :size="asset.size"
             :downloads="asset.download_count"
@@ -81,7 +79,7 @@ defineEmits([
 const {isDrawerOpen, advancedReleaseInfo} = toRefs(props);
 const version: ComputedRef<string> = computed(() => advancedReleaseInfo.value.version);
 const description: ComputedRef<string> = computed(() => advancedReleaseInfo.value.release.description);
-const assets: ComputedRef<AssetInfo[]> = computed(() => advancedReleaseInfo.value.release.assets);
+const asset: ComputedRef<AssetInfo> = computed(() => advancedReleaseInfo.value.release.asset);
 const requirements: ComputedRef<string[]> = computed(() => advancedReleaseInfo.value.release.meta.requirements);
 const dependencies: ComputedRef<Record<string, string>> = computed(() => advancedReleaseInfo.value.release.meta.dependencies);
 
