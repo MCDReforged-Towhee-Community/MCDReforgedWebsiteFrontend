@@ -14,11 +14,11 @@ const {t} = useI18n();
 
 <style scoped>
 #index {
-    width: 80%;
-    margin: 5rem auto;
+  width: 80%;
+  margin: 5rem auto;
 
-    display: grid;
-    grid-gap: 1rem;
+  display: grid;
+  grid-gap: 1rem;
 }
 </style>
 
