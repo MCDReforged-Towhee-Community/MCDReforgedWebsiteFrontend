@@ -1,18 +1,24 @@
-export default defineI18nConfig(nuxt => ({
+export default defineI18nConfig(() => ({
   fallbackLocale: "en-US",
   datetimeFormats: {
     "en-US": {
-      text: {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+      date: {
+        dateStyle: "medium",
+      },
+      time: {
+        dateStyle: "medium",
+        timeStyle: "medium",
+        hour12: false,
       },
     },
     "zh-CN": {
-      text: {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
+      date: {
+        dateStyle: "medium",
+      },
+      time: {
+        dateStyle: "medium",
+        timeStyle: "medium",
+        hour12: false,
       },
     },
   },

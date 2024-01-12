@@ -32,7 +32,7 @@
         class="data"
     >
       <div>{{ t("updatedAt") }}</div>
-      <div>{{ $d(new Date(brief.updated_at), "text") }}</div>
+      <div>{{ $d(new Date(brief.updated_at), "date") }}</div>
     </div>
     <ElDivider/>
     <div id="authors">

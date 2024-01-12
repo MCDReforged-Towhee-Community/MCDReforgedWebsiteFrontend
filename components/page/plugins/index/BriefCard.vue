@@ -88,7 +88,7 @@
           {{ t("updated_at") }}
         </div>
         <div class="card-data-item-number">
-          {{ $d(new Date(brief.updated_at), "text") }}
+          {{ $d(new Date(brief.updated_at), "date") }}
         </div>
       </div>
     </div>

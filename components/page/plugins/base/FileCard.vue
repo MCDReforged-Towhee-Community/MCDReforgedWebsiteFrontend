@@ -29,7 +29,7 @@
     </div>
     <div class="file-data file-created">
       <ElIconCalendar class="file-icon"/>
-      {{ $d(new Date(createdAt), "text") }}
+      {{ $d(new Date(createdAt), "date") }}
     </div>
   </div>
 </template>

@@ -49,7 +49,7 @@
           <div class="files-asset-text">
             <div class="files-asset-text-name">{{ release.asset.name }}</div>
             <div class="files-asset-text-date">
-              {{ $d(new Date(release.asset.created_at), "text") }}
+              {{ $d(new Date(release.asset.created_at), "date") }}
             </div>
           </div>
           <a
