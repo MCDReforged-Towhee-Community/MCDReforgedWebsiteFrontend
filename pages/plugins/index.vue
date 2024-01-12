@@ -107,6 +107,7 @@
       </div>
     </Transition>
   </div>
+  <TheFooter/>
 </template>
 
 <script setup lang="ts">

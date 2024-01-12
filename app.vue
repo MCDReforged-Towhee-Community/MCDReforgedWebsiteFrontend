@@ -6,7 +6,6 @@
       <ElConfigProvider :locale="locale">
         <NuxtPage/>
       </ElConfigProvider>
-      <TheFooter/>
     </div>
   </NuxtLayout>
 </template>

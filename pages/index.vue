@@ -2,6 +2,7 @@
   <div id="index">
     <PageIndexArea1/>
     <PageIndexArea2/>
+    <TheFooter/>
   </div>
 </template>
 
