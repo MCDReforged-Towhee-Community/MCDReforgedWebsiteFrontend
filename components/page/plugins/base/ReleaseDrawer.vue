@@ -1,50 +1,52 @@
 <template>
-  <ElDrawer
-      :model-value="isDrawerOpen"
-      append-to-body
-      :direction="direction"
-      :size="size"
-      :title="version"
-      @closed="$emit('update:isDrawerOpen', false)"
-  >
-    <ElCollapse v-model="activeCollapses">
-      <ElCollapseItem
-          name="description"
-          :title="t('description')"
-      >
-        <BaseMarkdown
-            :model-value="description"
-            a-tag-blank-target
-        />
-      </ElCollapseItem>
-      <ElCollapseItem
-          name="files"
-          :title="t('files')"
-      >
-        <PagePluginsBaseFileCard
-            :name="asset.name"
-            :size="asset.size"
-            :downloads="asset.download_count"
-            :created-at="asset.created_at"
-            :download-url="asset.browser_download_url"
-        />
-      </ElCollapseItem>
-      <ElCollapseItem
-          name="requirements"
-          :title="t('requirements')"
-          v-if="requirements.length > 0"
-      >
-        <PagePluginsBaseRequirements :requirements="requirements"/>
-      </ElCollapseItem>
-      <ElCollapseItem
-          name="dependencies"
-          :title="t('dependencies')"
-          v-if="Object.keys(dependencies).length > 0"
-      >
-        <PagePluginsBaseDependcies :dependencies="dependencies"/>
-      </ElCollapseItem>
-    </ElCollapse>
-  </ElDrawer>
+  <ClientOnly>
+    <ElDrawer
+        :model-value="isDrawerOpen"
+        append-to-body
+        :direction="direction"
+        :size="size"
+        :title="version"
+        @closed="$emit('update:isDrawerOpen', false)"
+    >
+      <ElCollapse v-model="activeCollapses">
+        <ElCollapseItem
+            name="description"
+            :title="t('description')"
+        >
+          <BaseMarkdown
+              :model-value="description"
+              a-tag-blank-target
+          />
+        </ElCollapseItem>
+        <ElCollapseItem
+            name="files"
+            :title="t('files')"
+        >
+          <PagePluginsBaseFileCard
+              :name="asset.name"
+              :size="asset.size"
+              :downloads="asset.download_count"
+              :created-at="asset.created_at"
+              :download-url="asset.browser_download_url"
+          />
+        </ElCollapseItem>
+        <ElCollapseItem
+            name="requirements"
+            :title="t('requirements')"
+            v-if="requirements.length > 0"
+        >
+          <PagePluginsBaseRequirements :requirements="requirements"/>
+        </ElCollapseItem>
+        <ElCollapseItem
+            name="dependencies"
+            :title="t('dependencies')"
+            v-if="Object.keys(dependencies).length > 0"
+        >
+          <PagePluginsBaseDependcies :dependencies="dependencies"/>
+        </ElCollapseItem>
+      </ElCollapse>
+    </ElDrawer>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
