@@ -13,19 +13,21 @@
         <NuxtLink class="nav-item" to="/document">{{ t("document") }}</NuxtLink>
         <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
       </nav>
-      <ClientOnly>
-        <ElSelect
-            v-model="localeRef"
-            @change="val => setLocale(val)"
-        >
-          <ElOption
-              v-for="locale in locales"
-              :key="locale.code"
-              :value="locale.code"
-              :label="locale.name"
-          />
-        </ElSelect>
-      </ClientOnly>
+      <div id="language">
+        <ClientOnly>
+          <ElSelect
+              v-model="localeRef"
+              @change="val => setLocale(val)"
+          >
+            <ElOption
+                v-for="locale in locales"
+                :key="locale.code"
+                :value="locale.code"
+                :label="locale.name"
+            />
+          </ElSelect>
+        </ClientOnly>
+      </div>
     </div>
   </header>
 </template>
@@ -33,8 +35,9 @@
 <script setup lang="ts">
 import {type LocaleObject} from "vue-i18n-routing";
 
-const {t, locale, setLocale} = useI18n();
-const locales: ComputedRef<LocaleObject[]> = useI18n().locales as ComputedRef<LocaleObject[]>;
+const i18n = useI18n();
+const {t, locale, setLocale} = i18n;
+const locales: ComputedRef<LocaleObject[]> = i18n.locales as ComputedRef<LocaleObject[]>;
 const localeRef = ref(locale.value);
 </script>
 
@@ -76,6 +79,10 @@ const localeRef = ref(locale.value);
           color: var(--blue-5);
         }
       }
+    }
+
+    #language {
+      width: 10rem;
     }
   }
 }
