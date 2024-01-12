@@ -19,10 +19,10 @@
             @change="val => setLocale(val)"
         >
           <ElOption
-              v-for="item in locales"
-              :key="item.name"
-              :value="item.code"
-              :label="item.name"
+              v-for="locale in locales"
+              :key="locale.code"
+              :value="locale.code"
+              :label="locale.name"
           />
         </ElSelect>
       </ClientOnly>
@@ -31,7 +31,10 @@
 </template>
 
 <script setup lang="ts">
-const {t, locale, locales, setLocale} = useI18n();
+import {type LocaleObject} from "vue-i18n-routing";
+
+const {t, locale, setLocale} = useI18n();
+const locales: ComputedRef<LocaleObject[]> = useI18n().locales as ComputedRef<LocaleObject[]>;
 const localeRef = ref(locale.value);
 </script>
 
