@@ -5,9 +5,6 @@ import {
   Everything,
   AuthorSummary,
   Author,
-  MetaInfo,
-  ReleaseSummary,
-  PluginInfo,
   PluginDataSummary,
 } from "~/types/plugins";
 
