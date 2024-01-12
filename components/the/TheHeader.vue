@@ -10,6 +10,7 @@
       </NuxtLink>
       <nav id="nav" class="hidden-xs-only">
         <NuxtLink class="nav-item" to="/">{{ t("home") }}</NuxtLink>
+        <NuxtLink class="nav-item" to="/document">{{ t("document") }}</NuxtLink>
         <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
       </nav>
       <ClientOnly>
@@ -79,10 +80,12 @@ const localeRef = ref(locale.value);
 
 <i18n locale="en-US" lang="yaml">
 home: Home
+document: Document
 plugins: Plugins
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
 home: 主页
+document: 文档
 plugins: 插件
 </i18n>
