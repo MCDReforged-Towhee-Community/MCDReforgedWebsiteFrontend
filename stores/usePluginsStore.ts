@@ -1,13 +1,13 @@
 import {
-  PluginDataSummary,
-  PluginData,
-  PluginDataBriefSummary,
-  PluginDataBrief,
-  PluginVotesSummary,
-  SearchSetting,
-} from "~/types/plugins";
+  type PluginDataSummary,
+  type PluginData,
+  type PluginDataBriefSummary,
+  type PluginDataBrief,
+  type PluginVotesSummary,
+  type SearchSetting,
+} from "~/types/plugins"
 import {useBackend} from "~/composables/useBackend";
-import {RemovableRef, useLocalStorage} from "@vueuse/core";
+import {type RemovableRef, useLocalStorage} from "@vueuse/core";
 
 interface PluginStoreState {
   pluginDataSummary: PluginDataSummary;

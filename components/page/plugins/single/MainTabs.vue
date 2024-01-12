@@ -64,16 +64,16 @@
 </template>
 
 <script setup lang="ts">
-import {ComputedRef} from "vue";
+import {type ComputedRef} from "vue";
 import {
-  PluginData,
-  AdvancedReleaseInfo,
+  type PluginData,
+  type AdvancedReleaseInfo,
 } from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants
 // ----------------------------------------------------------------------------
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 // ----------------------------------------------------------------------------
 // Props
@@ -103,7 +103,7 @@ onMounted(() => {
 const {data} = props;
 
 // introduction
-const introduction: ComputedRef<string> = computed(() => data.info.introduction[getMCDRLocale()] ?? "");
+const introduction: ComputedRef<string> = computed(() => data.info.introduction[getMCDRLocale(locale.value)] as string);
 
 const releases: AdvancedReleaseInfo[] = data.release.releases.map((release) => ({
   version: release.meta.version,

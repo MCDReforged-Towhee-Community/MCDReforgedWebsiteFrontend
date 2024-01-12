@@ -3,7 +3,7 @@
     <div id="name">{{ brief.name }}</div>
     <div id="description">
       <BaseMarkdown
-          :model-value="brief.description[getMCDRLocale()] ?? ''"
+          :model-value="description"
           a-tag-blank-target
       />
     </div>
@@ -106,9 +106,12 @@
 </template>
 
 <script setup lang="ts">
-import {PluginData, PluginDataBrief} from "~/types/plugins";
+import {
+  type PluginData,
+  type PluginDataBrief,
+} from "~/types/plugins";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 const voting = ref(false);
 
 const {data, brief} = defineProps<{
@@ -116,6 +119,10 @@ const {data, brief} = defineProps<{
   brief: PluginDataBrief;
 }>();
 
+// description
+const description = computed(() => brief.description[getMCDRLocale(locale.value)] as string);
+
+// repository
 const repositoryName = data.info.repository.split("/").slice(-2).join("/");
 const repositoryPagePath = joinPath(repositoryName, data.info.branch, data.info.related_path);
 

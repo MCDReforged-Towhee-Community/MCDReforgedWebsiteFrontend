@@ -1,4 +1,4 @@
-import {PluginVotesSummary} from "~/types/plugins";
+import {type PluginVotesSummary} from "~/types/plugins";
 import {useBackend} from "~/composables/useBackend";
 
 export default defineEventHandler(

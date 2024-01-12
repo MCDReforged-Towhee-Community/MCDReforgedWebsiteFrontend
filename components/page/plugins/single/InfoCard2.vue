@@ -71,7 +71,10 @@
 </template>
 
 <script setup lang="ts">
-import {PluginData, PluginDataBrief} from "~/types/plugins";
+import {
+  type PluginData,
+  type PluginDataBrief,
+} from "~/types/plugins";
 
 const {t} = useI18n();
 

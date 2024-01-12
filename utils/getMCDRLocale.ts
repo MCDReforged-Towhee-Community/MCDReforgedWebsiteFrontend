@@ -1,5 +1,5 @@
-import {MCDRLocale} from "~/types/plugins";
+import {type MCDRLocale} from "~/types/plugins";
 
-export function getMCDRLocale(): MCDRLocale {
-  return useI18n().locale.value.replace("-", "_").toLowerCase() as MCDRLocale;
+export function getMCDRLocale(locale: string): MCDRLocale {
+  return locale.replace("-", "_").toLowerCase() as MCDRLocale;
 }

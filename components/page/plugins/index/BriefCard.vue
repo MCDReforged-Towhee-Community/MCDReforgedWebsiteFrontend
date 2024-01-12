@@ -38,7 +38,7 @@
       </div>
       <div class="card-description">
         <BaseMarkdown
-            :model-value="brief.description[getMCDRLocale()] ?? ''"
+            :model-value="description"
             a-tag-blank-target
         />
       </div>
@@ -96,9 +96,9 @@
 </template>
 
 <script setup lang="ts">
-import {PluginDataBrief} from "~/types/plugins";
+import {type PluginDataBrief} from "~/types/plugins";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const props = defineProps<{
   brief: PluginDataBrief;
@@ -110,6 +110,9 @@ const isSelected = ref(props.isSelected);
 const $emit = defineEmits<{
   (e: "switchSelected", id: string, selected: boolean): void;
 }>();
+
+// description
+const description = computed(() => brief.description[getMCDRLocale(locale.value)] ?? "");
 
 // ----------------------------------------------------------------------------
 // select card

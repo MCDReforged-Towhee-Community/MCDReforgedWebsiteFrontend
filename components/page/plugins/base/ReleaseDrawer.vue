@@ -50,8 +50,11 @@
 </template>
 
 <script setup lang="ts">
-import {ComputedRef} from "vue";
-import {AssetInfo, AdvancedReleaseInfo} from "~/types/plugins";
+import {type ComputedRef} from "vue";
+import {
+  type AssetInfo,
+  type AdvancedReleaseInfo,
+} from "~/types/plugins";
 
 // ----------------------------------------------------------------------------
 // basic constants

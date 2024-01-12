@@ -2,10 +2,10 @@ import {
   gunzipSync,
 } from "fflate";
 import {
-  Everything,
-  AuthorSummary,
-  Author,
-  PluginDataSummary,
+  type Everything,
+  type AuthorSummary,
+  type Author,
+  type PluginDataSummary,
 } from "~/types/plugins";
 
 function parse(dataAsU8Array: Uint8Array): object {

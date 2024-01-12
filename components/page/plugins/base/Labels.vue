@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {Label} from "~/types/plugins";
+import {type Label} from "~/types/plugins";
 
 defineProps<{
   labels: Label[];

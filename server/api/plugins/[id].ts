@@ -1,4 +1,4 @@
-import {PluginDataSummary} from "~/types/plugins";
+import {type PluginDataSummary} from "~/types/plugins";
 
 export default defineEventHandler(async (event) => {
   const pluginDataSummary: PluginDataSummary = await $fetch("/api/plugins");

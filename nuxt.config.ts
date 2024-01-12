@@ -97,15 +97,14 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.config.ts",
   },
 
-  pinia: {
-    autoImports: [
-      "defineStore",
-      "storeToRefs",
-    ],
+  site: {
+    url: baseURL,
   },
 
   sitemap: {
-    siteUrl: baseURL,
+    sources: [
+      "/api/__sitemap__/urls",
+    ],
     autoLastmod: false,
   },
 });

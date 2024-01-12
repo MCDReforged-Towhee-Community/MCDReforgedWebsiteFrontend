@@ -1,4 +1,4 @@
-import {PluginDataBriefSummary} from "~/types/plugins";
+import {type PluginDataBriefSummary} from "~/types/plugins";
 
 async function getPluginDataBriefSummary(): Promise<PluginDataBriefSummary> {
   const [

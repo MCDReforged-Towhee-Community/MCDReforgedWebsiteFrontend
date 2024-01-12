@@ -1,6 +1,6 @@
 import {
-  PluginData,
-  PluginDataBrief,
+  type PluginData,
+  type PluginDataBrief,
 } from "~/types/plugins";
 
 export class MCDRPlugin {

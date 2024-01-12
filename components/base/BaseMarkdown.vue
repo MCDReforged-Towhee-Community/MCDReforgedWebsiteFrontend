@@ -1,5 +1,5 @@
 <template>
-  <Editor
+  <BytemdEditor
       v-if="isEditor"
       :value="modelValue"
       :plugins="plugins"
@@ -8,7 +8,7 @@
       :uploadImages="uploadImages"
       @change="$emit('update:modelValue', $event)"
   />
-  <Viewer
+  <BytemdViewer
       v-else
       :value="modelValue"
       :plugins="plugins"
@@ -17,9 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import {BytemdPlugin} from "bytemd";
-import {Schema} from "hast-util-sanitize";
-import {Editor, Viewer} from "@bytemd/vue-next";
+import {type BytemdPlugin} from "bytemd";
+import {type Schema} from "hast-util-sanitize";
 import gemoji from "@bytemd/plugin-gemoji";
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight-ssr";
@@ -90,7 +89,7 @@ const getLocale = (type: pluginType) => localeDict[locale.value][type];
 
 // plugins
 const aTagBlankTargetPlugin: BytemdPlugin = {
-  viewerEffect({markdownBody}) {
+  viewerEffect({markdownBody}: { markdownBody: HTMLElement }) {
     markdownBody.querySelectorAll("a").forEach(value => value.setAttribute("target", "_blank"));
   }
 }

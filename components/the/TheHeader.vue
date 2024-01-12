@@ -9,9 +9,15 @@
         >
       </NuxtLink>
       <nav id="nav" class="hidden-xs-only">
-        <NuxtLink class="nav-item" to="/">{{ t("home") }}</NuxtLink>
-        <NuxtLink class="nav-item" to="/document">{{ t("document") }}</NuxtLink>
-        <NuxtLink class="nav-item" to="/plugins">{{ t("plugins") }}</NuxtLink>
+        <NuxtLink class="nav-item" to="/">
+          {{ t("home") }}
+        </NuxtLink>
+        <NuxtLink class="nav-item" to="/document">
+          {{ t("document") }}
+        </NuxtLink>
+        <NuxtLink class="nav-item" to="/plugins">
+          {{ t("plugins") }}
+        </NuxtLink>
       </nav>
       <div id="language">
         <ClientOnly>

@@ -1,121 +1,127 @@
 <template>
-  <div id="plugins">
-    <ElBacktop style="left: 40px;"/>
-    <div
-        id="plugins-search"
-        class="box"
-    >
-      <div id="plugins-search-title">
-        {{ t("search.title") }}
-      </div>
-      <ElInput
-          v-model="searchSetting.name"
-          class="plugins-search-item"
-          :placeholder="t('search.name')"
-          clearable
-          :prefix-icon="ElIconSearch"
-      />
-      <ElInput
-          v-model="searchSetting.author"
-          class="plugins-search-item"
-          :placeholder="t('search.author')"
-          clearable
-          :prefix-icon="ElIconAvatar"
-      />
-      <div>
-        {{ t("search.labels") }}
-      </div>
-      <ElCheckboxGroup
-          id="plugins-search-item-labels"
-          v-model="searchSetting.labels"
-          class="plugins-search-item"
-      >
-        <ElCheckbox
-            v-for="label in LABELS"
-            :key="label"
-            :label="label"
-        >
-          <PagePluginsBaseLabel :label="label"/>
-        </ElCheckbox>
-      </ElCheckboxGroup>
-      <div>
-        {{ t("search.sorting") }}
-      </div>
-      <ElSelect
-          v-model="searchSetting.sorting"
-          class="plugins-search-item"
-          :placeholder="t('search.sorting')"
-      >
-        <ElOption
-            v-for="sorting in SEARCH_SORTS"
-            :key="sorting"
-            :label="t(`sorting.${sorting}`)"
-            :value="sorting"
-        />
-      </ElSelect>
-      <div>
-        {{ t("search.reverse") }}
-      </div>
-      <ElCheckbox
-          v-model="searchSetting.reverse"
-          class="plugins-search-item"
-          :label="t('search.reverse')"
-      />
-      <div>
-        {{ t("search.selected") }}
-      </div>
-      <ElCheckbox
-          v-model="searchSetting.selected"
-          class="plugins-search-item"
-          :label="t('search.selected')"
-      />
-    </div>
-    <div id="plugins-list">
-      <TransitionGroup
-          name="plugins-list"
-          tag="div"
-          v-infinite-scroll="load"
-      >
-        <PagePluginsIndexBriefCard
-            v-for="plugin in plugins"
-            :key="plugin.id"
-            :brief="plugin"
-            :is-selected="selectedPlugins.includes(plugin.id)"
-            @switch-selected="switchSelected"
-        />
-      </TransitionGroup>
-    </div>
-    <Transition name="fade">
+  <div>
+    <div id="plugins">
+      <ElBacktop style="left: 40px;"/>
       <div
-          id="plugins-toolbar"
+          id="plugins-search"
           class="box"
-          v-show="selectedPlugins.length > 0"
       >
-        <ElTooltip
-            :content="t('downloadAll')"
-            placement="top"
+        <div id="plugins-search-title">
+          {{ t("search.title") }}
+        </div>
+        <ElInput
+            v-model="searchSetting.name"
+            class="plugins-search-item"
+            :placeholder="t('search.name')"
+            clearable
+            :prefix-icon="ElIconSearch"
+        />
+        <ElInput
+            v-model="searchSetting.author"
+            class="plugins-search-item"
+            :placeholder="t('search.author')"
+            clearable
+            :prefix-icon="ElIconAvatar"
+        />
+        <div>
+          {{ t("search.labels") }}
+        </div>
+        <ElCheckboxGroup
+            id="plugins-search-item-labels"
+            v-model="searchSetting.labels"
+            class="plugins-search-item"
         >
-          <ElBadge :value="selectedPlugins.length" type="primary">
-            <ElButton
-                class="plugins-toolbar-button"
-                @click="downloadAll"
-            >
-              <ElIconDownload class="plugins-toolbar-button-icon"/>
-            </ElButton>
-          </ElBadge>
-        </ElTooltip>
+          <ElCheckbox
+              v-for="label in LABELS"
+              :key="label"
+              :label="label"
+          >
+            <PagePluginsBaseLabel :label="label"/>
+          </ElCheckbox>
+        </ElCheckboxGroup>
+        <div>
+          {{ t("search.sorting") }}
+        </div>
+        <ClientOnly>
+          <ElSelect
+              v-model="searchSetting.sorting"
+              class="plugins-search-item"
+              :placeholder="t('search.sorting')"
+          >
+            <ElOption
+                v-for="sorting in SEARCH_SORTS"
+                :key="sorting"
+                :label="t(`sorting.${sorting}`)"
+                :value="sorting"
+            />
+          </ElSelect>
+        </ClientOnly>
+        <div>
+          {{ t("search.reverse") }}
+        </div>
+        <ElCheckbox
+            v-model="searchSetting.reverse"
+            class="plugins-search-item"
+            :label="t('search.reverse')"
+        />
+        <div>
+          {{ t("search.selected") }}
+        </div>
+        <ElCheckbox
+            v-model="searchSetting.selected"
+            class="plugins-search-item"
+            :label="t('search.selected')"
+        />
       </div>
-    </Transition>
+      <div id="plugins-list">
+        <TransitionGroup
+            name="plugins-list"
+            tag="div"
+            v-infinite-scroll="load"
+        >
+          <PagePluginsIndexBriefCard
+              v-for="plugin in plugins"
+              :key="plugin.id"
+              :brief="plugin"
+              :is-selected="selectedPlugins.includes(plugin.id)"
+              @switch-selected="switchSelected"
+          />
+        </TransitionGroup>
+      </div>
+      <ClientOnly>
+        <Transition name="fade">
+          <div
+              id="plugins-toolbar"
+              class="box"
+              v-show="selectedPlugins.length > 0"
+          >
+            <ElTooltip
+                :content="t('downloadAll')"
+                placement="top"
+            >
+              <ElBadge :value="selectedPlugins.length" type="primary">
+                <ElButton
+                    class="plugins-toolbar-button"
+                    @click="downloadAll"
+                >
+                  <ElIconDownload class="plugins-toolbar-button-icon"/>
+                </ElButton>
+              </ElBadge>
+            </ElTooltip>
+          </div>
+        </Transition>
+      </ClientOnly>
+    </div>
+    <TheFooter/>
   </div>
-  <TheFooter/>
 </template>
 
 <script setup lang="ts">
 import {
   LABELS,
-  Label,
-  PluginDataBrief,
-  PluginDataBriefSummary,
+  type Label,
+  type PluginDataBrief,
+  type PluginDataBriefSummary,
   SEARCH_SORTS,
 } from "~/types/plugins";
 

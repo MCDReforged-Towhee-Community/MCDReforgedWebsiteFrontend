@@ -1,5 +1,5 @@
-import {HTTPMethod} from "h3";
-import {PluginVotesSummary} from "~/types/plugins";
+import {type HTTPMethod} from "h3";
+import {type PluginVotesSummary} from "~/types/plugins";
 
 export const useBackend = () => {
   /**
