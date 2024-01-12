@@ -6,8 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import {ComputedRef} from "vue";
-
 const pluginsStore = usePluginsStore();
 const {id} = defineProps<{
   id: string;
