@@ -39,6 +39,6 @@
     "vue-gtag-next": "^1.14.0"
   },
   "overrides": {
-    "vue": "3.4.10"
+    "vue": "latest"
   }
 }
