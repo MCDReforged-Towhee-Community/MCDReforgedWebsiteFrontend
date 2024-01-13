@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="t('documentLink')" target="_blank">
+    <NuxtLink to="/document">
       <ElButton
           class="button"
           size="large"
@@ -8,7 +8,7 @@
       >
         {{ t("document") }}
       </ElButton>
-    </a>
+    </NuxtLink>
     <NuxtLink to="/plugins">
       <ElButton
           class="button"
@@ -39,12 +39,10 @@ const {t} = useI18n();
 
 <i18n locale="en-US" lang="yaml">
 document: Document
-documentLink: https://mcdreforged.readthedocs.io/en/latest/
 plugins: Discover Plugins
 </i18n>
 
 <i18n locale="zh-CN" lang="yaml">
 document: 官方文档
-documentLink: https://mcdreforged.readthedocs.io/zh_CN/latest/
 plugins: 探索插件
 </i18n>
