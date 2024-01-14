@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.0](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/compare/v1.1.0...v1.2.0) (2024-01-14)
+
+
+### Features
+
+* **components:** ✨ add document page to header ([1e802aa](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/1e802aa5dd28dda2b23c813e9e2ae15f24ffb5c8))
+* **pages:** ✨ add /document page ([afac7e9](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/afac7e9e5dccbb981e596e82dd3a7d11f4f2ce54))
+* **pages:** ✨ update button on index ([aadf6c9](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/aadf6c965244a366a26192150223ed1c46687bca))
+
+
+### Bug Fixes
+
+* 🐛 fix i18n config ([0f04c14](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/0f04c14a40e114408fd00938221f9565f45dd7e7))
+* **components:** 🐛 fix hydration mismatch in PagePluginsBaseReleaseDrawer ([738e565](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/738e565faa5bdb4e6829dc44ce9220fbc3751f01))
+* **components:** 🐛 fix style in TheHeader ([e3dbb36](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/e3dbb36f6abfd066f7935461778f0ee84e56c1b9))
+* **pages:** 🌐 fix i18n type ([198b099](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/198b099c1781adee5a1530825f0f361347cded37))
+* **pinia:** 🐛 fix votes update ([44c65d3](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/commit/44c65d3352a1845d997aef90763f51693a9e7af3))
+
 ## [1.1.0](https://github.com/MCDReforged-Towhee-Community/MCDReforgedWebsiteFrontend/compare/v1.0.0...v1.1.0) (2024-01-11)
 
 
