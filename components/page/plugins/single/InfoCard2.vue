@@ -221,7 +221,7 @@ function writeToClipboard() {
 <i18n locale="en-US" lang="yaml">
 files: Recent Files
 viewAll: View All
-install: Install
+install: Installation
 installTooltip:
   default: Copy Command
   copied: Copied!
