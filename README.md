@@ -1,5 +1,13 @@
 # MCDReforged Website Frontend
 
+> [!NOTE]  
+> As the MCDReforged official has made a website with the same UI, this project is now archived.
+> | This Project | Official Website |
+> | - | - |
+> | ![This Project](https://github.com/user-attachments/assets/c428d4ea-9e10-4c57-b2e6-fbf2fa76f89b) | ![Official Website](https://github.com/user-attachments/assets/f70bf2b1-82e9-42db-b5fc-03e53b0bf8d3) |
+
+
+
 This is the source code of MCDReforged website frontend.
 
 Please notice that this website is still under development, and the content is
